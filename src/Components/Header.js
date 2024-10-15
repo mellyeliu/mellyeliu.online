@@ -242,14 +242,13 @@ const Header = (props) => {
         <Folder
           image={"images/menu/safari.png"}
           isOpen={false}
+          hoverString={"( Tinkering... )"}
           onOpen={() => {
             props.setDesktopScreen(Screen.PORTFOLIO);
             setCursorString("");
           }}
           isVisible={isFoldersVisible}
-          onHoverChange={() => {
-            setCursorString("see projects!");
-          }}
+          onHoverChange={handleFolderHoverChange}
           caption={"Projects"}
           x={0}
           y={140}

@@ -4,8 +4,8 @@ import { isMobile } from "react-device-detect";
 
 const styles = {
   container: {
-    width: isMobile ? "320px" : "380px",
-    height: isMobile ? "105px" : "120px",
+    width: isMobile ? "320px" : "390px",
+    height: isMobile ? "105px" : "125px",
     backgroundColor: "white",
     border: "0.5px solid #111",
     display: "flex",
@@ -17,7 +17,7 @@ const styles = {
     boxSizing: "border-box",
     position: "absolute",
     left: "50%",
-    top: "50px",
+    top: "65px",
     transform: "translateX(-50%)",
     color: "#111",
     zIndex: 100000,
@@ -26,7 +26,7 @@ const styles = {
     fontWeight: 700,
     letterSpacing: 0.4,
     fontFamily: "Cormorant Garamond",
-    fontSize: isMobile ? 24 : 27,
+    fontSize: isMobile ? 24 : 28,
   },
   funFacts: {
     letterSpacing: 1,
