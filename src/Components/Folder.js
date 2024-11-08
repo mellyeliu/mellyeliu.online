@@ -2,35 +2,25 @@ import React, { useState } from "react";
 import { isMobile } from "react-device-detect";
 
 const Folder = ({
-  src,
   scale,
-  x,
   y,
   hoverString,
   onHoverChange,
   caption,
   isOpen,
   onOpen,
-  isVisible,
   image,
 }) => {
-  const [position, setPosition] = useState({ x: x, y: y });
-  const [dragging, setDragging] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
   const handleClick = () => {
     onOpen(!isOpen);
   };
 
   const onHover = () => {
-    setIsHovered(true);
     onHoverChange(hoverString);
   };
 
   const stopHover = () => {
-    setIsHovered(false);
     onHoverChange("");
-    setDragging(false);
   };
 
   return (
@@ -42,7 +32,7 @@ const Folder = ({
         cursor: "pointer",
         right: 10,
         filter: "drop-shadow(0px 6px 6px rgba(0,0,0,0.4))",
-        top: position.y,
+        top: y,
         userSelect: "none",
         zIndex: 100,
         display: "block",

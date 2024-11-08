@@ -1,19 +1,14 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import Fade from "react-reveal/Fade";
-import Carousel from "nuka-carousel";
 import DesktopIcon from "./DesktopIcon";
 import Folder from "./Folder";
 import FileData, { windowData } from "../Data/FileData";
 import "@animated-burgers/burger-squeeze/dist/styles.css";
 import { ThemeContext } from "../ThemeContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isMobile } from "react-device-detect";
 import { Screen } from "../App";
 import Popup from "./Popup";
-import Pet from "./Pet";
 
 const Header = (props) => {
-  const { fullScreen, setFullScreen } = useContext(ThemeContext);
   const [isGridLayout, setIsGridLayout] = useState(false);
   const [isChildHovered, setIsChildHovered] = useState("");
   const [openStates, setOpenStates] = useState({
@@ -51,19 +46,16 @@ const Header = (props) => {
       }
     };
 
-    if (fullScreen) {
-      document.addEventListener("wheel", preventVerticalScroll, {
-        passive: false,
-      });
-      document.addEventListener("touchstart", handleTouchStart, {
-        passive: false,
-      });
-      document.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-    }
+    document.addEventListener("wheel", preventVerticalScroll, {
+      passive: false,
+    });
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    document.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
 
-    // Clean up the event listeners on component unmount
     return () => {
       document.removeEventListener("wheel", preventVerticalScroll, {
         passive: false,
@@ -75,7 +67,7 @@ const Header = (props) => {
         passive: false,
       });
     };
-  }, [fullScreen]);
+  }, []);
 
   // Function to check if the parent element is visible in the viewport
   const isElementInViewport = (el) => {
@@ -132,14 +124,6 @@ const Header = (props) => {
       setCursorString("");
     } else {
       setCursorString("open/close folders");
-    }
-  };
-
-  const handleMenuHoverChange = () => {
-    if (cursorString !== "") {
-      setCursorString("");
-    } else {
-      setCursorString("show/hide menus");
     }
   };
 
@@ -292,9 +276,9 @@ const Header = (props) => {
               transition: "height 1s ease",
               display: "inline-block",
               margin: "0px auto",
-              padding: fullScreen ? "0px" : "100px 0px 50px 0px",
-              width: fullScreen ? "100%" : "90%",
-              maxWidth: fullScreen ? "100%" : "1200px",
+              padding: "0px",
+              width: "100%",
+              maxWidth: "100%",
               textAlign: "center",
               position: "relative",
               height: "100%",
@@ -304,7 +288,7 @@ const Header = (props) => {
           >
             <div
               className="bottom-left-2"
-              style={{ top: fullScreen ? "15px" : "120px", display: "none" }}
+              style={{ top: "15px", display: "none" }}
             >
               {" "}
               &#40; 🌐🌷 &#41;{" "}
@@ -313,11 +297,10 @@ const Header = (props) => {
               onClick={() => {
                 setCursorString("");
                 props.setDesktopScreen(Screen.PORTFOLIO);
-                // setFullScreen();
                 handleFullScreenClick();
               }}
               className="bottom-right"
-              style={{ bottom: fullScreen ? "20px" : "70px" }}
+              style={{ bottom: "20px" }}
             >
               <span
                 style={{
@@ -337,7 +320,7 @@ const Header = (props) => {
                 props.setisFoldersOff(!props.isFoldersOff);
               }}
               className="bottom-leftt"
-              style={{ bottom: fullScreen ? "20px" : "70px" }}
+              style={{ bottom: "20px" }}
             >
               <span
                 style={{

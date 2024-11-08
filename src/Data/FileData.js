@@ -453,7 +453,9 @@ const FileData = {
 
 const socialsContent = (
   <>
-    find me at:
+    start &#8594; brainstorming for ideas 💭
+    <br />
+    start &#8594; contact to collab 💌
     <br />
     <br />
     {PortfolioData.main.social.map((item, index) => (
