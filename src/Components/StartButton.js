@@ -3,7 +3,6 @@ import { startData } from "../Data/StartData";
 
 const StartButton = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [dropdownTop, setDropdownTop] = useState(0);
   const buttonRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -36,20 +35,9 @@ const StartButton = () => {
     };
   }, [isDropdownVisible]);
 
-  useEffect(() => {
-    if (buttonRef.current && isDropdownVisible) {
-      const buttonRect = buttonRef.current.getBoundingClientRect();
-      setDropdownTop(buttonRect.top);
-    }
-  }, [isDropdownVisible]);
-
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
     setSelectedOption(null);
-  };
-
-  const showDropDown = (show) => {
-    setDropdownVisible(show);
   };
 
   const tabStyle = {
@@ -68,7 +56,7 @@ const StartButton = () => {
     // background: "rgb(245 245 245)",
     cursor: "pointer",
     fontStyle: "normal",
-    letterSpacing: 0.5,
+    letterSpacing: 0,
     color: "black",
   };
 
@@ -81,7 +69,7 @@ const StartButton = () => {
       background: "linear-gradient(to top, #888, #ddd)",
       padding: "1px",
       textAlign: "center",
-      lineHeight: "40px",
+      lineHeight: "45px",
       alignItems: "center",
       justifyContent: "center",
       borderRight: "0.5px solid black",
@@ -97,7 +85,7 @@ const StartButton = () => {
       alignItems: "center",
       textAlign: "center",
       justifyContent: "center",
-      marginTop: "90px",
+      marginTop: "135px",
       // verticalAlign: "center",
     },
   };
@@ -164,7 +152,7 @@ const StartButton = () => {
               className="side-panel"
               style={{
                 position: "absolute",
-                left: 144,
+                left: 178,
                 bottom: 50,
                 width: "220px",
                 height: "auto",

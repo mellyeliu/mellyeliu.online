@@ -73,7 +73,7 @@ const DesktopIcon = ({
   }, []);
 
   let timer = 0;
-  const delay = 300; // milliseconds
+  const delay = 300;
   const [clickCount, setClickCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -91,7 +91,6 @@ const DesktopIcon = ({
     borderRadius: "2px",
     padding: "2px",
     marginLeft: "3px",
-    // marginRight: "auto",
     display: "inline-block",
     backgroundColor: dragging || isClicked ? "#3443eb" : "transparent",
   };
@@ -148,7 +147,6 @@ const DesktopIcon = ({
     e.target.style.zIndex = zIndex + 1;
     ref.current.style.zIndex = zIndex + 1;
     e.target.style.cursor = "grabbing";
-    // Attach these to document to ensure drag continues even if mouse moves fast
     document.addEventListener("mousemove", onDrag);
     document.addEventListener("mouseup", stopDrag);
   };
@@ -180,14 +178,12 @@ const DesktopIcon = ({
     }
   };
 
-  // Function to stop the drag
   const onHover = () => {
     setIsHovered(true);
     if (!border) {
       setShowCursor("double click me!");
     }
     onHoverChange(hoverString);
-    // hoverText.style.display = 'none';
   };
 
   const stopHover = (e) => {
@@ -200,7 +196,6 @@ const DesktopIcon = ({
     width: "auto",
     height: "auto",
     textAlign: "center",
-    // overflow: "hidden",
   };
 
   const startTouchDrag = (e) => {
@@ -260,17 +255,11 @@ const DesktopIcon = ({
             cursor: "grab",
             position: "absolute",
             left: `${(position.x * width) / 100}px`,
-            // minHeight: "20%",
             display: "block",
             zIndex: 1,
             top: `${position.y}%`,
             border: dragging || isClicked ? "1px solid white" : "none",
             borderRadius: "5px",
-            // maxWidth: "100px",
-            // maxWidth: "6%",
-            // maxHeight: "9%",
-            // minWidth: "70px",
-            // minHeight: "70px",
             maxWidth: isMobile ? "70px" : "90px",
             maxHeight: isMobile ? "65px" : "90px",
             width: "auto",
@@ -279,7 +268,6 @@ const DesktopIcon = ({
             boxShadow: border ? "0 0 0 1px rgba(0,0,0,0.5)" : "none",
             userSelect: "none",
           }}
-          // className="draggableImage"
           onMouseDown={startDrag}
           onClick={(e) => {
             handleClickOutside(e);
@@ -288,9 +276,6 @@ const DesktopIcon = ({
           onMouseMove={onDrag}
           onMouseUp={stopDrag}
           onMouseLeave={stopHover}
-          // onTouchStart={startTouchDrag}
-          // onTouchMove={onTouchMove}
-          // onTouchEnd={stopTouchDrag}
           onMouseEnter={onHover}
           ref={ref}
           draggable={false}
@@ -315,9 +300,6 @@ const DesktopIcon = ({
           onMouseMove={onDrag}
           onMouseUp={stopDrag}
           onMouseLeave={stopHover}
-          // onTouchStart={startTouchDrag}
-          // onTouchMove={onTouchMove}
-          // onTouchEnd={stopTouchDrag}
           onMouseEnter={onHover}
           ref={ref}
         >
@@ -327,7 +309,6 @@ const DesktopIcon = ({
             backgroundColor={"red"}
             style={iconTextStyle}
           />
-          {/* <span style={iconTextStyle}>{iconText}</span> */}
         </div>
       </div>
     </div>

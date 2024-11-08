@@ -1,4 +1,12 @@
 export const startData = {
+  "✩ Brainstorming": [
+    ["Fictional drugs", ""],
+    ["Sci-fi mpreg medical devices", ""],
+    ["Cyclic AI dating sim", ""],
+    ["Internet surfer personality quiz", ""],
+    ["Miscellaneous personality quizzes", ""],
+    ["Stuffed animal paracosms", ""],
+  ],
   "𖧷 Interests": [
     ["Theories of God", "https://en.wikipedia.org/wiki/Transtheism"],
     ["Parser-based interactive fiction", "https://eblong.com/zarf/if.html"],
@@ -61,7 +69,7 @@ export const startData = {
       "https://images.aeonmedia.co/user_image_upload/744/v2-smorgasbord-b8wpopb56r4y.jpg?width=3840&quality=75&format=auto",
     ],
   ],
-  "⚘ Faves": [
+  "⚘ Favourites": [
     [
       "The Handmaiden",
       "https://tvtropes.org/pmwiki/pmwiki.php/Film/TheHandmaiden",

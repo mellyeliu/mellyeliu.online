@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import Fade from "react-reveal/Fade";
 import PortfolioData from "../Data/PortfolioData";
-import { ThemeContext } from "../ThemeContext";
 import { Screen } from "../App";
 import { isMobile } from "react-device-detect";
 import BrowserIcons from "./BrowserIcons";
@@ -17,17 +16,13 @@ const Portfolio = ({ setDesktopScreen }) => {
 
   const handleInputChange = (event) => {
     if (event.target.value === "YES" && tabTwoRef.current) {
-      setActiveTab("two"); // Switch to the desired tab ID
+      setActiveTab("two");
     }
   };
 
-  // Step 3: Function to toggle the state
   const handleFavourite = () => {
     setFavourite(favourite === "✩" ? "✮" : "✩");
   };
-  // const [activeTab, setActiveTab] = useState("tab1");
-  const { fullScreen, cursorString, setCursorString } =
-    useContext(ThemeContext);
 
   const urlBar = (tab, tabProjects) => {
     return (
@@ -310,8 +305,8 @@ const Portfolio = ({ setDesktopScreen }) => {
         style={{
           height: "100%",
           backgroundColor: "white",
-          width: fullScreen ? "100%" : "90%",
-          maxWidth: fullScreen ? "100%" : 1200,
+          width: "100%",
+          maxWidth: "100%",
         }}
       >
         <Fade top>
