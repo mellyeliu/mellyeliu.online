@@ -96,6 +96,22 @@ const PortfolioData = {
         ],
       },
       {
+        title: "BOY♡GAME (2.0)",
+        category:
+          "Couch co-op game to create boys and vote on your favourites. View the <a  class='special-links' href='https://github.com/mellyeliu/boygame'>source code</a>.",
+        languages: "React, NodeJS/SQLite, Figma",
+        image: "boygame2.png",
+        year: "2024",
+        type: ["code", "design", "games"],
+        url: "https://instagram.com/b0ygame",
+        collaborators: [
+          {
+            name: "Amanda Yeh",
+            url: "https://amandayeh.com/",
+          },
+        ],
+      },
+      {
         title: "BOY♡GAME",
         category:
           "Analog dating sim to date boys and matchmake friends. A reskin of the 80s game HEARTTHROB.",
