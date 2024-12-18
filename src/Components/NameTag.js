@@ -17,7 +17,7 @@ const styles = {
     boxSizing: "border-box",
     position: "absolute",
     left: "50%",
-    top: "65px",
+    top: "7.5vh",
     transform: "translateX(-50%)",
     color: "#111",
     zIndex: 100000,

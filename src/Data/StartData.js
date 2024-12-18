@@ -40,6 +40,10 @@ export const startData = {
       "https://tvtropes.org/pmwiki/pmwiki.php/Main/UnreliableNarrator",
     ],
     [
+      "Maladaptive neurodivergence",
+      "https://en.wikipedia.org/wiki/Hyperfocus",
+    ],
+    [
       "Biphasic sleep schedules",
       "https://en.wikipedia.org/wiki/Polyphasic_sleep",
     ],
@@ -71,20 +75,18 @@ export const startData = {
   ],
   "⚘ Favourites": [
     [
+      "In the Dream House",
+      "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
+    ],
+    ["Bliss Montage (Los Angeles)", "https://granta.com/los-angeles-ma/"],
+    [
       "The Handmaiden",
       "https://tvtropes.org/pmwiki/pmwiki.php/Film/TheHandmaiden",
     ],
+    ["Cat's Eye", "https://www.goodreads.com/book/show/51019.Cat_s_Eye"],
     [
       "So Sad Today",
       "https://www.goodreads.com/book/show/25904473-so-sad-today",
-    ],
-    [
-      "Grotesque (Natsuo Kirino)",
-      "https://www.goodreads.com/book/show/25366.Grotesque",
-    ],
-    [
-      "Glitch Feminism",
-      "https://www.goodreads.com/book/show/52411999-glitch-feminism",
     ],
     [
       "Girlhood (Melissa Febos)",
@@ -98,20 +100,8 @@ export const startData = {
       "The Robber Bride",
       "https://www.goodreads.com/book/show/17650.The_Robber_Bride",
     ],
-    [
-      "Bliss Montage",
-      "https://www.goodreads.com/book/show/60243188-bliss-montage",
-    ],
-    ["Cat's Eye", "https://www.goodreads.com/book/show/51019.Cat_s_Eye"],
     ["Mr. Robot", "https://tvtropes.org/pmwiki/pmwiki.php/Series/MrRobot"],
-    [
-      "In the Dream House",
-      "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
-    ],
-    [
-      "Her Body and Other Parties",
-      "https://www.goodreads.com/book/show/33375622-her-body-and-other-parties",
-    ],
+    ["The Husband Stitch", "https://granta.com/the-husband-stitch/"],
     [
       "Emily of New Moon",
       "https://www.goodreads.com/book/show/3562.Emily_of_New_Moon",
@@ -125,16 +115,16 @@ export const startData = {
       "https://www.goodreads.com/book/show/144974.The_Velveteen_Rabbit",
     ],
     [
+      "Grotesque (Natsuo Kirino)",
+      "https://www.goodreads.com/book/show/25366.Grotesque",
+    ],
+    [
+      "Glitch Feminism",
+      "https://www.goodreads.com/book/show/52411999-glitch-feminism",
+    ],
+    [
       "Anything by edy (ao3)",
       "https://archiveofourown.org/users/edy/pseuds/edy",
-    ],
-    [
-      "Anything by Margaret Atwood",
-      "https://www.goodreads.com/author/show/3472.Margaret_Atwood",
-    ],
-    [
-      "Anything by Carmen Machado",
-      "https://www.goodreads.com/author/show/6860265.Carmen_Maria_Machado",
     ],
   ],
   "𖧧 Beliefs": [

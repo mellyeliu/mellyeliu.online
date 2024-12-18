@@ -298,6 +298,10 @@ const Portfolio = ({ setDesktopScreen }) => {
   var code = getProjects(PortfolioData.portfolio.projects, "code");
   var design = getProjects(PortfolioData.portfolio.projects, "design");
   var games = getProjects(PortfolioData.portfolio.projects, "games");
+  var conversation = getProjects(
+    PortfolioData.portfolio.projects,
+    "conversation"
+  );
   return (
     <section id="portfolio">
       <div
@@ -327,15 +331,19 @@ const Portfolio = ({ setDesktopScreen }) => {
                 tabFor="two"
               >
                 {" "}
-                Code ‧&lt;₊˚#✩ /&gt;₊
+                Code ‧&lt;₊˚🔗✩ /&gt;₊
               </Tab>
               <Tab style={{ zIndex: 100000 }} tabFor="three">
                 {" "}
-                Design ‧&lt;₊˚🤍✩ /&gt;₊
+                Design ‧⊹˚🕊️☽₊⟡⋆
               </Tab>
               <Tab style={{ zIndex: 100000 }} tabFor="four">
                 {" "}
-                Games ‧&lt;₊˚🤍✩ /&gt;₊
+                Games ‧₊🎧ྀི☾⋆₊⟡⁺.
+              </Tab>
+              <Tab style={{ zIndex: 100000 }} tabFor="five">
+                {" "}
+                Convos ⁺.💭.˚✩˚⊹‧
               </Tab>
               <BrowserIcons setDesktopScreen={setDesktopScreen} />
               {/* <span className="browsero">○ ○ ○</span> */}
@@ -344,6 +352,9 @@ const Portfolio = ({ setDesktopScreen }) => {
             <TabPanel tabId="two">{urlBar("Code", code)}</TabPanel>
             <TabPanel tabId="three">{urlBar("Design", design)}</TabPanel>
             <TabPanel tabId="four">{urlBar("Games", games)}</TabPanel>
+            <TabPanel tabId="five">
+              {urlBar("Conversation", conversation)}
+            </TabPanel>
           </Tabs>
         </div>
       </div>

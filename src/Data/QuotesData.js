@@ -64,7 +64,7 @@ export const quotes = [
   ],
   [
     "You are a woman with a man inside watching a woman. You are your own voyeur.",
-    "https://www.goodreads.com/book/show/17650.The_Robber_Bride",
+    "https://www.goodreads.com/quotes/329778-male-fantasies-male-fantasies-is-everything-run-by-male-fantasies",
   ],
   [
     "Behind my eyelids are islands of violence / My mind shipwrecked, this is the only land my mind could find",
@@ -117,10 +117,6 @@ export const quotes = [
   [
     "I wanna fall inside your ghost / And fill up every hole inside my mind",
     "https://genius.com/Twenty-one-pilots-taxi-cab-lyrics",
-  ],
-  [
-    "There’s a ghostly double of myself hovering just behind me, and sometimes, it feels like she’s more real than I am",
-    "https://www.goodreads.com/quotes/1137576-there-s-a-ghostly-double-of-myself-hovering-just-behind",
   ],
   [
     "All the world's a stage / And all the men and women merely players",
@@ -177,5 +173,33 @@ export const quotes = [
   [
     "Time and space, creatures of infinite girth and tenderness, are keeping you safe as they were once unable to",
     "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
+  ],
+  [
+    "I am a forest fire / And I am the fire and I am the forest / And I am a witness watching it",
+    "https://genius.com/Mitski-a-burning-hill-lyrics",
+  ],
+  [
+    "If I can make my language flat enough, exact enough, if I can rinse each sentence clean enough, I could—it all could—just disappear.",
+    "https://www.goodreads.com/book/show/263257.The_Red_Parts",
+  ],
+  [
+    "Went looking for a creation myth / Ended up with a pair of cracked lips",
+    "https://genius.com/Phoebe-bridgers-i-know-the-end-lyrics",
+  ],
+  [
+    "What if I dissected my feelings, pulled them apart and brutalized them so that people would know they were true?",
+    "https://granta.com/los-angeles-ma/",
+  ],
+  [
+    "All we are is an isle of flightless birds / We find our worth in giving birth and stuff",
+    "https://genius.com/Twenty-one-pilots-isle-of-flightless-birds-lyrics",
+  ],
+  [
+    "Once, I took your medication to know what it's like / And now I have to act like I can't read your mind",
+    "https://genius.com/Boygenius-cool-about-it-lyrics",
+  ],
+  [
+    "I am lonely with the loneliness of unshared thought",
+    "https://www.goodreads.com/book/show/773507.Emily_s_Quest",
   ],
 ];

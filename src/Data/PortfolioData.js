@@ -37,7 +37,7 @@ const PortfolioData = {
         category: "A continual work in progress.",
         languages: "React",
         image: "pweb2.png",
-        year: "2024",
+        year: "2023-",
         type: ["code"],
         url: "https://github.com/mellyeliu/new-personal-website/",
       },
@@ -134,7 +134,7 @@ const PortfolioData = {
         languages: "React?",
         image: "healinggame.png",
         year: "2024",
-        type: ["code", "design", "games"],
+        type: ["code", "games"],
         url: "https://healing-game.netlify.app/",
         collaborators: [
           {
@@ -156,7 +156,7 @@ const PortfolioData = {
       {
         title: "M0MENTS",
         category:
-          "You play as an engineer trying not to get laid off. Created in the height of the tech layoffs",
+          "Welcome Employee 42069. You are an engineer trying to survive the recession. Created in the height of the tech layoffs",
         languages: "ChatGPT, Twine, HTML/CSS",
         image: "moments.png",
         year: "2023",
@@ -170,7 +170,7 @@ const PortfolioData = {
         languages: "ChatGPT",
         image: "clippy.png",
         year: "2024",
-        type: ["design"],
+        type: ["conversation"],
         url: "https://archiveofourown.org/works/53351767",
         collaborators: [
           {
@@ -186,7 +186,7 @@ const PortfolioData = {
         languages: "Framer, Figma",
         image: "serif.png",
         year: "2024",
-        type: ["code"],
+        type: ["code", "design"],
         url: "https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed",
         collaborators: [
           {
@@ -205,7 +205,7 @@ const PortfolioData = {
           "Nicknames, AI stickers, commands, themes, edit message, and encryption.",
         languages: "ObjC, Hack, React",
         image: "messenger.png",
-        year: "2021-",
+        year: "2021-2024",
         type: ["code"],
         url: "https://messenger.com",
       },
@@ -216,7 +216,7 @@ const PortfolioData = {
         languages: "Figma",
         image: "parasocial.png",
         year: "2024",
-        type: ["design"],
+        type: ["conversation"],
         url: "https://www.figma.com/design/e2UOBTAXopSigUwJToke4c/parasocial-relationships",
         collaborators: [
           {
@@ -226,17 +226,17 @@ const PortfolioData = {
         ],
       },
       {
-        title: "( DISSOCIATION )",
-        category: "Visual conversation on dissociation.",
+        title: "I've Been Thinking About Obsession",
+        category: "Visual conversation on obsessive personalities.",
         languages: "Figma",
-        image: "dissociation.png",
-        year: "2024",
-        type: ["design"],
-        url: "https://www.figma.com/file/wtlzG9LI65YerdnUCTavG5/dissociation-(Copy)?type=design&node-id=0%3A1&mode=design&t=qItstvoCYMAuhfYa-1",
+        image: "obsession.png",
+        year: "2023",
+        type: ["design", "conversation"],
+        url: "https://www.instagram.com/p/CpESuQsploR/?img_index=1",
         collaborators: [
           {
-            name: "Steven Gong",
-            url: "https://www.instagram.com/sttevengong/",
+            name: "Madeleine Lee",
+            url: "http://madlee.me/",
           },
         ],
       },
@@ -250,17 +250,17 @@ const PortfolioData = {
         url: "images/portfolio/poster.png",
       },
       {
-        title: "I've Been Thinking About Obsession",
-        category: "Visual conversation on obsessive personalities.",
+        title: "( DISSOCIATION )",
+        category: "Visual conversation on dissociation.",
         languages: "Figma",
-        image: "obsession.png",
-        year: "2023",
-        type: ["design"],
-        url: "https://www.instagram.com/p/CpESuQsploR/?img_index=1",
+        image: "dissociation.png",
+        year: "2024",
+        type: ["conversation"],
+        url: "https://www.figma.com/file/wtlzG9LI65YerdnUCTavG5/dissociation-(Copy)?type=design&node-id=0%3A1&mode=design&t=qItstvoCYMAuhfYa-1",
         collaborators: [
           {
-            name: "Madeleine Lee",
-            url: "http://madlee.me/",
+            name: "Steven Gong",
+            url: "https://www.instagram.com/sttevengong/",
           },
         ],
       },
@@ -269,7 +269,7 @@ const PortfolioData = {
         category: "Can we visualize the emotional spectrum?",
         languages: "Desmos, Matplotlib, Figma",
         image: "emotion profiles.png",
-        type: ["code", "design"],
+        type: ["conversation"],
         year: "2023",
         url: "",
         collaborators: [
@@ -305,7 +305,7 @@ const PortfolioData = {
       },
       {
         title: "Personal Website (1.0)",
-        category: "Covid-19 quarantine coping.",
+        category: "Covid-19 quarantine coping. (Plz do not visit Ty)",
         languages: "React",
         image: "oldpweb.png",
         type: ["code"],

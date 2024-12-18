@@ -249,7 +249,11 @@
     display: none;
   }
 
-  .rwt__tab[aria-controls="four"] {
+  .rwt__tab[aria-controls="three"] {
+    display: none;
+  }
+
+  .rwt__tab[aria-controls="five"] {
     display: none;
   }
 

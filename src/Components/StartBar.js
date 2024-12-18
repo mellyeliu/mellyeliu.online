@@ -14,7 +14,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const linkQuotes = quotes.map((item) => item[1]);
 
   const tabStyle = {
-    padding: "10px 10px",
+    padding: "12.5px 10px",
     color: "black",
     // fontWeight: "500",
     fontStyle: "italic",
@@ -28,7 +28,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
         position: "absolute",
         zIndex: 110000000,
         background: "rgb(241 241 241)",
-        height: 50,
+        height: 55,
         width: "100%",
         padding: "0px",
         display: "flex",
@@ -55,7 +55,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           setCursorString("");
         }}
         style={{
-          padding: "10px 15px 5px 15px",
+          padding: "12.5px 15px 5px 15px",
           color: "black",
           fontWeight: "500",
           fontStyle: "italic",
@@ -91,7 +91,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           position: "absolute",
           right: "130px",
           height: 50,
-          paddingTop: 10,
+          paddingTop: 12.5,
           maxWidth: "50%",
         }}
         id="desktop-only"
@@ -101,6 +101,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           textOptions={newQuotes}
           wrapper={false}
           autoplay={false}
+          order={true}
           typing={false}
           speed={30}
           autoplaySpeed={50000}

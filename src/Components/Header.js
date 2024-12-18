@@ -143,7 +143,7 @@ const Header = (props) => {
     }
   };
 
-  const folders = ["Games", "Fandoms", "Tools", "About Me"];
+  const folders = ["Games", "Fandoms", "Wikis", "About Me"];
   const display_folders = ["games", "fandoms", "tools", "About Me"];
   const display_strings = [
     "( Gamemaking as playing god )",
@@ -223,21 +223,64 @@ const Header = (props) => {
         <div style={{ position: "absolute", left: 920 }}>.</div>
       )}
       {!props.isFoldersOff && (
-        <Folder
-          image={"images/menu/safari.png"}
-          isOpen={false}
-          hoverString={"( Tinkering... )"}
-          onOpen={() => {
-            props.setDesktopScreen(Screen.PORTFOLIO);
-            setCursorString("");
-          }}
-          isVisible={isFoldersVisible}
-          onHoverChange={handleFolderHoverChange}
-          caption={"Projects"}
-          x={0}
-          y={140}
-          scale={0.5}
-        />
+        <>
+          <Folder
+            image={"images/menu/safari.png"}
+            isOpen={false}
+            hoverString={"( Tinkering... )"}
+            onOpen={() => {
+              props.setDesktopScreen(Screen.PORTFOLIO);
+              setCursorString("");
+            }}
+            isVisible={isFoldersVisible}
+            onHoverChange={handleFolderHoverChange}
+            caption={"Projects"}
+            x={0}
+            y={145}
+            scale={0.5}
+          />
+          {/* <Folder
+            image={"images/menu/blog.png"}
+            isOpen={false}
+            hoverString={"( Neurotic autofiction )"}
+            onOpen={() => {
+              window.open("https://reading.supply/@mellyeliu", "_blank");
+            }}
+            isVisible={isFoldersVisible}
+            onHoverChange={handleFolderHoverChange}
+            caption={"Vsco"}
+            x={0}
+            y={245}
+            scale={0.5}
+          />
+          <Folder
+            image={"images/menu/filep.png"}
+            isOpen={false}
+            hoverString={"( Neurotic autofiction )"}
+            onOpen={() => {
+              window.open("https://reading.supply/@mellyeliu", "_blank");
+            }}
+            isVisible={isFoldersVisible}
+            onHoverChange={handleFolderHoverChange}
+            caption={"Journal"}
+            x={0}
+            y={340}
+            scale={0.5}
+          />
+          <Folder
+            src={"images/menu/projects.png"}
+            isOpen={() => {}}
+            onOpen={() => {}}
+            isVisible={isFoldersVisible}
+            hoverString={"h"}
+            key={3}
+            onHoverChange={handleFolderHoverChange}
+            caption={"Folder"}
+            x={0}
+            y={440}
+            scale={0.5}
+          /> */}
+        </>
       )}
       {folders.map((folder, index) => {
         return !props.isFoldersOff ? (
