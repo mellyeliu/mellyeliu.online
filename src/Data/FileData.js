@@ -1,52 +1,3 @@
-import React from "react";
-import PortfolioData from "./PortfolioData";
-
-function CustomLink({ text, href, color = "#bf75bf" }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        textDecoration: "underline",
-        pointerEvents: "auto",
-        color,
-      }}
-      onMouseOver={(e) => (e.currentTarget.style.letterSpacing = "1px")}
-      onMouseOut={(e) => (e.currentTarget.style.letterSpacing = "0px")}
-    >
-      {text}
-    </a>
-  );
-}
-
-function ContentBlock({
-  content,
-  textAlign = "left",
-  padding = "150px 20px",
-  fontSize = "20px",
-}) {
-  return (
-    <div
-      style={{
-        whiteSpace: "pre-wrap",
-        color: "#222",
-        fontSize,
-        textAlign,
-        lineHeight: "1.1",
-        padding,
-        letterSpacing: -0.1,
-        fontFamily: "Helvetica",
-        // fontWeight: 500,
-        zIndex: 1000000,
-        pointerEvents: "none",
-      }}
-    >
-      {content}
-    </div>
-  );
-}
-
 const FileData = {
   games: [
     {
@@ -74,7 +25,7 @@ const FileData = {
       scale: 0.52,
       x: 40,
       y: 30,
-      iconText: "company of myself.png",
+      iconText: "company of.png",
     },
     {
       hoverString: "You Find Yourself In A Room",
@@ -119,7 +70,7 @@ const FileData = {
       scale: 0.52,
       x: 50,
       y: 40,
-      iconText: "club penguin.png",
+      iconText: "cp.png",
     },
     {
       hoverString: "Shift",
@@ -238,7 +189,7 @@ const FileData = {
       scale: 0.5,
       x: 75,
       y: 25,
-      iconText: "life is strange.webloc",
+      iconText: "life is strange.png",
     },
     {
       hoverString: "www.tvtropes.org",
@@ -274,7 +225,7 @@ const FileData = {
       scale: 0.5,
       x: 23,
       y: 65,
-      iconText: "dark everlark.webloc",
+      iconText: "everlark.png",
     },
     {
       hoverString: "azula x mai (atla) ♡",
@@ -283,7 +234,7 @@ const FileData = {
       scale: 0.5,
       x: 42,
       y: 48,
-      iconText: "tymaizula.webloc",
+      iconText: "tymaizula.png",
     },
     {
       hoverString: "joseon-era kdramas",
@@ -292,7 +243,7 @@ const FileData = {
       scale: 0.5,
       x: 50,
       y: 45,
-      iconText: "dae jang geum.webloc",
+      iconText: "dae jang geum.png",
     },
   ],
   tools: [
@@ -449,97 +400,6 @@ const FileData = {
     },
   ],
   Obsessions: [],
-};
-
-const socialsContent = (
-  <>
-    start &#8594; brainstorming for ideas 💭
-    <br />
-    start &#8594; contact to collab 💌
-    <br />
-    <br />
-    {PortfolioData.main.social.map((item, index) => (
-      <React.Fragment key={index}>
-        <CustomLink href={item.url} text={item.name} />
-        <div />
-      </React.Fragment>
-    ))}
-  </>
-);
-
-const siteContent = (
-  <>
-    welcome to my safe space on the internet ᡣ • . • 𐭩 ♡
-    <br />
-    &#40; web portrait 🌟 site assemblage 🌐 portfolio 📎 &#41;
-    <br />
-    <br />
-    ૮꒰ ˶• ༝ •˶꒱ა ♡
-    <br />
-    <br />
-    this website is{" "}
-    <CustomLink
-      text="open source"
-      href="https://github.com/mellyeliu/mellyeliu.online"
-    />
-    , made with <CustomLink text="react" href="https://react.dev/" />, and
-    inspired by{" "}
-    <CustomLink
-      text="everything before me"
-      href="https://www.are.na/vaiva-staugaityte/websites-that-look-like-operating-systems"
-    />
-  </>
-);
-
-const bioContent = (
-  <>
-    <div style={{ textAlign: "center" }}>
-      ₊˚ . ⋅☁︎‧₊˚ ☾. ⋅<br />
-    </div>
-    <br />
-    Melissa is a software engineer and internet artist. Interests include:
-    messaging systems, creation myths, fandom as landscaping fictional worlds,
-    video game as art form, safe spaces, creative intimacy, pseudoscientific
-    personality tests, relational psychology, bed rotting [...] They still
-    believe in the goodness of the internet and its potential for connection and
-    creativity.
-    <br />
-    <br />
-    In the day they work on core components,{" "}
-    <CustomLink
-      text="cross-platform integration"
-      href="https://github.com/facebook/react-strict-dom"
-    />
-    , and{" "}
-    <CustomLink
-      text="open source tooling"
-      href="https://github.com/facebook/stylex"
-    />{" "}
-    for React, the library where they fell in love with coding, and at night
-    they use it on random side quests. Previously, they worked on the{" "}
-    <CustomLink text="website" href="https://messenger.com" /> that first taught
-    them how to talk to people. She still beta tests it every day with her
-    friends. The rest of her life is just content fodder for her work.
-  </>
-);
-
-const emojisContent = <>🎀💿🧸💫</>;
-
-export const windowData = {
-  "( Socials )": <ContentBlock content={socialsContent} />,
-  "૮꒰ ˶• ༝ •˶꒱ა ♡": (
-    <ContentBlock content={bioContent} padding="165px 25px" />
-  ),
-  "( 🌐🤍🎀🫧 )": (
-    <ContentBlock
-      content={siteContent}
-      textAlign="center"
-      padding="170px 50px"
-    />
-  ),
-  "( Girlhood )": (
-    <ContentBlock content={emojisContent} textAlign="center" fontSize="48px" />
-  ),
 };
 
 export default FileData;

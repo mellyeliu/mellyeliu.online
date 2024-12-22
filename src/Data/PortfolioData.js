@@ -145,8 +145,7 @@ const PortfolioData = {
       },
       {
         title: "My Fanfic Became Sentient and Cannabalized Itself",
-        category:
-          "Zine documenting my online childhood and the websites that made me. For SF Zine Fest.",
+        category: "Zine documenting the underbelly of AO3. For SF Zine Fest.",
         languages: "Figma",
         image: "fanfic.png",
         year: "2023",

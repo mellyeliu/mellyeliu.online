@@ -1,5 +1,5 @@
 export const startData = {
-  "✩ Brainstorming": [
+  "∞︎︎ Brainstorming": [
     ["Fictional drugs", ""],
     ["Sci-fi mpreg medical devices", ""],
     ["Cyclic AI dating sim", ""],
@@ -39,10 +39,7 @@ export const startData = {
       "Unreliable narrators",
       "https://tvtropes.org/pmwiki/pmwiki.php/Main/UnreliableNarrator",
     ],
-    [
-      "Maladaptive neurodivergence",
-      "https://en.wikipedia.org/wiki/Hyperfocus",
-    ],
+    ["Maladaptive neurodivergence", "https://en.wikipedia.org/wiki/Hyperfocus"],
     [
       "Biphasic sleep schedules",
       "https://en.wikipedia.org/wiki/Polyphasic_sleep",
@@ -73,7 +70,7 @@ export const startData = {
       "https://images.aeonmedia.co/user_image_upload/744/v2-smorgasbord-b8wpopb56r4y.jpg?width=3840&quality=75&format=auto",
     ],
   ],
-  "⚘ Favourites": [
+  "⚘ Media Recs": [
     [
       "In the Dream House",
       "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
@@ -130,7 +127,7 @@ export const startData = {
   "𖧧 Beliefs": [
     [
       "Dismantling power hierarchies",
-      "https://en.wikipedia.org/wiki/The_personal_is_political",
+      "https://en.wikipedia.org/wiki/Critical_theory",
     ],
     [
       "All forms of intimacy",

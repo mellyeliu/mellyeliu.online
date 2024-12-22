@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ReactGA from "react-ga";
 import "./App.css";
-import Header from "./Components/Header";
+import Header from "./Components/Pages/Home";
 
-import NameTag from "./Components/NameTag";
-import Portfolio from "./Components/Portfolio";
+import NameTag from "./Components/Items/NameTag";
+import Portfolio from "./Components/Pages/Portfolio";
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
 import PortfolioData from "./Data/PortfolioData";
-import TextCursor from "./Components/TextCursor";
+import TextCursor from "./Components/Utils/TextCursor";
 import { isMobile } from "react-device-detect";
-import StartBar from "./Components/StartBar";
+import StartBar from "./Components/Items/StartBar";
 
 export const Screen = {
   HOME: "HOME",

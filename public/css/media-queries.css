@@ -221,6 +221,7 @@
   .bottom-leftt:hover,
   .bottom-right:hover {
     transform: none;
+    font-size: 17px;
   }
 
   #nav-wrap {

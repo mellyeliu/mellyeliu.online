@@ -48,6 +48,7 @@ html {
 
 div {
   font-family: "Cormorant Garamond";
+  font-size: 17px;
 }
 
 .react-draggable {
@@ -122,6 +123,7 @@ img#headerpic {
 #play-button {
   color: rgb(43, 43, 43) !important;
   cursor: pointer;
+  font-size: 19px;
 }
 
 #play-button::selection {
@@ -1399,7 +1401,7 @@ button#one-tab {
   position: absolute;
   top: 15px;
   right: 15px;
-  font: 17px "Cormorant Garamond";
+  font: 19px "Cormorant Garamond";
   /* font-family: montserrat; */
   /* text-transform: uppercase; */
   letter-spacing: 1.5px;
