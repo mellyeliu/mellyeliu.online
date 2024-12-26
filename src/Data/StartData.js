@@ -39,7 +39,10 @@ export const startData = {
       "Unreliable narrators",
       "https://tvtropes.org/pmwiki/pmwiki.php/Main/UnreliableNarrator",
     ],
-    ["Maladaptive neurodivergence", "https://en.wikipedia.org/wiki/Hyperfocus"],
+    [
+      "Neurodivergent isolation",
+      "https://en.wikipedia.org/wiki/Double_empathy_problem",
+    ],
     [
       "Biphasic sleep schedules",
       "https://en.wikipedia.org/wiki/Polyphasic_sleep",

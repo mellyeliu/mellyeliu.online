@@ -69,6 +69,7 @@ const StartButton = () => {
       background: "linear-gradient(to top, #888, #ddd)",
       padding: "1px",
       textAlign: "center",
+      width: "48px",
       lineHeight: "45px",
       alignItems: "center",
       justifyContent: "center",

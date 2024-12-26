@@ -193,7 +193,7 @@
 /* mobile wide/smaller tablets
 ---------------------------------------------------------------------- */
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 860px) {
   /* mobile navigation
    -------------------------------------------------------------------- */
   #logo {

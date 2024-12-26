@@ -180,6 +180,7 @@ const Portfolio = ({ setDesktopScreen }) => {
               style={{
                 position: "absolute",
                 top: "50%",
+                display: isMobile ? "none" : "block",
                 right: "10px",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
