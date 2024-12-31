@@ -75,15 +75,13 @@
   }
 }
 
-@media only screen and (min-height: 800px) {
-  .draggableImage {
-    transform: scale(0.6) !important;
-    /* margin-top: 2.5%; */
-  }
+.draggableImage {
+  transform: scale(0.6) !important;
+  /* margin-top: 2.5%; */
+}
 
-  .draggableImage:hover {
-    transform: scale(0.62) !important;
-  }
+.draggableImage:hover {
+  transform: scale(0.62) !important;
 }
 
 /* screenwidth less than 1024px

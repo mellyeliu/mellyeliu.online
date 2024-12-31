@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { event } from "react-ga";
 import PortfolioData from "../../Data/PortfolioData";
 import SplitTextByWidth from "../Utils/SplitTextByWidth";
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from "react-responsive";
 
 const DesktopIcon = ({
   src,
@@ -20,6 +20,10 @@ const DesktopIcon = ({
   triggerResize,
   iconText,
 }) => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px) or (max-height: 767px)",
+  });
+
   const [position, setPosition] = useState({ x: x, y: y });
   const [dragging, setDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);

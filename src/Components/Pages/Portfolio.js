@@ -3,11 +3,15 @@ import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import Fade from "react-reveal/Fade";
 import PortfolioData from "../../Data/PortfolioData";
 import { Screen } from "../../App";
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from "react-responsive";
 import BrowserIcons from "../Items/BrowserIcons";
 import ReactHtmlParser from "react-html-parser";
 
 const Portfolio = ({ setDesktopScreen }) => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px) or (max-height: 767px)",
+  });
+
   const [isVisible, setIsVisible] = useState(true);
   const [favourite, setFavourite] = useState("✩");
   const [activeTab, setActiveTab] = useState("one");

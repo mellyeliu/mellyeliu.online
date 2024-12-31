@@ -1,6 +1,6 @@
 import React from "react";
 import PortfolioData from "./PortfolioData";
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from "react-responsive";
 
 function CustomLink({ text, href, color = "#bf75bf" }) {
   return (
@@ -27,6 +27,10 @@ function ContentBlock({
   padding = "165px 20px",
   fontSize = 22,
 }) {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px) or (max-height: 767px)",
+  });
+
   return (
     <div
       style={{

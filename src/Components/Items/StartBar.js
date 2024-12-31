@@ -4,10 +4,14 @@ import { ThemeContext } from "../../ThemeContext";
 import Clock from "./Clock";
 import TypingToggleTextList from "../Utils/TextList";
 import { quotes } from "../../Data/QuotesData";
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from "react-responsive";
 import StartButton from "./StartButton";
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px) or (max-height: 767px)",
+  });
+
   const { cursorString, setCursorString } = useContext(ThemeContext);
 
   const newQuotes = quotes.map((item) => item[0]);

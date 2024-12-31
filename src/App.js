@@ -8,7 +8,7 @@ import Portfolio from "./Components/Pages/Portfolio";
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
 import PortfolioData from "./Data/PortfolioData";
 import TextCursor from "./Components/Utils/TextCursor";
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from "react-responsive";
 import StartBar from "./Components/Items/StartBar";
 
 export const Screen = {
@@ -17,6 +17,10 @@ export const Screen = {
 };
 
 const App = () => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px) or (max-height: 767px)",
+  });
+
   const [isFoldersOff, setisFoldersOff] = useState(false);
   const [desktopScreen, setDesktopScreen] = useState(Screen.HOME);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);

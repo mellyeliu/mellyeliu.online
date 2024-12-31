@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { event } from "react-ga";
 import PortfolioData from "../../Data/PortfolioData";
-import { isMobile } from "react-device-detect";
+import { useMediaQuery } from "react-responsive";
 
 const Popup = ({
   src,
@@ -19,6 +19,10 @@ const Popup = ({
   triggerResize,
   content,
 }) => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px) or (max-height: 767px)",
+  });
+
   const [position, setPosition] = useState({ x: x, y: y });
   const [dragging, setDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -41,7 +45,7 @@ const Popup = ({
         : setImageSize({ width: img.width + "px", height: img.height + "px" });
     };
     img.src = src;
-  }, [src]);
+  }, [src, isMobile]);
 
   useEffect(() => {
     const handleResize = () => setMobileWidth(window.screen.width);
@@ -236,7 +240,6 @@ const Popup = ({
           cursor: "grab",
           position: "absolute",
           left: `${(position.x * width) / 100}px`,
-          minHeight: "20%",
           zIndex: 1,
           top: `${position.y}%`,
           filter: "drop-shadow(8px 8px 10px rgba(0,0,0,0.3))",

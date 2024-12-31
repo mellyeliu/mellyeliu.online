@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { isMobile } from "react-device-detect";
+import React from "react";
 
 const Folder = ({
   scale,
