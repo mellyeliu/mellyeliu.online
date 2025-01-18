@@ -19,7 +19,7 @@ const Header = (props) => {
   const { cursorString, setCursorString } = useContext(ThemeContext);
   const [triggerResize, setTriggerResize] = useState(false);
   const [isFoldersVisible, setIsFoldersVisible] = useState(true);
-  const parentRef = useRef(null); // Reference to the parent element
+  const parentRef = useRef(null);
 
   useEffect(() => {
     let startX = 0;
@@ -47,30 +47,17 @@ const Header = (props) => {
       }
     };
 
-    document.addEventListener("wheel", preventVerticalScroll, {
-      passive: false,
-    });
-    document.addEventListener("touchstart", handleTouchStart, {
-      passive: false,
-    });
-    document.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
-    });
+    document.addEventListener("wheel", preventVerticalScroll, { passive: true });
+    document.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
-      document.removeEventListener("wheel", preventVerticalScroll, {
-        passive: false,
-      });
-      document.removeEventListener("touchstart", handleTouchStart, {
-        passive: false,
-      });
-      document.removeEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
+      document.removeEventListener("wheel", preventVerticalScroll);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
 
-  // Function to check if the parent element is visible in the viewport
   const isElementInViewport = (el) => {
     const rect = el.getBoundingClientRect();
     return (
@@ -82,22 +69,22 @@ const Header = (props) => {
     );
   };
 
-  // Effect to add window scroll event listener
   useEffect(() => {
-    setTriggerResize((prevState) => !prevState);
     const handleScroll = () => {
       if (parentRef.current) {
-        setIsFoldersVisible(isElementInViewport(parentRef.current));
+        const visible = isElementInViewport(parentRef.current);
+        if (visible !== isFoldersVisible) {
+          setIsFoldersVisible(visible);
+        }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [props.desktopScreen]);
+  }, [isFoldersVisible]);
 
   const handleFullScreenClick = () => {
     setTriggerResize((prevState) => !prevState);
@@ -121,27 +108,15 @@ const Header = (props) => {
 
   const handleFolderHoverChange = (hoverState) => {
     setIsChildHovered(hoverState);
-    if (hoverState === "") {
-      setCursorString("");
-    } else {
-      setCursorString("open/close folders");
-    }
+    setCursorString(hoverState ? "open/close folders" : "");
   };
 
   const handleSortHoverChange = () => {
-    if (cursorString === "") {
-      setCursorString("sort/shuffle icons");
-    } else {
-      setCursorString("");
-    }
+    setCursorString(cursorString === "" ? "sort/shuffle icons" : "");
   };
 
   const handleFullscreenHoverChange = () => {
-    if (cursorString === "") {
-      setCursorString("fullscreen!");
-    } else {
-      setCursorString("");
-    }
+    setCursorString(cursorString === "" ? "fullscreen!" : "");
   };
 
   const folders = ["Games", "Fandoms", "Wikis", "About Me"];
@@ -160,17 +135,10 @@ const Header = (props) => {
     image: "images/bgfinal.png",
   };
 
-  const art = (
-    <div className="hover-container" ref={parentRef}>
-      <img
-        style={{ opacity: 0 }}
-        id="headerpic"
-        draggable="false"
-        src={photoData.src}
-      ></img>
-
-      {display_folders.map((folder, ind) => {
-        return (openStates && openStates[0][ind]) || false
+  const renderItems = () => {
+    if (isFoldersVisible) {
+      return display_folders.map((folder, ind) =>
+        openStates && openStates[0][ind]
           ? FileData[folder].map((image) => {
               if (!image.border) {
                 alignY = counter % 5 === 0 ? 10 : alignY + 16;
@@ -184,6 +152,7 @@ const Header = (props) => {
                 <></>
               ) : image.border ? (
                 <Popup
+                  key={image.url}
                   url={image.url}
                   setZIndex={setZIndex}
                   zIndex={zIndex}
@@ -198,9 +167,10 @@ const Header = (props) => {
                   triggerResize={triggerResize}
                   isGridLayout={isGridLayout}
                   content={WindowData[image.hoverString]}
-                ></Popup>
+                />
               ) : (
                 <DesktopIcon
+                  key={image.url}
                   url={image.url}
                   setZIndex={setZIndex}
                   zIndex={zIndex}
@@ -215,100 +185,14 @@ const Header = (props) => {
                   triggerResize={triggerResize}
                   isGridLayout={isGridLayout}
                   iconText={image.iconText}
-                ></DesktopIcon>
+                />
               );
             })
-          : null;
-      })}
-      {!isGridLayout && (
-        <div style={{ position: "absolute", left: 920 }}>.</div>
-      )}
-      {!props.isFoldersOff && (
-        <>
-          <Folder
-            image={"images/menu/safari.png"}
-            isOpen={false}
-            hoverString={"( Tinkering... )"}
-            onOpen={() => {
-              props.setDesktopScreen(Screen.PORTFOLIO);
-              setCursorString("");
-            }}
-            isVisible={isFoldersVisible}
-            onHoverChange={handleFolderHoverChange}
-            caption={"Projects"}
-            x={0}
-            y={145}
-            scale={0.5}
-          />
-          {/* <Folder
-            image={"images/menu/blog.png"}
-            isOpen={false}
-            hoverString={"( Neurotic autofiction )"}
-            onOpen={() => {
-              window.open("https://reading.supply/@mellyeliu", "_blank");
-            }}
-            isVisible={isFoldersVisible}
-            onHoverChange={handleFolderHoverChange}
-            caption={"Vsco"}
-            x={0}
-            y={245}
-            scale={0.5}
-          />
-          <Folder
-            image={"images/menu/filep.png"}
-            isOpen={false}
-            hoverString={"( Neurotic autofiction )"}
-            onOpen={() => {
-              window.open("https://reading.supply/@mellyeliu", "_blank");
-            }}
-            isVisible={isFoldersVisible}
-            onHoverChange={handleFolderHoverChange}
-            caption={"Journal"}
-            x={0}
-            y={340}
-            scale={0.5}
-          />
-          <Folder
-            src={"images/menu/projects.png"}
-            isOpen={() => {}}
-            onOpen={() => {}}
-            isVisible={isFoldersVisible}
-            hoverString={"h"}
-            key={3}
-            onHoverChange={handleFolderHoverChange}
-            caption={"Folder"}
-            x={0}
-            y={440}
-            scale={0.5}
-          /> */}
-        </>
-      )}
-      {folders.map((folder, index) => {
-        return !props.isFoldersOff ? (
-          <Folder
-            src={"images/folder.png"}
-            isOpen={openStates[0][index]}
-            onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
-            isVisible={isFoldersVisible}
-            hoverString={display_strings[index]}
-            key={index}
-            onHoverChange={handleFolderHoverChange}
-            caption={folder}
-            x={0}
-            y={150 + 90 * (index + 1)}
-            scale={0.5}
-          />
-        ) : null;
-      })}
-      {isChildHovered === "" ? (
-        <div className="bottom-left">{photoData.place} </div>
-      ) : (
-        <div id="header-hover" className="bottom-left">
-          {isChildHovered}{" "}
-        </div>
-      )}
-    </div>
-  );
+          : null
+      );
+    }
+    return null;
+  };
 
   return (
     <>
@@ -334,17 +218,16 @@ const Header = (props) => {
               className="bottom-left-2"
               style={{ top: "15px", display: "none" }}
             >
-              {" "}
-              &#40; 🌐🌷 &#41;{" "}
+              &#40; 🌐🌷 &#41;
             </div>
             <div
+              className="bottom-right"
+              style={{ bottom: "20px" }}
               onClick={() => {
                 setCursorString("");
                 props.setDesktopScreen(Screen.PORTFOLIO);
                 handleFullScreenClick();
               }}
-              className="bottom-right"
-              style={{ bottom: "20px" }}
             >
               <span
                 style={{
@@ -356,15 +239,14 @@ const Header = (props) => {
                 onMouseLeave={handleFullscreenHoverChange}
               >
                 &#40; Projects &#41;
-                {/* &#x2194; */}
               </span>
             </div>
             <div
+              className="bottom-leftt"
+              style={{ bottom: "20px" }}
               onClick={() => {
                 props.setisFoldersOff(!props.isFoldersOff);
               }}
-              className="bottom-leftt"
-              style={{ bottom: "20px" }}
             >
               <span
                 style={{
@@ -374,16 +256,12 @@ const Header = (props) => {
                 id="mobile-only"
               >
                 &#40; Menus &#41;
-                {/* &#x2194; */}
               </span>
             </div>
             <div className="container" style={{ zIndex: 1 }}>
-              {/* <Pet /> */}
               <div
                 onClick={toggleButton}
                 className="top-left"
-                // onMouseEnter={handleSortHoverChange}
-                // onMouseLeave={handleSortHoverChange}
               >
                 {isGridLayout ? (
                   <span
@@ -413,7 +291,41 @@ const Header = (props) => {
                 )}{" "}
               </div>
             </div>
-            {art}
+            <div className="hover-container" ref={parentRef}>
+              <img
+                style={{ opacity: 0 }}
+                id="headerpic"
+                draggable="false"
+                src={photoData.image}
+                loading="lazy"
+                alt="Background"
+              />
+              {renderItems()}
+              {!props.isFoldersOff && (
+                folders.map((folder, index) => (
+                  <Folder
+                    key={index}
+                    src="images/folder.png"
+                    isOpen={openStates[0][index]}
+                    onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
+                    isVisible={isFoldersVisible}
+                    hoverString={display_strings[index]}
+                    onHoverChange={handleFolderHoverChange}
+                    caption={folder}
+                    x={0}
+                    y={150 + 90 * (index + 1)}
+                    scale={0.5}
+                  />
+                ))
+              )}
+              {isChildHovered ? (
+                <div id="header-hover" className="bottom-left">
+                  {isChildHovered}
+                </div>
+              ) : (
+                <div className="bottom-left">{photoData.place}</div>
+              )}
+            </div>
           </div>
         </Fade>
       </header>

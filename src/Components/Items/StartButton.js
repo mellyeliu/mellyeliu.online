@@ -155,7 +155,7 @@ const StartButton = () => {
               style={{
                 position: "absolute",
                 left: 183,
-                bottom: 50,
+                bottom: 40,
                 width: "220px",
                 height: "auto",
                 backgroundColor: "#fff",
