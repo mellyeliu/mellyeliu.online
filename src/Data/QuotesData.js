@@ -206,7 +206,7 @@ export const quotes = [
   ],
   [
     "All we are is an isle of flightless birds / We find our worth in giving birth and stuff",
-    "https://genius.com/Phoebe-bridgers-i-know-the-end-lyrics",
+    "https://genius.com/Twenty-one-pilots-isle-of-flightless-birds-lyrics",
   ],
   [
     "Once, I took your medication to know what it's like / And now I have to act like I can't read your mind",
@@ -215,5 +215,9 @@ export const quotes = [
   [
     "I am lonely with the loneliness of unshared thought",
     "https://www.goodreads.com/book/show/773507.Emily_s_Quest",
+  ],
+  [
+    "What if computers care / And we just stare through their hearts all day?",
+    "https://genius.com/Between-friends-better-friends-lyrics",
   ],
 ];

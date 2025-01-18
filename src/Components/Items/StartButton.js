@@ -128,6 +128,7 @@ const StartButton = () => {
             minWidth: "120px",
             zIndex: 1,
           }}
+          onMouseLeave={() => handleOptionClick(null)}
         >
           <div style={styles.verticalBlock}>
             <span style={styles.verticalText}>@mellye.liu</span>
@@ -142,7 +143,7 @@ const StartButton = () => {
                   textAlign: "left",
                   background: selectedOption === option ? "#ddd" : "none",
                 }}
-                onClick={() => handleOptionClick(option)}
+                onMouseEnter={() => handleOptionClick(option)}
               >
                 {option}
               </a>

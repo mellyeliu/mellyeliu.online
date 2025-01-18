@@ -68,7 +68,7 @@ const PortfolioData = {
         image: "zine1.png",
         year: "2023",
         type: ["design"],
-        url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?page-id=0%3A1&node-id=201-2&node-type=CANVAS&viewport=617%2C1021%2C0.07&t=6nK9lL1zcp8bszWy-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=201%3A2&share=1",
+        url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?page-id=0%3A1&node-id=201-2&node-type=CANVAS&viewport=617%2C1021%2C0.07&t=6nK9lL1zcp8bszWy-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=201%3A2",
       },
       {
         title: "Dreamland",
@@ -153,14 +153,14 @@ const PortfolioData = {
         url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?node-id=201-3023&t=7x2gIbOEt1n5qwZx-1&scaling=scale-down&content-scaling=fixed",
       },
       {
-        title: "M0MENTS",
+        title: "MOMENTS",
         category:
-          "Welcome Employee 42069. You are an engineer trying to survive the recession. Created in the height of the tech layoffs",
+          "Welcome Employee 42069. You play an engineer trying to survive the recession. Created in the height of the tech layoffs and updated in response to policy changes",
         languages: "ChatGPT, Twine, HTML/CSS",
         image: "moments.png",
-        year: "2023",
+        year: "2023-",
         type: ["code", "games"],
-        url: "https://m0ments.w3spaces.com/",
+        url: "https://mellyeliu.github.io/moments/",
       },
       {
         title: "Object Anthropomorphism",
