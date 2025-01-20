@@ -160,7 +160,7 @@ const PortfolioData = {
         image: "moments.png",
         year: "2023-",
         type: ["code", "games"],
-        url: "https://mellyeliu.github.io/moments/",
+        url: "https://m0ments.netlify.app/",
       },
       {
         title: "Object Anthropomorphism",
