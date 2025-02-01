@@ -28,7 +28,7 @@ function ContentBlock({
   fontSize = 22,
 }) {
   const isMobile = useMediaQuery({
-    query: "(max-width: 767px) or (max-height: 767px)",
+    query: "(max-width: 767px)",
   });
 
   return (

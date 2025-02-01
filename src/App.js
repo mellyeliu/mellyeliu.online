@@ -18,7 +18,7 @@ export const Screen = {
 
 const App = () => {
   const isMobile = useMediaQuery({
-    query: "(max-width: 767px) or (max-height: 767px)",
+    query: "(max-width: 767px)",
   });
 
   const [isFoldersOff, setisFoldersOff] = useState(false);

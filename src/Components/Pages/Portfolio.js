@@ -9,7 +9,7 @@ import ReactHtmlParser from "react-html-parser";
 
 const Portfolio = ({ setDesktopScreen }) => {
   const isMobile = useMediaQuery({
-    query: "(max-width: 767px) or (max-height: 767px)",
+    query: "(max-width: 767px)",
   });
 
   const [isVisible, setIsVisible] = useState(true);

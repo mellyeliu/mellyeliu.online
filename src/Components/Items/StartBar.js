@@ -9,7 +9,7 @@ import StartButton from "./StartButton";
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const isMobile = useMediaQuery({
-    query: "(max-width: 767px) or (max-height: 767px)",
+    query: "(max-width: 767px)",
   });
 
   const { cursorString, setCursorString } = useContext(ThemeContext);
