@@ -64,6 +64,15 @@ const FileData = {
       iconText: "spider and web.png",
     },
     {
+      hoverString: "",
+      src: "",
+      url: "",
+      scale: 0.52,
+      x: 105,
+      y: 100,
+      iconText: ".",
+    },
+    {
       hoverString: "Club Penguin",
       src: "images/icons/cp.png",
       url: "https://www.cplegacy.com/",

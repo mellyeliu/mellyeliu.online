@@ -41,18 +41,10 @@ const Header = (props) => {
       }
     };
 
-    const preventVerticalScroll = (e) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-      }
-    };
-
-    document.addEventListener("wheel", preventVerticalScroll, { passive: true });
     document.addEventListener("touchstart", handleTouchStart, { passive: true });
     document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
-      document.removeEventListener("wheel", preventVerticalScroll);
       document.removeEventListener("touchstart", handleTouchStart);
       document.removeEventListener("touchmove", handleTouchMove);
     };
@@ -84,7 +76,7 @@ const Header = (props) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isFoldersVisible]);
+  }, []);
 
   const handleFullScreenClick = () => {
     setTriggerResize((prevState) => !prevState);
@@ -140,7 +132,7 @@ const Header = (props) => {
       return display_folders.map((folder, ind) =>
         openStates && openStates[0][ind]
           ? FileData[folder].map((image) => {
-              if (!image.border) {
+              if (!image.border && !(isGridLayout && image.hoverString === "")) {
                 alignY = counter % 5 === 0 ? 10 : alignY + 16;
                 alignX = counter % 5 === 0 ? alignX + 11 : alignX;
                 if (counter === 0) {
@@ -168,7 +160,7 @@ const Header = (props) => {
                   isGridLayout={isGridLayout}
                   content={WindowData[image.hoverString]}
                 />
-              ) : (
+              ) : !(isGridLayout && image.hoverString === "") && (
                 <DesktopIcon
                   key={image.url}
                   url={image.url}

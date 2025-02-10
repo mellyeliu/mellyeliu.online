@@ -187,17 +187,20 @@ const Popup = ({
   };
 
   const startTouchDrag = (e) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      // Store initial touch position
-      ref.current.initialTouchX = touch.clientX;
-      ref.current.initialTouchY = touch.clientY;
+    setZIndex(zIndex + 1);
+    e.target.style.zIndex = zIndex;
 
-      setDragging(true);
-      setZIndex(zIndex + 1);
-      e.target.style.zIndex = zIndex;
-      e.target.style.cursor = "grabbing";
-    }
+    // if (e.touches.length > 0) {
+    //   const touch = e.touches[0];
+    //   // Store initial touch position
+    //   ref.current.initialTouchX = touch.clientX;
+    //   ref.current.initialTouchY = touch.clientY;
+
+    //   setDragging(true);
+    //   setZIndex(zIndex + 1);
+    //   e.target.style.zIndex = zIndex;
+    //   e.target.style.cursor = "grabbing";
+    // }
   };
 
   const onTouchMove = (e) => {
@@ -263,8 +266,8 @@ const Popup = ({
         onMouseUp={stopDrag}
         onMouseLeave={stopHover}
         onTouchStart={startTouchDrag}
-        onTouchMove={onTouchMove}
-        onTouchEnd={stopTouchDrag}
+        // onTouchMove={onTouchMove}
+        // onTouchEnd={stopTouchDrag}
         onMouseEnter={onHover}
         ref={ref}
       >
