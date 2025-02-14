@@ -81,21 +81,6 @@ const PortfolioData = {
         url: "https://dreamland-demo.netlify.app/play",
       },
       {
-        title: "CYBERHUG COLLABORATIONS",
-        category: "Musings on digital intimacy.",
-        languages: "Figma",
-        image: "cyberhug.png",
-        year: "2022-",
-        type: ["design"],
-        url: "https://instagram.com/cyber.hug",
-        collaborators: [
-          {
-            name: "Madeleine Lee",
-            url: "http://madlee.me/",
-          },
-        ],
-      },
-      {
         title: "BOY♡GAME (2.0)",
         category:
           "Couch co-op game to create boys and vote on your favourites. View the <a  class='special-links' href='https://github.com/mellyeliu/boygame'>source code</a>.",
@@ -108,6 +93,37 @@ const PortfolioData = {
           {
             name: "Amanda Yeh",
             url: "https://amandayeh.com/",
+          },
+        ],
+      },
+      {
+        title: "Love Love Love",
+        category:
+          "Two friends use Valentine's Day as an excuse to talk about love again.",
+        languages: "Figma",
+        image: "love love love.png",
+        year: "2025",
+        type: ["conversation"],
+        url: "https://www.figma.com/proto/hkZ1ppBFS9HaALSesJZl07/valentines?page-id=109%3A130&node-id=109-131&p=f&viewport=560%2C40%2C0.03&t=JpfqV5tPb32nP0oG-1&scaling=scale-down&content-scaling=fixed",
+        collaborators: [
+          {
+            name: "Carolyn Wang",
+            url: "carolynwang.substack.com",
+          },
+        ],
+      },
+      {
+        title: "CYBERHUG COLLABORATIONS",
+        category: "Musings on digital intimacy.",
+        languages: "Figma",
+        image: "cyberhug.png",
+        year: "2022-",
+        type: ["design"],
+        url: "https://instagram.com/cyber.hug",
+        collaborators: [
+          {
+            name: "Madeleine Lee",
+            url: "http://madlee.me/",
           },
         ],
       },
