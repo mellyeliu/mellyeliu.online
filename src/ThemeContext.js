@@ -15,7 +15,7 @@ export const ThemeContext = createContext({
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(themeSet[0]); // Start with 'light'
+  const [theme, setTheme] = useState(themeSet[0]);
   const [fullScreen, setFullScreen] = useState(true || window.innerWidth < 768);
   const [cursorString, setCursorString] = useState("");
 

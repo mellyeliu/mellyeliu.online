@@ -31,7 +31,7 @@ const NameTag = () => {
       fontWeight: 700,
       letterSpacing: 0.4,
       fontFamily: "Cormorant Garamond",
-      fontSize: isMobile ? 24 : "clamp(30px, 2vh, 38px)",
+      fontSize: isMobile ? 24 : "clamp(28px, 2vh, 38px)",
     },
     funFacts: {
       letterSpacing: 1,

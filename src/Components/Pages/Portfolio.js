@@ -243,7 +243,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                 &#40;{i + 1}&#41; {projects.title}; {projects.year}
               </h5>
               <p className="collab">
-                {ReactHtmlParser(projects.category)}{" "}
+                {ReactHtmlParser(projects.description)}{" "}
                 {projects.collaborators && "Collaborators: "}
                 {projects.collaborators && projects.collaborators.length > 0
                   ? projects.collaborators

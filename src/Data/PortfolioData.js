@@ -2,23 +2,23 @@ const PortfolioData = {
   main: {
     social: [
       {
-        name: "vsco // mellyeliu",
+        name: "❀ vsco.co",
         url: "https://vsco.co/mellyeliu",
         className: "fas fa-camera",
       },
       {
-        name: "reading.supply // mellyeliu",
+        name: "𖡼 reading.supply",
         url: "https://reading.supply/@mellyeliu",
         className: "fas fa-edit",
       },
       {
-        name: "dimensional // mellyeliu",
-        url: "https://www.dimensional.me/mellyeliu",
+        name: "⚘ github.com",
+        url: "https://github.com/mellyeliu",
         className: "fas fa-edit",
       },
       {
-        name: "linktree // mellyeliu",
-        url: "https://linktr.ee/mellye.liu",
+        name: "𖠋 itch.io",
+        url: "https://mellyeliu.itch.io/",
         className: "fas fa-link",
       },
     ],
@@ -34,7 +34,7 @@ const PortfolioData = {
     projects: [
       {
         title: "Personal Website (2.0)",
-        category: "A continual work in progress.",
+        description: "A continual work in progress.",
         languages: "React",
         image: "pweb2.png",
         year: "2023-",
@@ -43,7 +43,8 @@ const PortfolioData = {
       },
       {
         title: "Ascii Storybook",
-        category: "A storybooking tool to turn writing into ascii visuals.",
+        description:
+          "A storybooking tool to turn writing into ascii visuals. (Server not running! Tokens are expensive...)",
         languages: "React, Python, NLTK, DALL-E",
         image: "ascii.png",
         year: "2024",
@@ -62,7 +63,7 @@ const PortfolioData = {
       },
       {
         title: "Digital Nostalgia",
-        category:
+        description:
           "Zine documenting my online childhood and the websites that made me. For SF Zine Fest.",
         languages: "Figma",
         image: "zine1.png",
@@ -72,7 +73,7 @@ const PortfolioData = {
       },
       {
         title: "Dreamland",
-        category:
+        description:
           "Interactive fiction documenting dream journal escapism. Play the (rough) demo!",
         languages: "Inform7",
         image: "inform.png",
@@ -82,7 +83,7 @@ const PortfolioData = {
       },
       {
         title: "BOY♡GAME (2.0)",
-        category:
+        description:
           "Couch co-op game to create boys and vote on your favourites. View the <a  class='special-links' href='https://github.com/mellyeliu/boygame'>source code</a>.",
         languages: "React, NodeJS/SQLite, Figma",
         image: "boygame2.png",
@@ -98,7 +99,7 @@ const PortfolioData = {
       },
       {
         title: "Love Love Love",
-        category:
+        description:
           "Two friends use Valentine's Day as an excuse to talk about love again.",
         languages: "Figma",
         image: "love love love.png",
@@ -108,13 +109,13 @@ const PortfolioData = {
         collaborators: [
           {
             name: "Carolyn Wang",
-            url: "carolynwang.substack.com",
+            url: "https://carolynwang.substack.com",
           },
         ],
       },
       {
         title: "CYBERHUG COLLABORATIONS",
-        category: "Musings on digital intimacy.",
+        description: "Musings on digital intimacy.",
         languages: "Figma",
         image: "cyberhug.png",
         year: "2022-",
@@ -129,7 +130,7 @@ const PortfolioData = {
       },
       {
         title: "BOY♡GAME",
-        category:
+        description:
           "Analog dating sim to date boys and matchmake friends. A reskin of the 80s game HEARTTHROB.",
         languages: "Canva AI (lol), Figma",
         image: "boygame.png",
@@ -145,7 +146,7 @@ const PortfolioData = {
       },
       {
         title: "On Healing [Untitled]",
-        category:
+        description:
           "Meditations on trauma, abuse, and silver lining friendships. Work in progress!",
         languages: "React?",
         image: "healinggame.png",
@@ -161,7 +162,8 @@ const PortfolioData = {
       },
       {
         title: "My Fanfic Became Sentient and Cannabalized Itself",
-        category: "Zine documenting the underbelly of AO3. For SF Zine Fest.",
+        description:
+          "Zine documenting the underbelly of AO3. For SF Zine Fest.",
         languages: "Figma",
         image: "fanfic.png",
         year: "2023",
@@ -170,7 +172,7 @@ const PortfolioData = {
       },
       {
         title: "MOMENTS",
-        category:
+        description:
           "Welcome Employee 42069. You play an engineer trying to survive the recession. Created in the height of the tech layoffs and updated in response to policy changes",
         languages: "ChatGPT, Twine, HTML/CSS",
         image: "moments.png",
@@ -180,7 +182,7 @@ const PortfolioData = {
       },
       {
         title: "Object Anthropomorphism",
-        category:
+        description:
           "A <a  class='special-links' href='https://archiveofourown.org/works/53351767'>beloved phone app</a> and <a class='special-links' href='https://archiveofourown.org/works/51323875'>paperclip</a> find love. Circumventing the ChatGPT censors again.",
         languages: "ChatGPT",
         image: "clippy.png",
@@ -196,7 +198,7 @@ const PortfolioData = {
       },
       {
         title: "Serif",
-        category:
+        description:
           "Tiktok meets Goodreads. View the <a class='special-links' href='https://www.serif.app/publishers'>website</a> and <a class='special-links' href='https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed'>mocks</a> here.",
         languages: "Framer, Figma",
         image: "serif.png",
@@ -216,7 +218,7 @@ const PortfolioData = {
       },
       {
         title: "Messenger (selected projects)",
-        category:
+        description:
           "Nicknames, AI stickers, commands, themes, edit message, and encryption.",
         languages: "ObjC, Hack, React",
         image: "messenger.png",
@@ -226,7 +228,7 @@ const PortfolioData = {
       },
       {
         title: "Parasocial Relationships",
-        category:
+        description:
           "Visual conversation on parasocial relationships, internet crushes, and loneliness.",
         languages: "Figma",
         image: "parasocial.png",
@@ -242,7 +244,7 @@ const PortfolioData = {
       },
       {
         title: "I've Been Thinking About Obsession",
-        category: "Visual conversation on obsessive personalities.",
+        description: "Visual conversation on obsessive personalities.",
         languages: "Figma",
         image: "obsession.png",
         year: "2023",
@@ -257,7 +259,7 @@ const PortfolioData = {
       },
       {
         title: "Digital Love Languages",
-        category: "What does it mean to love online?",
+        description: "What does it mean to love online?",
         languages: "Figma",
         image: "digitallove.png",
         year: "2023",
@@ -266,7 +268,7 @@ const PortfolioData = {
       },
       {
         title: "( DISSOCIATION )",
-        category: "Visual conversation on dissociation.",
+        description: "Visual conversation on dissociation.",
         languages: "Figma",
         image: "dissociation.png",
         year: "2024",
@@ -281,7 +283,7 @@ const PortfolioData = {
       },
       {
         title: "Brainquations",
-        category: "Can we visualize the emotional spectrum?",
+        description: "Can we visualize the emotional spectrum?",
         languages: "Desmos, Matplotlib, Figma",
         image: "emotion profiles.png",
         type: ["conversation"],
@@ -296,7 +298,7 @@ const PortfolioData = {
       },
       {
         title: "Dimensional Fanfic",
-        category: "Fictional Dimensional personality archetypes.",
+        description: "Fictional Dimensional personality archetypes.",
         languages: "Figma",
         image: "dimensional.png",
         type: ["design"],
@@ -305,7 +307,7 @@ const PortfolioData = {
       },
       {
         title: "Internet (2 Sides)",
-        category: "Word cloud on 2000s internet.",
+        description: "Word cloud on 2000s internet.",
         languages: "Figma",
         image: "internetc.png",
         year: "2022",
@@ -320,7 +322,7 @@ const PortfolioData = {
       },
       {
         title: "Personal Website (1.0)",
-        category: "Covid-19 quarantine coping. (Plz do not visit Ty)",
+        description: "Covid-19 quarantine coping. (Plz do not visit Ty)",
         languages: "React",
         image: "oldpweb.png",
         type: ["code"],
@@ -329,7 +331,7 @@ const PortfolioData = {
       },
       {
         title: "Tattoo Art",
-        category: "Then I wanted to make tattoo art but then I gave up.",
+        description: "Then I wanted to make tattoo art but then I gave up.",
         languages: "Procreate",
         image: "tattoo.png",
         type: ["design"],
@@ -338,7 +340,8 @@ const PortfolioData = {
       },
       {
         title: "Portraits",
-        category: "I used to want to be good at visual art but then I gave up.",
+        description:
+          "I used to want to be good at visual art but then I gave up.",
         languages: "Not Tech :o",
         image: "portrait.png",
         type: ["design"],
@@ -347,7 +350,7 @@ const PortfolioData = {
       },
       {
         title: "HTML Instruction",
-        category: "My sister and I make an HTML fansite.",
+        description: "My sister and I make an HTML fansite.",
         languages: "HTML/CSS",
         image: "html.png",
         type: ["code"],
@@ -362,7 +365,7 @@ const PortfolioData = {
       },
       {
         title: "Tamagotchi Fansites",
-        category:
+        description:
           "A neurodivergent 7 year old gets a tamagotchi and internet access.",
         languages: "HTML/CSS",
         image: "tama.png",

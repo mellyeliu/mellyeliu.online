@@ -98,25 +98,25 @@ const bioContent = (
       ₊˚ . ⋅☁︎‧₊˚ ☾. ⋅<br />
     </div>
     <br />
-    Melissa is a software engineer and web artist. Interests include: messaging
+    Melissa is a software engineer and net artist. Interests include: messaging
     systems, creation myths, fandom as worldbuilding, video game as art form,
     literary tropes, pseudoscientific personality tests, creative intimacy,
     relational psychology, bed rotting [...] They maintain an enduring belief in
     the internet and its potential for connection and identity play.
     <br />
     <br />
-    In the day they work on infrastructure,{" "}
+    In the day they work on design systems,{" "}
     <CustomLink
       text="css-in-js tooling"
       href="https://github.com/facebook/stylex"
     />
     , and{" "}
     <CustomLink
-      text="cross-platform integration"
+      text="cross-platform"
       href="https://github.com/facebook/react-strict-dom"
     />{" "}
-    for React, the library where they fell in love with coding, and at night
-    they use it on random side quests. Previously, they worked on the{" "}
+    components in React, the library where they fell in love with coding, and at
+    night they use it on random side quests. Before that they worked on the{" "}
     <CustomLink text="website" href="https://messenger.com" /> that first taught
     them how to talk to people. She still beta tests it every day with her
     friends. The rest of her life is just content fodder for her work.

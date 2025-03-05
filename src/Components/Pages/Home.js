@@ -8,8 +8,12 @@ import "@animated-burgers/burger-squeeze/dist/styles.css";
 import { ThemeContext } from "../../ThemeContext";
 import { Screen } from "../../App";
 import Popup from "../Items/Popup";
+import { useMediaQuery } from "react-responsive";
 
 const Header = (props) => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px)",
+  });
   const [isGridLayout, setIsGridLayout] = useState(false);
   const [isChildHovered, setIsChildHovered] = useState("");
   const [openStates, setOpenStates] = useState({
@@ -41,7 +45,9 @@ const Header = (props) => {
       }
     };
 
-    document.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
     document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
@@ -132,7 +138,10 @@ const Header = (props) => {
       return display_folders.map((folder, ind) =>
         openStates && openStates[0][ind]
           ? FileData[folder].map((image) => {
-              if (!image.border && !(isGridLayout && image.hoverString === "")) {
+              if (
+                !image.border &&
+                !(isGridLayout && image.hoverString === "")
+              ) {
                 alignY = counter % 5 === 0 ? 10 : alignY + 16;
                 alignX = counter % 5 === 0 ? alignX + 11 : alignX;
                 if (counter === 0) {
@@ -160,24 +169,26 @@ const Header = (props) => {
                   isGridLayout={isGridLayout}
                   content={WindowData[image.hoverString]}
                 />
-              ) : !(isGridLayout && image.hoverString === "") && (
-                <DesktopIcon
-                  key={image.url}
-                  url={image.url}
-                  setZIndex={setZIndex}
-                  zIndex={zIndex}
-                  setShowCursor={setCursorString}
-                  border={image.border ? true : false}
-                  hoverString={image.hoverString}
-                  onHoverChange={handleHoverChange}
-                  src={image.src}
-                  scale={image.scale}
-                  x={isGridLayout ? alignX : image.x}
-                  y={isGridLayout ? alignY : image.y}
-                  triggerResize={triggerResize}
-                  isGridLayout={isGridLayout}
-                  iconText={image.iconText}
-                />
+              ) : (
+                !((isGridLayout || !isMobile) && image.hoverString === "") && (
+                  <DesktopIcon
+                    key={image.url}
+                    url={image.url}
+                    setZIndex={setZIndex}
+                    zIndex={zIndex}
+                    setShowCursor={setCursorString}
+                    border={image.border ? true : false}
+                    hoverString={image.hoverString}
+                    onHoverChange={handleHoverChange}
+                    src={image.src}
+                    scale={image.scale}
+                    x={isGridLayout ? alignX : image.x}
+                    y={isGridLayout ? alignY : image.y}
+                    triggerResize={triggerResize}
+                    isGridLayout={isGridLayout}
+                    iconText={image.iconText}
+                  />
+                )
               );
             })
           : null
@@ -251,10 +262,7 @@ const Header = (props) => {
               </span>
             </div>
             <div className="container" style={{ zIndex: 1 }}>
-              <div
-                onClick={toggleButton}
-                className="top-left"
-              >
+              <div onClick={toggleButton} className="top-left">
                 {isGridLayout ? (
                   <span
                     id="play-button"
@@ -293,7 +301,7 @@ const Header = (props) => {
                 alt="Background"
               />
               {renderItems()}
-              {!props.isFoldersOff && (
+              {!props.isFoldersOff &&
                 folders.map((folder, index) => (
                   <Folder
                     key={index}
@@ -308,8 +316,7 @@ const Header = (props) => {
                     y={150 + 90 * (index + 1)}
                     scale={0.5}
                   />
-                ))
-              )}
+                ))}
               {isChildHovered ? (
                 <div id="header-hover" className="bottom-left">
                   {isChildHovered}
