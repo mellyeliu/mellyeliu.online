@@ -1,10 +1,11 @@
 export const startData = {
   "∞︎︎ Brainstorming": [
+    ["Psych ward friendships <3", ""],
     ["Fictional drugs", ""],
     ["Sci-fi mpreg medical devices", ""],
     ["Cyclic AI dating sim", ""],
     ["Internet surfer personality quiz", ""],
-    ["Miscellaneous personality quizzes", ""],
+    ["Misc personality quizzes", ""],
     ["Stuffed animal paracosms", ""],
   ],
   "𖧷 Interests": [
@@ -42,10 +43,6 @@ export const startData = {
     [
       "Neurodivergent isolation",
       "https://en.wikipedia.org/wiki/Double_empathy_problem",
-    ],
-    [
-      "Biphasic sleep schedules",
-      "https://en.wikipedia.org/wiki/Polyphasic_sleep",
     ],
     ["Reading about suffering", "https://en.wikipedia.org/wiki/Pit_of_despair"],
     [
@@ -123,8 +120,8 @@ export const startData = {
       "https://www.goodreads.com/book/show/52411999-glitch-feminism",
     ],
     [
-      "Anything by edy (ao3)",
-      "https://archiveofourown.org/users/edy/pseuds/edy",
+      "Fanfic Recs*",
+      "https://docs.google.com/spreadsheets/d/1ZdARDFisdZWIopoMqk2-Ah5DCoYVu_yLiVnRKPUCmIU/",
     ],
   ],
   "𖧧 Beliefs": [
