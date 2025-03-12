@@ -120,7 +120,7 @@ export const startData = {
       "https://www.goodreads.com/book/show/52411999-glitch-feminism",
     ],
     [
-      "Fanfic Recs*",
+      "Fanfic Recs 𖠋",
       "https://docs.google.com/spreadsheets/d/1ZdARDFisdZWIopoMqk2-Ah5DCoYVu_yLiVnRKPUCmIU/",
     ],
   ],

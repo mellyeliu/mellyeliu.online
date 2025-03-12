@@ -129,6 +129,21 @@ const PortfolioData = {
         ],
       },
       {
+        title: "StyleX",
+        description: "CSS in JS compiler.",
+        languages: "Javascript",
+        image: "stylex.png",
+        year: "2024-",
+        type: ["code"],
+        url: "https://stylexjs.com/",
+        collaborators: [
+          {
+            name: "Community",
+            url: "https://github.com/facebook/stylex/graphs/contributors",
+          },
+        ],
+      },
+      {
         title: "BOY♡GAME",
         description:
           "Analog dating sim to date boys and matchmake friends. A reskin of the 80s game HEARTTHROB.",
