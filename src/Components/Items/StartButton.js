@@ -131,7 +131,12 @@ const StartButton = () => {
           onMouseLeave={() => handleOptionClick(null)}
         >
           <div style={styles.verticalBlock}>
-            <span style={styles.verticalText}>@mellye.liu</span>
+            <a
+              href={"https://linktr.ee/mellye.liu"}
+              style={styles.verticalText}
+            >
+              @mellye.liu
+            </a>
           </div>
           <div className="options" style={{ flex: 1 }}>
             {Object.keys(startData).map((option, index) => (

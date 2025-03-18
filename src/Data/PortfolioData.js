@@ -196,6 +196,22 @@ const PortfolioData = {
         url: "https://m0ments.netlify.app/",
       },
       {
+        title: "Childhood Convos",
+        description:
+          "Fictional childhood friendship roleplay. Recess trespassing, fanfic reading, msn chats, nose jobs.",
+        languages: "Figma",
+        image: "childhood.png",
+        year: "2025",
+        type: ["conversation"],
+        url: "https://www.figma.com/design/cCsqk7MUBsIxy3M1ZiEEDf/childhood?node-id=0-1&t=nRZ1MitSTxdXJVKT-1",
+        collaborators: [
+          {
+            name: "Philbert Widjaja",
+            url: "https://www.philbertwidjaja.design/",
+          },
+        ],
+      },
+      {
         title: "Object Anthropomorphism",
         description:
           "A <a  class='special-links' href='https://archiveofourown.org/works/53351767'>beloved phone app</a> and <a class='special-links' href='https://archiveofourown.org/works/51323875'>paperclip</a> find love. Circumventing the ChatGPT censors again.",

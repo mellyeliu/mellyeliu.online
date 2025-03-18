@@ -315,7 +315,7 @@ const FileData = {
       src: "images/windows/bio.png",
       border: true,
       x: 68,
-      y: 21,
+      y: 22.5,
     },
     {
       hoverString: "૮꒰ ˶• ༝ •˶꒱ა ♡",
@@ -345,8 +345,8 @@ const FileData = {
       hoverString: "( Girlhood )",
       src: "images/windows/emojis.png",
       border: true,
-      x: 58,
-      y: 13,
+      x: 59,
+      y: 14,
     },
     {
       hoverString: "( Socials )",
