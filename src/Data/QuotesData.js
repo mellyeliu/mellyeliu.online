@@ -2,8 +2,8 @@ export const selfFacts = [
   "believes in digital intimacy",
   "unironically enjoys hyperpop",
   "is using tetris as therapy",
-  "is organizing her goodreads bookshelves",
-  "is overthinking her playlist covers",
+  "is organizing goodreads bookshelves",
+  "is overthinking playlist covers",
   "psychoanalyzes to feel safe",
   "is fascinated by abnormal psychology",
   "is deep in a wikipedia rabbit hole",
@@ -19,7 +19,6 @@ export const selfFacts = [
   "only eats one food (hotpot)",
   "is doodling in ms paint",
   "is dissociating at indie concerts",
-  "is trauma dumping on strangers",
   "is intellectualizing all feeling",
   "is adding 花椒 to everything",
   "is giving stick n poke tattoos",
@@ -30,7 +29,7 @@ export const selfFacts = [
   "collects tamagotchis",
   "is attached to her notes app",
   "is writing fanfic abt inanimate objects",
-  "is writing fanfic about her friends",
+  "is writing fanfic about friends",
   "is writing fanfic about OTPs",
   "is writing the most neurotic autofiction",
   "is always misplacing their keys",
@@ -40,13 +39,17 @@ export const selfFacts = [
   "can always be found in bed",
   "is hyperfixated on people",
   "is hyperfixated on narratives",
-  "is always running 30 minutes late",
+  "is running 30 minutes late",
 ];
 
 export const quotes = [
   [
     "I am made and remade continually. Different people draw different words from me.",
     "https://www.goodreads.com/quotes/451044-i-am-made-and-remade-continually-different-people-draw-different",
+  ],
+  [
+    "I brushed up on philosophy: To live is to exist within time. To remember is to negate time.",
+    "https://granta.com/los-angeles-ma/",
   ],
   [
     "We took away your art because we thought it would reveal your souls.",
@@ -71,10 +74,6 @@ export const quotes = [
   [
     "I am good at falling in love and I can survive falling out of it. I’m good at falling",
     "https://genius.com/The-japanese-house-lilo-lyrics",
-  ],
-  [
-    "I brushed up on philosophy: To live is to exist within time. To remember is to negate time.",
-    "https://granta.com/los-angeles-ma/",
   ],
   [
     "For many years, I have been moved by the blue at the edge of what can be seen [...] Blue is the color of longing for distances you never arrive in",
@@ -109,14 +108,6 @@ export const quotes = [
     "https://www.goodreads.com/quotes/810174-stories-are-compasses-and-architecture-we-navigate-by-them-we",
   ],
   [
-    "Our brains are sick but that's okay",
-    "https://genius.com/Twenty-one-pilots-fake-you-out-lyrics",
-  ],
-  [
-    "That's why we seize the moment, try to freeze it and own it / Squeeze it and hold it ‘cause we consider these minutes golden",
-    "https://genius.com/Eminem-sing-for-the-moment-lyrics",
-  ],
-  [
     "I came of age in the Dream House, wisdom practically smothering me in my sleep. Everything tasted like an almost epiphany.",
     "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
   ],
@@ -139,10 +130,6 @@ export const quotes = [
   [
     "All the world's a stage / And all the men and women merely players",
     "https://en.wikipedia.org/wiki/All_the_world%27s_a_stage",
-  ],
-  [
-    "For each man kills the thing he loves / Yet each man does not die",
-    "https://poets.org/poem/ballad-reading-gaol",
   ],
   [
     "Are all things quantifiable, and all numbers fraught with poetic possibility?",
@@ -171,10 +158,6 @@ export const quotes = [
   [
     "Radios playing a mash of songs about heartbreak and ruin, heartbreak and memory, heartbreak and hatred, how it’s the deeper intimacy",
     "https://granta.com/los-angeles-ma/",
-  ],
-  [
-    "I'm looking for affection in all the wrong places / And we'll keep falling on each other to fill the empty spaces",
-    "https://genius.com/Between-friends-affection-lyrics",
   ],
   [
     "We are survivors of each other. We have been shark to one another, but also lifeboat.",
@@ -213,11 +196,19 @@ export const quotes = [
     "https://genius.com/Boygenius-cool-about-it-lyrics",
   ],
   [
-    "I am lonely with the loneliness of unshared thought",
-    "https://www.goodreads.com/book/show/773507.Emily_s_Quest",
-  ],
-  [
     "What if computers care / And we just stare through their hearts all day?",
     "https://genius.com/Between-friends-better-friends-lyrics",
+  ],
+  [
+    "All it takes is someone's gaze. Beheld by her, I learned how to become myself. Her interest actualized me",
+    "https://www.goodreads.com/quotes/11399088-it-doesn-t-take-much-to-come-into-your-own-all",
+  ],
+  [
+    "I came to theory because I was hurting. I came to theory desperate, wanting to comprehend... I saw in theory a location for healing.",
+    "https://www.goodreads.com/quotes/10917557-i-came-to-theory-because-i-was-hurting-the-pain-within",
+  ],
+  [
+    "After everything, they made it here. It looked like a normal room, but it was really Heaven.",
+    "https://www.goodreads.com/quotes/11797697-something-really-painful-happened-to-them-something-really-really-sad",
   ],
 ];

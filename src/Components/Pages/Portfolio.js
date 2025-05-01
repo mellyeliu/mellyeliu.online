@@ -66,7 +66,7 @@ const Portfolio = ({ setDesktopScreen }) => {
               style={{
                 position: "absolute",
                 top: "15px",
-                left: "98px",
+                left: "102px",
                 width: "30px",
                 height: "30px",
                 borderRadius: "50%",
@@ -93,15 +93,6 @@ const Portfolio = ({ setDesktopScreen }) => {
               onMouseEnter={() => setBackHover(1)}
               onMouseLeave={() => setBackHover(0)}
             >
-              {/* Circle as background */}
-              {/* <circle
-                cx="10"
-                cy="10"
-                r="12"
-                fill={backHover ? "lightgrey" : "transparent"} // Grey circle on hover
-              /> */}
-
-              {/* Arrow path */}
               <path
                 d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.528 6.236h-12.884v1h21.883z"
                 transform="scale(-1, 1) translate(-24, 0)" // Horizontal reflection of the SVG
@@ -226,7 +217,6 @@ const Portfolio = ({ setDesktopScreen }) => {
             src={projectImage}
             style={{
               height: 200,
-              // width: "100%",
               transform: "scale(0.9)",
             }}
           />
@@ -281,9 +271,6 @@ const Portfolio = ({ setDesktopScreen }) => {
           <div className="hvr-grow">
             {projects.url !== "" ? (
               <a
-                //
-
-                // onMouseLeave={handleHoverChange}
                 target="_blank"
                 href={projects.url}
                 rel="noopener noreferrer"

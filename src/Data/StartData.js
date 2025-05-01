@@ -133,7 +133,7 @@ export const startData = {
       "All forms of intimacy",
       "https://en.wikipedia.org/wiki/Colour_wheel_theory_of_love",
     ],
-    ["Gender neutrality", "https://en.wikipedia.org/wiki/Gender_neutrality"],
+    ["Post-gender worlds", "https://en.wikipedia.org/wiki/Postgenderism"],
     [
       "Vulnerability as resistance",
       "https://64.media.tumblr.com/cefd317a46d9dcff2ed286f2a493ddfe/7ff1e0aa9ed33979-f4/s1280x1920/cf2af4766ccacd4451ec27a7ae9721187e91c920.jpg",
