@@ -162,7 +162,7 @@ const PortfolioData = {
       {
         title: "On Healing [Untitled]",
         description:
-          "Meditations on trauma, abuse, and silver lining friendships. Work in progress!",
+          "Meditations on trauma, abuse, and silver lining friendships. CW: abuse, graphic content. Work in progress!",
         languages: "React?",
         image: "healinggame.png",
         year: "2024",
