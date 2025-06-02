@@ -117,7 +117,7 @@ const StartButton = () => {
             position: "fixed",
             left: 0,
             letterSpacing: 0,
-            bottom: 54.5,
+            bottom: 59.5,
             background: "rgb(235 235 235)",
             borderTop: "0.5px solid black",
             borderLeft: "0.5px solid black",
