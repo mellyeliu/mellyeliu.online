@@ -52,8 +52,8 @@ const FileData = {
       hoverString: "( Spider and Web )",
       src: "images/icons/spiderweb.png",
       url: "https://eblong.com/zarf/zweb/tangle/",
-      x: 18,
-      y: 9,
+      x: 27,
+      y: 15,
       iconText: "spider and web.png",
     },
     {
@@ -77,7 +77,7 @@ const FileData = {
       src: "images/icons/shift.png",
       url: "https://armorgames.com/play/751/shift",
       x: 7,
-      y: 13,
+      y: 17,
       iconText: "shift.png",
     },
     {
@@ -109,7 +109,7 @@ const FileData = {
       src: "images/icons/dreamingmary.png",
       url: "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/DreamingMary",
       x: 10,
-      y: 19,
+      y: 20,
       iconText: "dreaming mary.png",
     },
     {
@@ -353,7 +353,7 @@ const FileData = {
       src: "images/windows/socials.png",
       border: true,
       x: 9,
-      y: 28,
+      y: 29,
     },
     {
       hoverString: "( 🌐🤍🎀🫧 )",

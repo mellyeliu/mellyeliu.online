@@ -129,7 +129,7 @@ const Header = (props) => {
   let alignY = 30;
   let counter = 0;
   const photoData = {
-    place: "( Internet gardening )",
+    place: "( Internet dwelling *ੈ✩‧₊˚ )",
     image: "images/bgfinal.png",
   };
 

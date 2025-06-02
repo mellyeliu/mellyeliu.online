@@ -98,11 +98,11 @@ const bioContent = (
       ₊˚ . ⋅☁︎‧₊˚ ☾. ⋅<br />
     </div>
     <br />
-    Melissa is a software engineer and net artist. Interests include: messaging
-    systems, creation myths, fandom as worldbuilding, video game as art form,
-    literary tropes, pseudoscientific personality tests, creative intimacy,
-    relational psychology, bed rotting [...] They maintain an enduring belief in
-    the internet and its potential for connection and identity play.
+    Melissa (思源) is a software engineer and net artist. Interests include:
+    messaging systems, creation myths, fandom as worldbuilding, video game as
+    art form, literary tropes, pseudoscientific personality tests, relational
+    psychology, bed rotting [...] They maintain an enduring belief in the
+    internet and its potential for connection and identity play.
     <br />
     <br />
     In the day they work on design systems,{" "}

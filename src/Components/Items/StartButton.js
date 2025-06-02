@@ -101,7 +101,7 @@ const StartButton = () => {
           ...tabStyle,
           cursor: "pointer",
           height: 60,
-          paddingTop: "12.5px",
+          paddingTop: "15px",
           marginLeft: "20px !important",
           fontWeight: 500,
           background: isDropdownVisible ? "#ddd" : "none",

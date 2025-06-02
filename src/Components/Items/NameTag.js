@@ -29,7 +29,8 @@ const NameTag = () => {
     },
     title: {
       fontWeight: 700,
-      letterSpacing: 0.4,
+      letterSpacing: 0.5,
+      transform: "scaleY(1.05)",
       fontFamily: "Cormorant Garamond",
       fontSize: isMobile ? 24 : "clamp(28px, 2vh, 38px)",
     },

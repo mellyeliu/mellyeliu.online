@@ -42,22 +42,18 @@ const PortfolioData = {
         url: "https://github.com/mellyeliu/new-personal-website/",
       },
       {
-        title: "Ascii Storybook",
+        title: "BOY♡GAME (2.0)",
         description:
-          "A storybooking tool to turn writing into ascii visuals. (Server not running! Tokens are expensive...)",
-        languages: "React, Python, NLTK, DALL-E",
-        image: "ascii.png",
+          "Couch co-op game to create boys and vote on your favourites. View the <a  class='special-links' href='https://github.com/mellyeliu/boygame'>source code</a>.",
+        languages: "React, NodeJS/SQLite, Figma",
+        image: "boygame2.png",
         year: "2024",
-        url: "https://ascii-storybook.netlify.app/",
-        type: ["code"],
+        type: ["code", "design", "games"],
+        url: "https://instagram.com/b0ygame",
         collaborators: [
           {
-            name: "Madeleine Lee",
-            url: "http://madlee.me/",
-          },
-          {
-            name: "Christina Huang",
-            url: "https://www.instagram.com/christina.is.huang/",
+            name: "Amanda Yeh",
+            url: "https://amandayeh.com/",
           },
         ],
       },
@@ -82,18 +78,18 @@ const PortfolioData = {
         url: "https://dreamland-demo.netlify.app/play",
       },
       {
-        title: "BOY♡GAME (2.0)",
+        title: "CYBERHUG COLLECTIVE",
         description:
-          "Couch co-op game to create boys and vote on your favourites. View the <a  class='special-links' href='https://github.com/mellyeliu/boygame'>source code</a>.",
-        languages: "React, NodeJS/SQLite, Figma",
-        image: "boygame2.png",
-        year: "2024",
-        type: ["code", "design", "games"],
-        url: "https://instagram.com/b0ygame",
+          "Musings on digital intimacy.  View the <a class='special-links' href='https://cyberhug.studio/'>website</a> and <a class='special-links' href='https://www.instagram.com/cyber.hug/'>brainstorm</a> ",
+        languages: "Figma",
+        image: "cyberhug.png",
+        year: "2022-",
+        type: ["design"],
+        url: "https://cyberhug.studio/",
         collaborators: [
           {
-            name: "Amanda Yeh",
-            url: "https://amandayeh.com/",
+            name: "Madeleine Lee",
+            url: "http://madlee.me/",
           },
         ],
       },
@@ -114,17 +110,22 @@ const PortfolioData = {
         ],
       },
       {
-        title: "CYBERHUG COLLABORATIONS",
-        description: "Musings on digital intimacy.",
-        languages: "Figma",
-        image: "cyberhug.png",
-        year: "2022-",
-        type: ["design"],
-        url: "https://instagram.com/cyber.hug",
+        title: "Ascii Storybook",
+        description:
+          "A storybooking tool to turn writing into ascii visuals. (Server not running! Tokens are expensive...)",
+        languages: "React, Python, NLTK, DALL-E",
+        image: "ascii.png",
+        year: "2024",
+        url: "https://ascii-storybook.netlify.app/",
+        type: ["code"],
         collaborators: [
           {
             name: "Madeleine Lee",
             url: "http://madlee.me/",
+          },
+          {
+            name: "Christina Huang",
+            url: "https://www.instagram.com/christina.is.huang/",
           },
         ],
       },
