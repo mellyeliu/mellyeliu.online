@@ -118,8 +118,8 @@ const bioContent = (
     components in React, the library where they fell in love with coding, and at
     night they use it on random side quests. Before that they worked on the{" "}
     <CustomLink text="website" href="https://messenger.com" /> that first taught
-    them how to talk to people. She still beta tests it every day with her
-    friends. The rest of her life is just content fodder for her work.
+    them how to talk to people. They still beta test it every day with their
+    friends. The rest of their life is just content for their work.
   </>
 );
 

@@ -17,8 +17,8 @@ const PortfolioData = {
         className: "fas fa-edit",
       },
       {
-        name: "𖠋 itch.io",
-        url: "https://mellyeliu.itch.io/",
+        name: "𖠋 dimensional.me",
+        url: "https://dimensional.me/mellyeliu",
         className: "fas fa-link",
       },
     ],
@@ -70,7 +70,7 @@ const PortfolioData = {
       {
         title: "Dreamland",
         description:
-          "Interactive fiction documenting dream journal escapism. Play the (rough) demo!",
+          "Interactive fiction documenting dream journal escapism. For tiat.place at the <a class='special-links' href='https://archive.org/'>Internet Archive</a>. Play the (rough) demo!",
         languages: "Inform7",
         image: "inform.png",
         year: "2023-",
@@ -80,7 +80,7 @@ const PortfolioData = {
       {
         title: "CYBERHUG COLLECTIVE",
         description:
-          "Musings on digital intimacy.  View the <a class='special-links' href='https://cyberhug.studio/'>website</a> and <a class='special-links' href='https://www.instagram.com/cyber.hug/'>brainstorm</a> ",
+          "Musings on digital intimacy.  View the <a class='special-links' href='https://cyberhug.studio/'>website</a> and <a class='special-links' href='https://www.instagram.com/cyber.hug/'>brainstorm</a>.",
         languages: "Figma",
         image: "cyberhug.png",
         year: "2022-",
@@ -128,6 +128,15 @@ const PortfolioData = {
             url: "https://www.instagram.com/christina.is.huang/",
           },
         ],
+      },
+      {
+        title: "666 Stories",
+        description: "Little Alchemy inspired fragments of the 2nd-gen Asian experience. Dedicated to my family and hometown. Work in progress! For the <a class='special-links' href='https://www.instagram.com/p/DJVkYEJRtSp/'>666 show</a>.",
+        languages: "React, Cursor :/",
+        image: "666piece.png",
+        year: "2024-",
+        type: ["code", "games"],
+        url: "",
       },
       {
         title: "StyleX",

@@ -8,8 +8,6 @@ export const selfFacts = [
   "is fascinated by abnormal psychology",
   "is deep in a wikipedia rabbit hole",
   "has gone permanently nocturnal",
-  "is outfit repeating",
-  "is a believer in retail therapy",
   "is reading about creation myths",
   "is a chronic internet lurker",
   "is writing spaghetti code",
@@ -22,8 +20,6 @@ export const selfFacts = [
   "is intellectualizing all feeling",
   "is adding 花椒 to everything",
   "is giving stick n poke tattoos",
-  "is raving about 2cb",
-  "is experimenting with drug states",
   "aims to create safe spaces",
   "is a shill for dimensional",
   "collects tamagotchis",
@@ -52,8 +48,8 @@ export const quotes = [
     "https://granta.com/los-angeles-ma/",
   ],
   [
-    "We took away your art because we thought it would reveal your souls.",
-    "https://www.goodreads.com/quotes/269882-we-took-away-your-art-because-we-thought-it-would",
+    "Are all things quantifiable, and all numbers fraught with poetic possibility?",
+    "https://www.goodreads.com/book/show/3181564-the-housekeeper-and-the-professor",
   ],
   [
     "So we spent what was left of our serotonin / To chew on our cheeks and stare at the moon",
@@ -72,12 +68,12 @@ export const quotes = [
     "https://www.goodreads.com/book/show/144974.The_Velveteen_Rabbit",
   ],
   [
-    "I am good at falling in love and I can survive falling out of it. I’m good at falling",
-    "https://genius.com/The-japanese-house-lilo-lyrics",
-  ],
-  [
     "For many years, I have been moved by the blue at the edge of what can be seen [...] Blue is the color of longing for distances you never arrive in",
     "https://www.goodreads.com/book/show/76479.A_Field_Guide_to_Getting_Lost",
+  ],
+  [
+    "We took away your art because we thought it would reveal your souls.",
+    "https://www.goodreads.com/quotes/269882-we-took-away-your-art-because-we-thought-it-would",
   ],
   [
     "You are a woman with a man inside watching a woman. You are your own voyeur.",
@@ -130,10 +126,6 @@ export const quotes = [
   [
     "All the world's a stage / And all the men and women merely players",
     "https://en.wikipedia.org/wiki/All_the_world%27s_a_stage",
-  ],
-  [
-    "Are all things quantifiable, and all numbers fraught with poetic possibility?",
-    "https://www.goodreads.com/book/show/3181564-the-housekeeper-and-the-professor",
   ],
   [
     "A thousand dreams I'm holding heavy",
