@@ -26,6 +26,8 @@ const Folder = ({
     <div
       onClick={handleClick}
       className="folderIcon"
+      onMouseLeave={stopHover}
+      onMouseEnter={onHover}
       style={{
         position: "fixed",
         cursor: "pointer",
@@ -46,8 +48,8 @@ const Folder = ({
             ? "/images/menu/folderNewOpen.png"
             : "/images/menu/folder.png"
         }
-        onMouseLeave={stopHover}
-        onMouseEnter={onHover}
+        // onMouseLeave={stopHover}
+        // onMouseEnter={onHover}
         className="folder"
         draggable={false}
       />

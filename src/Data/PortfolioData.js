@@ -17,8 +17,8 @@ const PortfolioData = {
         className: "fas fa-edit",
       },
       {
-        name: "𖠋 dimensional.me",
-        url: "https://dimensional.me/mellyeliu",
+        name: "𖠋 linktr.ee",
+        url: "https://linktr.ee/mellye.liu",
         className: "fas fa-link",
       },
     ],
