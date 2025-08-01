@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Screen } from "../../App";
 
 const BrowserIcons = ({ setDesktopScreen }) => {
   const [hovered, setHovered] = useState(false);

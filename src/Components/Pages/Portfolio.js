@@ -270,11 +270,7 @@ const Portfolio = ({ setDesktopScreen }) => {
         >
           <div className="hvr-grow">
             {projects.url !== "" ? (
-              <a
-                target="_blank"
-                href={projects.url}
-                rel="noopener noreferrer"
-              >
+              <a target="_blank" href={projects.url} rel="noopener noreferrer">
                 {project}
               </a>
             ) : (

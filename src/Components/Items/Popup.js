@@ -9,7 +9,6 @@ const Popup = ({
   isGridLayout,
   onHoverChange,
   hoverString,
-  border,
   zIndex,
   setZIndex,
   setShowCursor,

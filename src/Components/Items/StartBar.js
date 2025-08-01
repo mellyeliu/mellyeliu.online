@@ -12,7 +12,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
     query: "(max-width: 767px)",
   });
 
-  const { cursorString, setCursorString } = useContext(ThemeContext);
+  const { setCursorString } = useContext(ThemeContext);
 
   const newQuotes = quotes.map((item) => item[0]);
   const linkQuotes = quotes.map((item) => item[1]);
@@ -20,7 +20,6 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const tabStyle = {
     padding: "15px 10px",
     color: "black",
-    // fontWeight: "500",
     fontStyle: "italic",
     fontSize: 17,
     cursor: "pointer",
@@ -97,7 +96,6 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           height: 60,
           paddingTop: 15,
           maxWidth: "50%",
-          // overflow: "hidden",
         }}
         id="desktop-only"
       >

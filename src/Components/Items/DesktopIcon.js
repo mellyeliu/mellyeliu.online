@@ -29,17 +29,6 @@ const DesktopIcon = ({
   const ref = useRef(null);
   const dragRef = useRef(null); // Track drag state across fast movements
 
-  const [mobileWidth, setMobileWidth] = useState(window.screen.width);
-
-  useEffect(() => {
-    const handleResize = () => setMobileWidth(window.screen.width);
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   useEffect(() => {
     const handleResize = () => {
       const divs = document.getElementsByClassName("hover-container");

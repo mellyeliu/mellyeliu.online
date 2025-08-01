@@ -15,7 +15,6 @@ const Header = (props) => {
     query: "(max-width: 767px)",
   });
   const [isGridLayout, setIsGridLayout] = useState(false);
-  const [isChildHovered, setIsChildHovered] = useState("");
   const [openStates, setOpenStates] = useState({
     0: [true, false, true, true],
   });
@@ -101,11 +100,10 @@ const Header = (props) => {
   };
 
   const handleHoverChange = (hoverState) => {
-    setIsChildHovered(hoverState);
+    setCursorString(hoverState ? "open/close folders" : "");
   };
 
   const handleFolderHoverChange = (hoverState) => {
-    setIsChildHovered(hoverState);
     setCursorString(hoverState ? "open/close folders" : "");
   };
 
@@ -317,9 +315,9 @@ const Header = (props) => {
                     scale={0.5}
                   />
                 ))}
-              {isChildHovered ? (
+              {cursorString ? (
                 <div id="header-hover" className="bottom-left">
-                  {isChildHovered}
+                  {cursorString}
                 </div>
               ) : (
                 <div className="bottom-left">{photoData.place}</div>
