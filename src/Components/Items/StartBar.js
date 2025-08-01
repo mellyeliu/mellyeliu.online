@@ -97,6 +97,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           height: 60,
           paddingTop: 15,
           maxWidth: "50%",
+          // overflow: "hidden",
         }}
         id="desktop-only"
       >
@@ -118,6 +119,11 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
             fontStyle: "italic",
             fontSize: 15,
             color: "black",
+            maxHeight: "40px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            display: "block",
           }}
         ></TypingToggleTextList>{" "}
       </div>
