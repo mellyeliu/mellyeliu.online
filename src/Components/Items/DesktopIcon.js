@@ -25,6 +25,7 @@ const DesktopIcon = ({
   const [dragging, setDragging] = useState(false);
   const minWidth = 900;
   const [width, setWidth] = useState(minWidth);
+  const [isWidthCalculated, setIsWidthCalculated] = useState(false);
   const ref = useRef(null);
   const dragRef = useRef(null); // Track drag state across fast movements
 
@@ -40,6 +41,17 @@ const DesktopIcon = ({
   }, []);
 
   useEffect(() => {
+    const handleResize = () => {
+      const divs = document.getElementsByClassName("hover-container");
+      if (divs.length > 0) {
+        const divWidth = divs[0].clientWidth;
+        const newWidth = Math.max(divWidth, minWidth);
+        setWidth(newWidth);
+        setIsWidthCalculated(true);
+      }
+    };
+
+    // Calculate initial width
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -50,18 +62,10 @@ const DesktopIcon = ({
   }, []);
 
   useEffect(() => {
-    handleResize();
-  }, [triggerResize]);
-
-  useEffect(() => {
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    if (isWidthCalculated) {
+      handleResize();
+    }
+  }, [triggerResize, isWidthCalculated]);
 
   let timer = 0;
   const delay = 300;
@@ -214,69 +218,70 @@ const DesktopIcon = ({
 
   return (
     <div style={imageContainerStyle}>
-      <div>
-        <img
-          src={src}
-          style={{
-            cursor: "grab",
-            position: "absolute",
-            left: `${(position.x * width) / 100}px`,
-            display: "block",
-            zIndex: 1,
-            top: `${position.y}%`,
-            border: dragging || isClicked ? "1px solid white" : "none",
-            borderRadius: "5px",
-            maxWidth: isMobile ? "70px" : "clamp(98px, 3vh, 120px)",
-            maxHeight: isMobile ? "65px" : "clamp(95px, 3vw, 120px)",
-            width: "auto",
-            height: "auto",
-            filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
-            boxShadow: border ? "0 0 0 1px rgba(0,0,0,0.5)" : "none",
-            userSelect: "none",
-          }}
-          onMouseDown={startDrag}
-          onClick={(e) => {
-            handleClickOutside(e);
-            openPopupOnDoubleClick(e);
-          }}
-          onMouseMove={onDrag}
-          onMouseUp={stopDrag}
-          onMouseLeave={stopHover}
-          onMouseEnter={onHover}
-          ref={ref}
-          draggable={false}
-        />
-        <div
-          style={{
-            cursor: "grab",
-            position: "absolute",
-            left: `${(position.x * width) / 100}px`,
-            zIndex: 1,
-            top: `${position.y}%`,
-            filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.8))",
-            boxShadow: "none",
-
-            userSelect: "none",
-          }}
-          onMouseDown={startDrag}
-          onClick={(e) => {
-            handleClickOutside(e);
-            openPopupOnDoubleClick(e);
-          }}
-          onMouseMove={onDrag}
-          onMouseUp={stopDrag}
-          onMouseLeave={stopHover}
-          onMouseEnter={onHover}
-          ref={ref}
-        >
-          <SplitTextByWidth
-            text={iconText}
-            maxWidth={isMobile ? 75 : 80}
-            backgroundColor={"red"}
-            style={iconTextStyle}
+      {isWidthCalculated && (
+        <div>
+          <img
+            src={src}
+            style={{
+              cursor: "grab",
+              position: "absolute",
+              left: `${(position.x * width) / 100}px`,
+              display: "block",
+              zIndex: 1,
+              top: `${position.y}%`,
+              border: dragging || isClicked ? "1px solid white" : "none",
+              borderRadius: "5px",
+              maxWidth: isMobile ? "70px" : "clamp(98px, 3vh, 120px)",
+              maxHeight: isMobile ? "65px" : "clamp(95px, 3vw, 120px)",
+              width: "auto",
+              height: "auto",
+              filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
+              boxShadow: border ? "0 0 0 1px rgba(0,0,0,0.5)" : "none",
+              userSelect: "none",
+            }}
+            onMouseDown={startDrag}
+            onClick={(e) => {
+              handleClickOutside(e);
+              openPopupOnDoubleClick(e);
+            }}
+            onMouseMove={onDrag}
+            onMouseUp={stopDrag}
+            onMouseLeave={stopHover}
+            onMouseEnter={onHover}
+            ref={ref}
+            draggable={false}
           />
+          <div
+            style={{
+              cursor: "grab",
+              position: "absolute",
+              left: `${(position.x * width) / 100}px`,
+              zIndex: 1,
+              top: `${position.y}%`,
+              filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.8))",
+              boxShadow: "none",
+              userSelect: "none",
+            }}
+            onMouseDown={startDrag}
+            onClick={(e) => {
+              handleClickOutside(e);
+              openPopupOnDoubleClick(e);
+            }}
+            onMouseMove={onDrag}
+            onMouseUp={stopDrag}
+            onMouseLeave={stopHover}
+            onMouseEnter={onHover}
+            ref={ref}
+          >
+            <SplitTextByWidth
+              text={iconText}
+              maxWidth={isMobile ? 75 : 80}
+              backgroundColor={"red"}
+              style={iconTextStyle}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
