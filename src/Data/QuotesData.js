@@ -36,6 +36,7 @@ export const selfFacts = [
   "is hyperfixated on people",
   "is hyperfixated on narratives",
   "is running 30 minutes late",
+  "is rereading children's books",
 ];
 
 export const quotes = [

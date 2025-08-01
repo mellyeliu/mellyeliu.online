@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { event } from "react-ga";
-import PortfolioData from "../../Data/PortfolioData";
 import SplitTextByWidth from "../Utils/SplitTextByWidth";
 import { useMediaQuery } from "react-responsive";
 
 const DesktopIcon = ({
   src,
-  scale,
   url,
   x,
   y,
@@ -26,22 +23,12 @@ const DesktopIcon = ({
 
   const [position, setPosition] = useState({ x: x, y: y });
   const [dragging, setDragging] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const minWidth = 900;
   const [width, setWidth] = useState(minWidth);
   const ref = useRef(null);
+  const dragRef = useRef(null); // Track drag state across fast movements
 
   const [mobileWidth, setMobileWidth] = useState(window.screen.width);
-
-  const [imageSize, setImageSize] = useState({ width: "auto", height: "auto" });
-
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => {
-      setImageSize({ width: img.width + "px", height: img.height + "px" });
-    };
-    img.src = src;
-  }, [src]);
 
   useEffect(() => {
     const handleResize = () => setMobileWidth(window.screen.width);
@@ -108,6 +95,7 @@ const DesktopIcon = ({
   };
 
   const handleClickOutside = (event) => {
+    if (!event) return;
     setIsClicked(false);
     if (ref.current && !ref.current.contains(event.target)) {
       setIsClicked(false);
@@ -115,8 +103,6 @@ const DesktopIcon = ({
   };
 
   useEffect(() => {
-    handleClickOutside(event);
-
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -145,46 +131,69 @@ const DesktopIcon = ({
   }, [x, y, isGridLayout]);
 
   const startDrag = (e) => {
+    e.preventDefault();
     setDragging(true);
-    setIsHovered(true);
     setZIndex(zIndex + 1);
     setIsClicked(true);
-    e.target.style.zIndex = zIndex + 1;
-    ref.current.style.zIndex = zIndex + 1;
-    e.target.style.cursor = "grabbing";
+
+    dragRef.current = {
+      isDragging: true,
+      startX: e.clientX,
+      startY: e.clientY,
+      startPosition: { ...position },
+    };
+
+    if (ref.current) {
+      ref.current.style.zIndex = zIndex + 1;
+    }
+
     document.addEventListener("mousemove", onDrag);
     document.addEventListener("mouseup", stopDrag);
   };
 
-  const stopDrag = (e) => {
-    setIsHovered(false);
+  const stopDrag = () => {
     onHoverChange("");
     setDragging(false);
+
+    // Clear drag state
+    if (dragRef.current) {
+      dragRef.current.isDragging = false;
+    }
 
     const draggableElement = document.querySelector(".draggableImage");
     if (draggableElement) {
       draggableElement.style.cursor = "grab";
     }
+
     // Remove event listeners from document
     document.removeEventListener("mousemove", onDrag);
     document.removeEventListener("mouseup", stopDrag);
   };
 
   const onDrag = (e) => {
-    if (dragging) {
-      const container = e.target.closest(".hover-container");
-      setWidth(Math.max(container.offsetWidth, minWidth));
-      const deltaX = (e.movementX / container.offsetWidth) * 100;
-      const deltaY = (e.movementY / container.offsetHeight) * 100;
-      setPosition((prev) => ({
-        x: prev.x + deltaX,
-        y: prev.y + deltaY,
-      }));
-    }
+    if (!dragRef.current || !dragRef.current.isDragging) return;
+
+    e.preventDefault();
+
+    // Get container more reliably
+    const container = document.querySelector(".hover-container");
+    if (!container) return;
+
+    setWidth(Math.max(container.offsetWidth, minWidth));
+
+    // Calculate movement based on absolute positions for better accuracy
+    const deltaX =
+      ((e.clientX - dragRef.current.startX) / container.offsetWidth) * 100;
+    const deltaY =
+      ((e.clientY - dragRef.current.startY) / container.offsetHeight) * 100;
+
+    setPosition({
+      x: dragRef.current.startPosition.x + deltaX,
+      y: dragRef.current.startPosition.y + deltaY,
+    });
   };
 
   const onHover = () => {
-    setIsHovered(true);
     if (!border) {
       setShowCursor("double click me!");
     }
@@ -201,54 +210,6 @@ const DesktopIcon = ({
     width: "auto",
     height: "auto",
     textAlign: "center",
-  };
-
-  const startTouchDrag = (e) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      // Store initial touch position
-      ref.current.initialTouchX = touch.clientX;
-      ref.current.initialTouchY = touch.clientY;
-
-      setDragging(true);
-      setZIndex(zIndex + 1);
-      e.target.style.zIndex = zIndex + 1;
-      ref.current.style.zIndex = zIndex + 1;
-      e.target.style.cursor = "grabbing";
-    }
-  };
-
-  const onTouchMove = (e) => {
-    if (dragging && e.touches.length > 0) {
-      const touch = e.touches[0];
-      const container = e.target.closest(".hover-container");
-
-      const deltaX =
-        ((touch.clientX - ref.current.initialTouchX) / mobileWidth) * 50;
-      const deltaY =
-        ((touch.clientY - ref.current.initialTouchY) / container.offsetHeight) *
-        100;
-
-      ref.current.initialTouchX = touch.clientX;
-      ref.current.initialTouchY = touch.clientY;
-      document.querySelector(".hover-container").classList.add("no-scroll");
-
-      setPosition((prev) => ({
-        x: prev.x + deltaX,
-        y: prev.y + deltaY,
-      }));
-    }
-  };
-
-  const stopTouchDrag = () => {
-    setDragging(false);
-    onHoverChange("");
-    document.querySelector(".hover-container").classList.remove("no-scroll");
-    // Reset initial touch positions
-    if (ref.current) {
-      ref.current.initialTouchX = 0;
-      ref.current.initialTouchY = 0;
-    }
   };
 
   return (
