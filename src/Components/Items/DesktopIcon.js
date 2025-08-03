@@ -29,7 +29,8 @@ const DesktopIcon = ({
   const minWidth = 900;
   const [width, setWidth] = useState(minWidth);
   const [isWidthCalculated, setIsWidthCalculated] = useState(false);
-  const ref = useRef(null);
+  const imageRef = useRef(null);
+  const textRef = useRef(null);
   const dragRef = useRef(null); // Track drag state across fast movements
 
   useEffect(() => {
@@ -93,7 +94,10 @@ const DesktopIcon = ({
   const handleClickOutside = (event) => {
     if (!event) return;
     setIsClicked(false);
-    if (ref.current && !ref.current.contains(event.target)) {
+    if (imageRef.current && !imageRef.current.contains(event.target)) {
+      setIsClicked(false);
+    }
+    if (textRef.current && !textRef.current.contains(event.target)) {
       setIsClicked(false);
     }
   };
@@ -116,14 +120,12 @@ const DesktopIcon = ({
     setZIndex(newZIndex);
     setLocalZIndex(newZIndex);
 
-    if (ref.current) {
-      ref.current.style.zIndex = newZIndex;
+    // Update both image and text z-index
+    if (imageRef.current) {
+      imageRef.current.style.zIndex = newZIndex;
     }
-
-    // Also update the image element's z-index
-    const imageElement = ref.current && ref.current.previousElementSibling;
-    if (imageElement && imageElement.tagName === "IMG") {
-      imageElement.style.zIndex = newZIndex;
+    if (textRef.current) {
+      textRef.current.style.zIndex = newZIndex;
     }
 
     timer = setTimeout(() => {
@@ -154,8 +156,12 @@ const DesktopIcon = ({
       startPosition: { ...position },
     };
 
-    if (ref.current) {
-      ref.current.style.zIndex = zIndex + 1;
+    // Update both image and text z-index
+    if (imageRef.current) {
+      imageRef.current.style.zIndex = zIndex + 1;
+    }
+    if (textRef.current) {
+      textRef.current.style.zIndex = zIndex + 1;
     }
 
     document.addEventListener("mousemove", onDrag);
@@ -234,7 +240,7 @@ const DesktopIcon = ({
               position: "absolute",
               left: `${(position.x * width) / 100}px`,
               display: "block",
-              zIndex: 1,
+              zIndex: localZIndex,
               top: `${position.y}%`,
               border: dragging || isClicked ? "1px solid white" : "none",
               borderRadius: "5px",
@@ -255,7 +261,7 @@ const DesktopIcon = ({
             onMouseUp={stopDrag}
             onMouseLeave={stopHover}
             onMouseEnter={onHover}
-            ref={ref}
+            ref={imageRef}
             draggable={false}
           />
           <div
@@ -263,7 +269,7 @@ const DesktopIcon = ({
               cursor: "grab",
               position: "absolute",
               left: `${(position.x * width) / 100}px`,
-              zIndex: 1,
+              zIndex: localZIndex,
               top: `${position.y}%`,
               filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.8))",
               boxShadow: "none",
@@ -278,7 +284,7 @@ const DesktopIcon = ({
             onMouseUp={stopDrag}
             onMouseLeave={stopHover}
             onMouseEnter={onHover}
-            ref={ref}
+            ref={textRef}
           >
             <SplitTextByWidth
               text={iconText}
@@ -291,6 +297,22 @@ const DesktopIcon = ({
       )}
     </div>
   );
+};
+
+DesktopIcon.propTypes = {
+  src: PropTypes.string.isRequired,
+  url: PropTypes.string,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  isGridLayout: PropTypes.bool,
+  onHoverChange: PropTypes.func.isRequired,
+  hoverString: PropTypes.string,
+  border: PropTypes.bool,
+  zIndex: PropTypes.number.isRequired,
+  setZIndex: PropTypes.func.isRequired,
+  setShowCursor: PropTypes.func.isRequired,
+  triggerResize: PropTypes.number,
+  iconText: PropTypes.string.isRequired,
 };
 
 export default DesktopIcon;
