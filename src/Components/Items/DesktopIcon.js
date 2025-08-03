@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import SplitTextByWidth from "../Utils/SplitTextByWidth";
 import { useMediaQuery } from "react-responsive";
 
@@ -17,6 +18,8 @@ const DesktopIcon = ({
   triggerResize,
   iconText,
 }) => {
+  // Local z-index state for this specific icon
+  const [localZIndex, setLocalZIndex] = useState(zIndex);
   const isMobile = useMediaQuery({
     query: "(max-width: 767px)",
   });
@@ -107,6 +110,21 @@ const DesktopIcon = ({
     clearTimeout(timer);
     setClickCount(clickCount + 1);
     setIsClicked(true);
+
+    // Bring element to front on click
+    const newZIndex = zIndex + 1;
+    setZIndex(newZIndex);
+    setLocalZIndex(newZIndex);
+
+    if (ref.current) {
+      ref.current.style.zIndex = newZIndex;
+    }
+
+    // Also update the image element's z-index
+    const imageElement = ref.current && ref.current.previousElementSibling;
+    if (imageElement && imageElement.tagName === "IMG") {
+      imageElement.style.zIndex = newZIndex;
+    }
 
     timer = setTimeout(() => {
       if (clickCount === 1) {

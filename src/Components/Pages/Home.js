@@ -103,8 +103,12 @@ const Header = (props) => {
     setCursorString(hoverState ? "open/close folders" : "");
   };
 
-  const handleFolderHoverChange = (hoverState) => {
-    setCursorString(hoverState ? "open/close folders" : "");
+  const handleFolderHoverChange = (hoverState, folderIndex) => {
+    if (hoverState && folderIndex !== undefined) {
+      setCursorString(display_strings[folderIndex]);
+    } else {
+      setCursorString("");
+    }
   };
 
   const handleSortHoverChange = () => {
@@ -308,7 +312,9 @@ const Header = (props) => {
                     onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
                     isVisible={isFoldersVisible}
                     hoverString={display_strings[index]}
-                    onHoverChange={handleFolderHoverChange}
+                    onHoverChange={(hoverState) =>
+                      handleFolderHoverChange(hoverState, index)
+                    }
                     caption={folder}
                     x={0}
                     y={150 + 90 * (index + 1)}
