@@ -15,11 +15,11 @@ const Folder = ({
   };
 
   const onHover = () => {
-    onHoverChange(hoverString);
+    onHoverChange(true, hoverString);
   };
 
   const stopHover = () => {
-    onHoverChange("");
+    onHoverChange(false, "");
   };
 
   return (

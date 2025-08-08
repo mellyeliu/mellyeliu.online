@@ -99,8 +99,8 @@ const Header = (props) => {
     setIsGridLayout((prevIsGridLayout) => !prevIsGridLayout);
   };
 
-  const handleHoverChange = (hoverState) => {
-    setCursorString(hoverState ? "open/close folders" : "");
+  const handleHoverChange = (hoverState, hoverString) => {
+    setCursorString(hoverState ? (hoverString || "") : "");
   };
 
   const handleFolderHoverChange = (hoverState, folderIndex) => {
@@ -112,7 +112,7 @@ const Header = (props) => {
   };
 
   const handleSortHoverChange = () => {
-    setCursorString(cursorString === "" ? "sort/shuffle icons" : "");
+    setCursorString(cursorString === "" ? "Shuffle!" : "");
   };
 
   const handleFullscreenHoverChange = () => {
@@ -312,7 +312,7 @@ const Header = (props) => {
                     onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
                     isVisible={isFoldersVisible}
                     hoverString={display_strings[index]}
-                    onHoverChange={(hoverState) =>
+                    onHoverChange={(hoverState, _) =>
                       handleFolderHoverChange(hoverState, index)
                     }
                     caption={folder}

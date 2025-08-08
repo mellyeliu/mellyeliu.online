@@ -214,12 +214,12 @@ const DesktopIcon = ({
     if (!border) {
       setShowCursor("double click me!");
     }
-    onHoverChange(hoverString);
+    onHoverChange(true, hoverString);
   };
 
   const stopHover = (e) => {
     setShowCursor("");
-    onHoverChange("");
+    onHoverChange(false, "");
     e.target.style.cursor = "grab";
   };
 

@@ -41,6 +41,10 @@ export const startData = {
       "https://tvtropes.org/pmwiki/pmwiki.php/Main/UnreliableNarrator",
     ],
     [
+      "The Alignment Problem",
+      "https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities",
+    ],
+    [
       "Neurodivergent isolation",
       "https://en.wikipedia.org/wiki/Double_empathy_problem",
     ],
