@@ -41,7 +41,7 @@ export const startData = {
       "https://tvtropes.org/pmwiki/pmwiki.php/Main/UnreliableNarrator",
     ],
     [
-      "The Alignment Problem",
+      "The alignment problem",
       "https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities",
     ],
     [
@@ -79,12 +79,11 @@ export const startData = {
       "In the Dream House",
       "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
     ],
-    ["Bliss Montage (Los Angeles)", "https://granta.com/los-angeles-ma/"],
+    ["Bliss Montage", "https://granta.com/los-angeles-ma/"],
     [
-      "The Handmaiden",
-      "https://tvtropes.org/pmwiki/pmwiki.php/Film/TheHandmaiden",
+      "Rejection",
+      "https://www.goodreads.com/book/show/199635125-rejection",
     ],
-    ["Cat's Eye", "https://www.goodreads.com/book/show/51019.Cat_s_Eye"],
     [
       "So Sad Today",
       "https://www.goodreads.com/book/show/25904473-so-sad-today",
@@ -94,6 +93,11 @@ export const startData = {
       "https://www.goodreads.com/book/show/53138199-girlhood",
     ],
     [
+      "The Handmaiden",
+      "https://tvtropes.org/pmwiki/pmwiki.php/Film/TheHandmaiden",
+    ],
+    ["Cat's Eye", "https://www.goodreads.com/book/show/51019.Cat_s_Eye"],
+    [
       "Series of Unfortunate Events",
       "https://www.goodreads.com/book/show/78411.The_Bad_Beginning",
     ],
@@ -102,7 +106,7 @@ export const startData = {
       "https://www.goodreads.com/book/show/17650.The_Robber_Bride",
     ],
     ["Mr. Robot", "https://tvtropes.org/pmwiki/pmwiki.php/Series/MrRobot"],
-    ["The Husband Stitch", "https://granta.com/the-husband-stitch/"],
+    ["Her Body and Other Parties", "https://granta.com/the-husband-stitch/"],
     [
       "Emily of New Moon",
       "https://www.goodreads.com/book/show/3562.Emily_of_New_Moon",
