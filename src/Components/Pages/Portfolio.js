@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
+import { useLocation, useHistory } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import PortfolioData from "../../Data/PortfolioData";
 import { Screen } from "../../App";
@@ -12,20 +13,71 @@ const Portfolio = ({ setDesktopScreen }) => {
     query: "(max-width: 767px)",
   });
 
+  const location = useLocation();
+  const history = useHistory();
+
   const [isVisible, setIsVisible] = useState(true);
   const [favourite, setFavourite] = useState("✩");
   const [activeTab, setActiveTab] = useState("one");
   const tabTwoRef = useRef(null);
   const [backHover, setBackHover] = useState(0);
 
+  // Map URL paths to tab IDs
+  const getTabFromPath = (pathname) => {
+    if (pathname === "/portfolio" || pathname === "/portfolio/") {
+      return "one"; // All tab
+    } else if (pathname === "/portfolio/code") {
+      return "two";
+    } else if (pathname === "/portfolio/design") {
+      return "three";
+    } else if (pathname === "/portfolio/games") {
+      return "four";
+    } else if (pathname === "/portfolio/convos") {
+      return "five";
+    }
+    return "one"; // Default to All
+  };
+
+  // Map tab IDs to URL paths
+  const getPathFromTab = (tabId) => {
+    switch (tabId) {
+      case "one":
+        return "/portfolio";
+      case "two":
+        return "/portfolio/code";
+      case "three":
+        return "/portfolio/design";
+      case "four":
+        return "/portfolio/games";
+      case "five":
+        return "/portfolio/convos";
+      default:
+        return "/portfolio";
+    }
+  };
+
+  // Update active tab based on URL
+  useEffect(() => {
+    const tabFromPath = getTabFromPath(location.pathname);
+    setActiveTab(tabFromPath);
+  }, [location.pathname]);
+
   const handleInputChange = (event) => {
     if (event.target.value === "YES" && tabTwoRef.current) {
       setActiveTab("two");
+      history.push("/portfolio/code");
     }
   };
 
   const handleFavourite = () => {
     setFavourite(favourite === "✩" ? "✮" : "✩");
+  };
+
+  // Handle tab changes and update URL
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    const newPath = getPathFromTab(tabId);
+    history.push(newPath);
   };
 
   const urlBar = (tab, tabProjects) => {
@@ -242,7 +294,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                           key={collaborator.name}
                           href={collaborator.url}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="collab"
                           style={{
                             display: "inline",
@@ -305,10 +357,14 @@ const Portfolio = ({ setDesktopScreen }) => {
           <div style={{ marginBottom: -15 }} className="tagline"></div>
         </Fade>
         <div className="twelve columns collapsed" style={{ height: "100%" }}>
-          <Tabs defaultTab={"one"}>
+          <Tabs defaultTab={activeTab}>
             <TabList>
               <div style={{ height: 5 }}></div>
-              <Tab style={{ zIndex: 100000 }} tabFor="one">
+              <Tab
+                style={{ zIndex: 100000 }}
+                tabFor="one"
+                onClick={() => handleTabChange("one")}
+              >
                 {" "}
                 All ⋆𐙚₊˚⊹♡{" "}
               </Tab>
@@ -317,19 +373,32 @@ const Portfolio = ({ setDesktopScreen }) => {
                 ref={tabTwoRef}
                 style={{ zIndex: 100000 }}
                 tabFor="two"
+                onClick={() => handleTabChange("two")}
               >
                 {" "}
                 Code ‧&lt;₊˚🔗✩ /&gt;₊
               </Tab>
-              <Tab style={{ zIndex: 100000 }} tabFor="three">
+              <Tab
+                style={{ zIndex: 100000 }}
+                tabFor="three"
+                onClick={() => handleTabChange("three")}
+              >
                 {" "}
                 Design ‧⊹˚🕊️☽₊⟡⋆
               </Tab>
-              <Tab style={{ zIndex: 100000 }} tabFor="four">
+              <Tab
+                style={{ zIndex: 100000 }}
+                tabFor="four"
+                onClick={() => handleTabChange("four")}
+              >
                 {" "}
                 Games ‧₊🎧ྀི☾⋆₊⟡⁺.
               </Tab>
-              <Tab style={{ zIndex: 100000 }} tabFor="five">
+              <Tab
+                style={{ zIndex: 100000 }}
+                tabFor="five"
+                onClick={() => handleTabChange("five")}
+              >
                 {" "}
                 Convos ⁺.💭.˚✩˚⊹‧
               </Tab>

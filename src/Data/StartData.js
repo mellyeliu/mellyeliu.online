@@ -41,7 +41,7 @@ export const startData = {
       "https://tvtropes.org/pmwiki/pmwiki.php/Main/UnreliableNarrator",
     ],
     [
-      "The alignment problem",
+      "Alignment problem",
       "https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities",
     ],
     [
@@ -80,10 +80,7 @@ export const startData = {
       "https://www.goodreads.com/book/show/43317482-in-the-dream-house",
     ],
     ["Bliss Montage", "https://granta.com/los-angeles-ma/"],
-    [
-      "Rejection",
-      "https://www.goodreads.com/book/show/199635125-rejection",
-    ],
+    ["Rejection", "https://www.goodreads.com/book/show/199635125-rejection"],
     [
       "So Sad Today",
       "https://www.goodreads.com/book/show/25904473-so-sad-today",

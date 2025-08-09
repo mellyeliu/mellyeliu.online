@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactGA from "react-ga";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Pages/Home";
 
@@ -21,9 +22,22 @@ const App = () => {
     query: "(max-width: 767px)",
   });
 
+  const location = useLocation();
+  const history = useHistory();
   const [isFoldersOff, setisFoldersOff] = useState(false);
-  const [desktopScreen, setDesktopScreen] = useState(Screen.HOME);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  // Determine current screen based on URL
+  const isPortfolioPage = location.pathname.startsWith("/portfolio");
+  const desktopScreen = isPortfolioPage ? Screen.PORTFOLIO : Screen.HOME;
+
+  const setDesktopScreen = (screen) => {
+    if (screen === Screen.HOME) {
+      history.push("/");
+    } else if (screen === Screen.PORTFOLIO) {
+      history.push("/portfolio");
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,21 +75,24 @@ const App = () => {
               }}
             >
               {!isFoldersOff && desktopScreen === Screen.HOME && <NameTag />}
-              {desktopScreen === Screen.HOME ? (
-                <Header
-                  dest={"home"}
-                  isFoldersOff={isFoldersOff}
-                  setisFoldersOff={setisFoldersOff}
-                  setDesktopScreen={setDesktopScreen}
-                  desktopScreen={desktopScreen}
-                />
-              ) : (
-                <Portfolio
-                  style={{ zIndex: 1000000, position: "relative" }}
-                  data={PortfolioData.portfolio}
-                  setDesktopScreen={setDesktopScreen}
-                />
-              )}
+              <Switch>
+                <Route exact path="/">
+                  <Header
+                    dest={"home"}
+                    isFoldersOff={isFoldersOff}
+                    setisFoldersOff={setisFoldersOff}
+                    setDesktopScreen={setDesktopScreen}
+                    desktopScreen={desktopScreen}
+                  />
+                </Route>
+                <Route path="/portfolio">
+                  <Portfolio
+                    style={{ zIndex: 1000000, position: "relative" }}
+                    data={PortfolioData.portfolio}
+                    setDesktopScreen={setDesktopScreen}
+                  />
+                </Route>
+              </Switch>
               {!isMobile && (
                 <StartBar
                   setDesktopScreen={setDesktopScreen}

@@ -13,7 +13,6 @@ const BrowserIcons = ({ setDesktopScreen }) => {
   };
 
   const handleClick = () => {
-    window.location.reload();
     setDesktopScreen(Screen.HOME);
   };
 

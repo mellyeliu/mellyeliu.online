@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 // import { register } from "./registerServiceWorker";
 import "./serviceWorker";
@@ -8,7 +8,7 @@ import "./serviceWorker";
 const routing = (
   <Router>
     <div>
-      <Route exact path="/" component={App} />
+      <Route path="/" component={App} />
     </div>
   </Router>
 );

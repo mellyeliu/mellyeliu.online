@@ -95,27 +95,35 @@ const siteContent = (
 const bioContent = (
   <>
     <div style={{ textAlign: "center" }}>
-      ₊˚ . ⋅☁︎‧₊˚ ☾. ⋅<br /><br />
+      ₊˚ . ⋅☁︎‧₊˚ ☾. ⋅
+      <br />
     </div>
     <br />
     Melissa (思源) is a software engineer and net artist. Interests include:
-    messaging systems, creation myths, fandom as worldbuilding, recursive autofiction, video game as
-    art form, literary tropes, pseudoscientific personality tests, relational
-    psychology, bed rotting [...] They maintain an enduring belief in the
-    internet as identity play and in softness as defiance.
+    messaging systems, creation myths, fandom as worldbuilding, recursive
+    autofiction, video game as art form, literary tropes, pseudoscientific
+    personality tests, relational psychology, bed rotting [...] They maintain an
+    enduring belief in the internet as identity play and in softness as
+    defiance.
     <br />
     <br />
     In the day they work on web tooling like{" "}
+    <CustomLink text="StyleX" href="https://github.com/facebook/stylex" />, a
+    css-in-js compiler, and at night they work on web games. Before that they
+    worked on the <CustomLink text="website" href="https://messenger.com" />{" "}
+    that first taught them how to talk to people. They still beta test it every
+    day with their friends. The rest of their life is just content for their
+    work
+    {" ("}
+    <CustomLink text="code" href="https://github.com/mellyeliu" />,{" "}
+    <CustomLink text="text" href="https://reading.supply/mellyeliu" />,{" "}
     <CustomLink
-      text="StyleX"
-      href="https://github.com/facebook/stylex"
+      text="visuals"
+      href="https://mellyeliu.online/portfolio/design"
     />
-    , a css-in-js compiler, and at
-    night they work on web games. Before that they worked on the{" "}
-    <CustomLink text="website" href="https://messenger.com" /> that first taught
-    them how to talk to people. They still beta test it every day with their
-    friends. The rest of their life is just content for their work.
-
+    ,{" "}
+    <CustomLink text="games" href="https://mellyeliu.online/portfolio/games" />
+    {")"}.
   </>
 );
 
