@@ -109,7 +109,7 @@ const bioContent = (
     <br />
     In the day they work on web tooling like{" "}
     <CustomLink text="StyleX" href="https://github.com/facebook/stylex" />, a
-    css-in-js compiler, and at night they work on web games. Before that they
+    css-in-js library, and at night they work on web games. Before that they
     worked on the <CustomLink text="website" href="https://messenger.com" />{" "}
     that first taught them how to talk to people. They still beta test it every
     day with their friends. The rest of their life is just content for their

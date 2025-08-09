@@ -21,15 +21,6 @@
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
 
-    <script>
-      // Get the current timestamp
-      const timestamp = new Date().getTime();
-      // Create a script tag with the timestamp appended to the source
-      const script = document.createElement("script");
-      script.src = `%PUBLIC_URL%/bundle.js?v=${timestamp}`;
-      document.body.appendChild(script);
-    </script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
       window.jQuery ||

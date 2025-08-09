@@ -259,7 +259,8 @@ const Portfolio = ({ setDesktopScreen }) => {
         : projects.filter((item) => item.type.includes(category));
 
     return filteredProjects.map(function (projects, i) {
-      var projectImage = "images/portfolio/" + projects.image;
+      var projectImage =
+        window.location.origin + "/images/portfolio/" + projects.image;
 
       var project = (
         <>

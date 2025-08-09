@@ -1208,7 +1208,7 @@ div .banner-text h3 {
   /* margin-left: 10px;
    margin-bottom:10px; */
   padding-left: 30px;
-  background-image: url(../images/tabs.png);
+  background-image: url(/images/tabs.png);
   /* background-color: #eaeaea; */
   border-bottom: 0.5px solid #111111;
 }

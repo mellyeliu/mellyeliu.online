@@ -100,7 +100,7 @@ const Header = (props) => {
   };
 
   const handleHoverChange = (hoverState, hoverString) => {
-    setCursorString(hoverState ? (hoverString || "") : "");
+    setCursorString(hoverState ? hoverString || "" : "");
   };
 
   const handleFolderHoverChange = (hoverState, folderIndex) => {
@@ -274,7 +274,7 @@ const Header = (props) => {
                     &#40; Shuffle{" "}
                     <i
                       style={{ fontSize: 11 }}
-                      class="fa fa-random"
+                      className="fa fa-random"
                       aria-hidden="true"
                     ></i>
                     &#41;
@@ -307,7 +307,7 @@ const Header = (props) => {
                 folders.map((folder, index) => (
                   <Folder
                     key={index}
-                    src="images/folder.png"
+                    src="/images/folder.png"
                     isOpen={openStates[0][index]}
                     onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
                     isVisible={isFoldersVisible}
