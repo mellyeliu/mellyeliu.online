@@ -42,19 +42,20 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
         border: "0.5px solid black",
       }}
     >
-      <StartButton />
+      <StartButton
+        onMouseEnter={() => {
+          setCursorString("home page!");
+        }}
+        onMouseLeave={() => {
+          setCursorString("");
+        }}
+      />
       <div
         onClick={() => {
           if (isMobile) {
             window.location.reload();
           }
           setDesktopScreen("HOME");
-          setCursorString("");
-        }}
-        onMouseEnter={() => {
-          setCursorString("home page!");
-        }}
-        onMouseLeave={() => {
           setCursorString("");
         }}
         style={{
@@ -75,12 +76,6 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           background: desktopScreen === "PORTFOLIO" && "rgb(225 225 225)",
         }}
         className="hvr-shade"
-        onMouseEnter={() => {
-          setCursorString("see projects!");
-        }}
-        onMouseLeave={() => {
-          setCursorString("");
-        }}
         onClick={() => {
           setDesktopScreen("PORTFOLIO");
           setCursorString("");

@@ -753,9 +753,7 @@ a.collab:hover {
 
 .portfolio-item .portfolio-item-meta p {
   font: 11px/18px "opensans-light", sans-serif;
-
-  /* font: 11px/18px "opensans-light", sans-serif; */
-  color: #454545;
+  color: black;
   margin-bottom: 0;
 }
 

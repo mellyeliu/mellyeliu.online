@@ -45,8 +45,8 @@ const Folder = ({
           image
             ? image
             : isOpen
-            ? "/images/menu/folderNewOpen.png"
-            : "/images/menu/folder.png"
+            ? window.location.origin + "/images/menu/folderNewOpen.png"
+            : window.location.origin + "/images/menu/folder.png"
         }
         // onMouseLeave={stopHover}
         // onMouseEnter={onHover}

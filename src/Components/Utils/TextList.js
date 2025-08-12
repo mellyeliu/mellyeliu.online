@@ -53,14 +53,6 @@ const TextList = ({
         }
       : {};
 
-  const handleHoverChange = () => {
-    if (cursorString === "") {
-      setCursorString("click for more!");
-    } else {
-      setCursorString("");
-    }
-  };
-
   useEffect(() => {
     let typingInterval;
 
@@ -132,8 +124,6 @@ const TextList = ({
         ...styles,
       }}
       onClick={handleClick}
-      onMouseEnter={handleHoverChange}
-      onMouseLeave={handleHoverChange}
       className="hvr-line"
     >
       {typing === false

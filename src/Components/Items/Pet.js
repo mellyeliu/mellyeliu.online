@@ -22,7 +22,7 @@ const Pet = () => {
       <div style={{ position: "relative", textAlign: "center" }}>
         {/* <div style={{ cursor: "pointer", fontSize: "120px" }}>🦔</div> */}
         <img
-          src="/images/pets/hedgehog.gif"
+          src={window.location.origin + "/images/pets/hedgehog.gif"}
           alt="Pet"
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}

@@ -132,7 +132,7 @@ const Header = (props) => {
   let counter = 0;
   const photoData = {
     place: "( Internet dwelling *ੈ✩‧₊˚ )",
-    image: "images/bgfinal.png",
+    image: window.location.origin + "/images/bgfinal.png",
   };
 
   const renderItems = () => {
@@ -182,7 +182,9 @@ const Header = (props) => {
                     border={image.border ? true : false}
                     hoverString={image.hoverString}
                     onHoverChange={handleHoverChange}
-                    src={image.src}
+                    src={
+                      image.src ? window.location.origin + "/" + image.src : ""
+                    }
                     scale={image.scale}
                     x={isGridLayout ? alignX : image.x}
                     y={isGridLayout ? alignY : image.y}
@@ -307,7 +309,7 @@ const Header = (props) => {
                 folders.map((folder, index) => (
                   <Folder
                     key={index}
-                    src="/images/folder.png"
+                    src={window.location.origin + "/images/folder.png"}
                     isOpen={openStates[0][index]}
                     onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
                     isVisible={isFoldersVisible}

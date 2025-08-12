@@ -1,6 +1,5 @@
-( web portrait 🌟 site assemblage 🌐 portfolio 📎 ) 
+( personal os 🌟 site assemblage 🌐 portfolio 📎 )
 
-໒ ꒰ྀིっ˕ -｡꒱ྀི১
+໒ ꒰ྀི っ ˕ -｡꒱ྀི১
 
 [visit the site here](https://mellyeliu.online)
-

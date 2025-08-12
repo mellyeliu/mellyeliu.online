@@ -72,7 +72,7 @@ const siteContent = (
   <>
     welcome to my safe space on the internet ᡣ • . • 𐭩 ♡
     <br />
-    &#40; web portrait 🌟 site assemblage 🌐 portfolio 📎 &#41;
+    &#40; personal os 🌟 site assemblage 🌐 portfolio 📎 &#41;
     <br />
     <br />
     ૮꒰ ˶• ༝ •˶꒱ა ♡
@@ -116,7 +116,7 @@ const bioContent = (
     work
     {" ("}
     <CustomLink text="code" href="https://github.com/mellyeliu" />,{" "}
-    <CustomLink text="text" href="https://reading.supply/mellyeliu" />,{" "}
+    <CustomLink text="text" href="https://reading.supply/@mellyeliu" />,{" "}
     <CustomLink
       text="visuals"
       href="https://mellyeliu.online/portfolio/design"
