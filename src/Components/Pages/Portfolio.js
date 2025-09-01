@@ -132,9 +132,6 @@ const Portfolio = ({ setDesktopScreen }) => {
               width="25"
               height="30"
               onClick={() => {
-                if (isMobile) {
-                  window.location.reload();
-                }
                 setDesktopScreen(Screen.HOME);
               }}
               xmlns="http://www.w3.org/2000/svg"

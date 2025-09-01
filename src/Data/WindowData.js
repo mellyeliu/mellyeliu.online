@@ -2,7 +2,7 @@ import React from "react";
 import PortfolioData from "./PortfolioData";
 import { useMediaQuery } from "react-responsive";
 
-function CustomLink({ text, href, color = "#ee4898" }) {
+function CustomLink({ text, href, color = "#B666BA" }) {
   return (
     <a
       href={href}
@@ -103,14 +103,14 @@ const bioContent = (
     messaging systems, creation myths, fandom as worldbuilding, recursive
     autofiction, video game as art form, literary tropes, pseudoscientific
     personality tests, relational psychology, bed rotting [...] They maintain an
-    enduring belief in the internet as identity play and in softness as
+    enduring belief in the internet as identity play and softness as
     defiance.
     <br />
     <br />
     In the day they work on web tooling like{" "}
     <CustomLink text="StyleX" href="https://github.com/facebook/stylex" />, a
     css-in-js library, and at night they work on web games. Before that they
-    worked on the <CustomLink text="website" href="https://messenger.com" />{" "}
+    worked on <CustomLink text="Messenger" href="https://messenger.com" />, the website
     that first taught them how to talk to people. They still beta test it every
     day with their friends. The rest of their life is just content for their
     work
@@ -141,7 +141,7 @@ const WindowData = {
       padding="195px 50px"
     />
   ),
-  "( Girlhood )": (
+  "( Pixels )": (
     <ContentBlock content={emojisContent} textAlign="center" fontSize={48} />
   ),
 };

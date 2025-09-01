@@ -342,7 +342,7 @@ const FileData = {
       iconText: "meeee.png",
     },
     {
-      hoverString: "( Girlhood )",
+      hoverString: "( Pixels )",
       src: "images/windows/emojis.png",
       border: true,
       x: 59,

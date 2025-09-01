@@ -48,6 +48,10 @@ export const startData = {
       "Neurodivergent isolation",
       "https://en.wikipedia.org/wiki/Double_empathy_problem",
     ],
+    [
+      "Importance of playgrounds",
+      "https://en.wikipedia.org/wiki/Playground",
+    ],
     ["Reading about suffering", "https://en.wikipedia.org/wiki/Pit_of_despair"],
     [
       "Epileptic Trees",
@@ -124,6 +128,11 @@ export const startData = {
       "Glitch Feminism",
       "https://www.goodreads.com/book/show/52411999-glitch-feminism",
     ],
+    [
+      "Spotify",
+      "https://open.spotify.com/user/12173838416?si=78f67f79756c485a",
+    ],
+    ["Goodreads", "https://www.goodreads.com/mellyeliu"],
     [
       "Fanfic Recs 𖠋",
       "https://docs.google.com/spreadsheets/d/1ZdARDFisdZWIopoMqk2-Ah5DCoYVu_yLiVnRKPUCmIU/",

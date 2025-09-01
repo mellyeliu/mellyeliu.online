@@ -172,7 +172,7 @@ const PortfolioData = {
       {
         title: "On Healing [Untitled]",
         description:
-          "Meditations on trauma, abuse, and silver lining friendships. CW: abuse, graphic content. Work in progress!",
+          "Meditations on trauma, abuse, and silver lining friendships. Work in progress!",
         languages: "React?",
         image: "healinggame.png",
         year: "2024",
@@ -323,21 +323,6 @@ const PortfolioData = {
         ],
       },
       {
-        title: "Brainquations",
-        description: "Can we visualize the emotional spectrum?",
-        languages: "Desmos, Matplotlib, Figma",
-        image: "emotion profiles.png",
-        type: ["conversation"],
-        year: "2023",
-        url: "",
-        collaborators: [
-          {
-            name: "Jonathan Hsun",
-            url: "https://www.instagram.com/jonathanhsunny/",
-          },
-        ],
-      },
-      {
         title: "Dimensional Fanfic",
         description: "Fictional Dimensional personality archetypes.",
         languages: "Figma",
@@ -372,21 +357,11 @@ const PortfolioData = {
       },
       {
         title: "Tattoo Art",
-        description: "Then I wanted to make tattoo art but then I gave up.",
+        description: "I wanted to make tattoo art but then I gave up.",
         languages: "Procreate",
         image: "tattoo.png",
         type: ["design"],
         year: "2021",
-        url: "",
-      },
-      {
-        title: "Portraits",
-        description:
-          "I used to want to be good at visual art but then I gave up.",
-        languages: "Not Tech :o",
-        image: "portrait.png",
-        type: ["design"],
-        year: "2018",
         url: "",
       },
       {

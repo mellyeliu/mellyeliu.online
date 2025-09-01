@@ -126,6 +126,7 @@ const StartButton = () => {
             textAlign: "center",
             backgroundColor: "#f9f9f9",
             minWidth: "120px",
+            maxHeight: "80vh",
             zIndex: 1,
           }}
           onMouseLeave={() => handleOptionClick(null)}
@@ -138,7 +139,10 @@ const StartButton = () => {
               @mellye.liu
             </a>
           </div>
-          <div className="options" style={{ flex: 1 }}>
+          <div
+            className="options"
+            style={{ flex: 1, overflowY: "auto", maxHeight: "80vh" }}
+          >
             {Object.keys(startData).map((option, index) => (
               <a
                 key={index}
@@ -162,13 +166,14 @@ const StartButton = () => {
                 left: 183,
                 bottom: 40,
                 width: "220px",
-                height: "auto",
+                maxHeight: "80vh",
                 backgroundColor: "#fff",
                 border: "0.5px solid black",
                 zIndex: 2,
+                overflowY: "auto",
               }}
             >
-              <ul>
+              <ul style={{ margin: 0, padding: 0 }}>
                 {startData[selectedOption].map((subOption, index) => (
                   <li
                     key={index}
@@ -186,7 +191,7 @@ const StartButton = () => {
                       <a
                         href={subOption[1]}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         style={{
                           color: "black",
                           textDecoration: "none",

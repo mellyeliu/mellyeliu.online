@@ -105,7 +105,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           autoplaySpeed={50000}
           links={linkQuotes}
           style={{
-            letterSpacing: 0,
+            letterSpacing: -0.1,
             marginBottom: 5,
             fontFamily: "Cormorant Garamond",
             fontWeight: 300,
