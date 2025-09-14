@@ -46,10 +46,10 @@ html {
 /* b. Header Styles
 /* ------------------------------------------------------------------ */
 
-div {
+/* div {
   font-family: "Cormorant Garamond";
   font-size: 17px;
-}
+} */
 
 .react-draggable {
   width: min-content;
@@ -1419,4 +1419,13 @@ button#one-tab {
 
 .draggableImage {
   margin-top: 1%;
+}
+
+/* Default responsive behavior */
+#mobile-only {
+  display: none;
+}
+
+#desktop-only {
+  display: block;
 }
