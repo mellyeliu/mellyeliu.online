@@ -9,6 +9,7 @@ import { ThemeContext } from "../../ThemeContext";
 import { Screen } from "../../App";
 import Popup from "../Items/Popup";
 import { useMediaQuery } from "react-responsive";
+import PropTypes from "prop-types";
 
 const Header = (props) => {
   const isMobile = useMediaQuery({
@@ -314,7 +315,7 @@ const Header = (props) => {
                     onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
                     isVisible={isFoldersVisible}
                     hoverString={display_strings[index]}
-                    onHoverChange={(hoverState, _) =>
+                    onHoverChange={(hoverState) =>
                       handleFolderHoverChange(hoverState, index)
                     }
                     caption={folder}
@@ -336,6 +337,12 @@ const Header = (props) => {
       </header>
     </>
   );
+};
+
+Header.propTypes = {
+  setDesktopScreen: PropTypes.func.isRequired,
+  isFoldersOff: PropTypes.bool.isRequired,
+  setisFoldersOff: PropTypes.func.isRequired,
 };
 
 export default Header;

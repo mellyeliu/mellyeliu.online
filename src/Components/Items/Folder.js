@@ -1,4 +1,5 @@
 import React from "react";
+import * as stylex from "@stylexjs/stylex";
 
 const Folder = ({
   scale,
@@ -10,6 +11,42 @@ const Folder = ({
   onOpen,
   image,
 }) => {
+  const styles = stylex.create({
+    container: {
+      position: "fixed",
+      cursor: "pointer",
+      right: 10,
+      filter: "drop-shadow(0px 6px 6px rgba(0,0,0,0.4))",
+      userSelect: "none",
+      zIndex: 100,
+      display: "block",
+    },
+    folderIcon: {
+      // Base styles for folderIcon
+    },
+    folder: {
+      transform: {
+        default: "scale(1)",
+        "@media (max-width: 1024px)": "scale(1.05)",
+      },
+    },
+    text: {
+      fontSize: "30px",
+      color: "#111111",
+      fontFamily: "Cormorant Garamond",
+      fontStyle: "italic",
+      fontWeight: 400,
+    },
+    textOpen: {
+      fontWeight: "500",
+    },
+    textClosed: {
+      fontWeight: "400",
+    },
+    folderTextHover: {
+      letterSpacing: "2px",
+    },
+  });
   const handleClick = () => {
     onOpen(!isOpen);
   };
@@ -25,18 +62,11 @@ const Folder = ({
   return (
     <div
       onClick={handleClick}
-      className="folderIcon"
+      {...stylex.props(styles.container, styles.folderIcon)}
       onMouseLeave={stopHover}
       onMouseEnter={onHover}
       style={{
-        position: "fixed",
-        cursor: "pointer",
-        right: 10,
-        filter: "drop-shadow(0px 6px 6px rgba(0,0,0,0.4))",
         top: y,
-        userSelect: "none",
-        zIndex: 100,
-        display: "block",
         transform: `scale(${scale})`,
       }}
     >
@@ -50,20 +80,15 @@ const Folder = ({
         }
         // onMouseLeave={stopHover}
         // onMouseEnter={onHover}
-        className="folder"
+        {...stylex.props(styles.folder)}
         draggable={false}
       />
       {caption && (
         <div
-          className="folderText"
-          style={{
-            fontSize: 30,
-            color: "black",
-            fontFamily: "Cormorant Garamond",
-            fontStyle: "italic",
-            fontWeight: isOpen ? "500" : "400",
-            fontColor: "#111111",
-          }}
+          {...stylex.props(
+            styles.text,
+            isOpen ? styles.textOpen : styles.textClosed
+          )}
         >
           {caption}
         </div>

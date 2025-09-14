@@ -9,8 +9,8 @@ import Portfolio from "./Components/Pages/Portfolio";
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
 import PortfolioData from "./Data/PortfolioData";
 import TextCursor from "./Components/Utils/TextCursor";
-import { useMediaQuery } from "react-responsive";
 import StartBar from "./Components/Items/StartBar";
+import * as stylex from "@stylexjs/stylex";
 
 export const Screen = {
   HOME: "HOME",
@@ -18,9 +18,6 @@ export const Screen = {
 };
 
 const App = () => {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 767px)",
-  });
 
   const location = useLocation();
   const history = useHistory();
@@ -66,7 +63,7 @@ const App = () => {
       <ThemeContext.Consumer>
         {({ theme }) => (
           <>
-            {!isMobile && <TextCursor />}
+            <TextCursor />
             <div
               className={`App ${theme === "dark" ? "" : ""}`}
               style={{
@@ -93,12 +90,10 @@ const App = () => {
                   />
                 </Route>
               </Switch>
-              {!isMobile && (
-                <StartBar
-                  setDesktopScreen={setDesktopScreen}
-                  desktopScreen={desktopScreen}
-                />
-              )}
+              <StartBar
+                setDesktopScreen={setDesktopScreen}
+                desktopScreen={desktopScreen}
+              />
             </div>
           </>
         )}

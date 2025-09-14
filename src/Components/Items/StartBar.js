@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import PortfolioData from "../../Data/PortfolioData";
 import { ThemeContext } from "../../ThemeContext";
 import Clock from "./Clock";
 import TypingToggleTextList from "../Utils/TextList";
 import { quotes } from "../../Data/QuotesData";
 import { useMediaQuery } from "react-responsive";
 import StartButton from "./StartButton";
+import PropTypes from "prop-types";
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const isMobile = useMediaQuery({
@@ -25,6 +25,11 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
     cursor: "pointer",
   };
 
+  // Hide StartBar on mobile screens
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <div
       style={{
@@ -35,6 +40,8 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
         width: "100%",
         padding: "0px",
         display: "flex",
+        fontFamily: "Cormorant Garamond",
+        fontSize: 17,
         letterSpacing: 1,
         fontSize: 16,
         overflow: "hidden",
@@ -105,7 +112,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           autoplaySpeed={50000}
           links={linkQuotes}
           style={{
-            letterSpacing: -0.1,
+            letterSpacing: -0.2,
             marginBottom: 5,
             fontFamily: "Cormorant Garamond",
             fontWeight: 300,
@@ -123,6 +130,11 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
       <Clock />
     </div>
   );
+};
+
+StartBar.propTypes = {
+  setDesktopScreen: PropTypes.func.isRequired,
+  desktopScreen: PropTypes.string.isRequired,
 };
 
 export default StartBar;

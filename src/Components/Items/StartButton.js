@@ -55,6 +55,7 @@ const StartButton = () => {
     display: "block",
     // background: "rgb(245 245 245)",
     cursor: "pointer",
+    fontSize: 17,
     fontStyle: "normal",
     letterSpacing: 0,
     color: "black",
@@ -63,6 +64,7 @@ const StartButton = () => {
   const styles = {
     container: {
       display: "flex",
+      fontSize: 17,
       alignItems: "flex-start",
     },
     verticalBlock: {
@@ -183,6 +185,7 @@ const StartButton = () => {
                       fontStyle: "normal",
                       letterSpacing: -0.3,
                       textAlign: "left",
+                      fontSize: 17,
                       color: "black",
                       padding: "2px 10px",
                     }}
