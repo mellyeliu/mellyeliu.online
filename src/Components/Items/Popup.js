@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import * as stylex from "@stylexjs/stylex";
+import { useMediaQuery } from "react-responsive";
 
 const Popup = ({
   src,
@@ -15,13 +15,8 @@ const Popup = ({
   triggerResize,
   content,
 }) => {
-  const styles = stylex.create({
-    popupImage: {
-      backgroundSize: {
-        default: "cover",
-        "@media (max-width: 767px)": "cover",
-      },
-    },
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px)",
   });
 
   const [position, setPosition] = useState({ x: x, y: y });
@@ -37,7 +32,7 @@ const Popup = ({
   useEffect(() => {
     const img = new Image();
     img.onload = () => {
-      window.innerWidth <= 767
+      isMobile
         ? setImageSize({
             width: `${img.width * 0.85}px`,
             height: `${img.height * 0.85}px`,
@@ -45,7 +40,7 @@ const Popup = ({
         : setImageSize({ width: img.width + "px", height: img.height + "px" });
     };
     img.src = src;
-  }, [src]);
+  }, [src, isMobile]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -219,7 +214,7 @@ const Popup = ({
             transition: "transform 0.3s ease-in-out",
             transformOrigin: "top left",
             backgroundImage: `url(${src})`,
-            ...stylex.props(styles.popupImage),
+            backgroundSize: isMobile ? "cover" : "cover",
             backgroundPosition: "center",
             ...imageSize,
           }}

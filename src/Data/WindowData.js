@@ -1,6 +1,6 @@
 import React from "react";
 import PortfolioData from "./PortfolioData";
-import * as stylex from "@stylexjs/stylex";
+import { useMediaQuery } from "react-responsive";
 
 function CustomLink({ text, href, color = "#B666BA" }) {
   return (
@@ -21,45 +21,31 @@ function CustomLink({ text, href, color = "#B666BA" }) {
   );
 }
 
-function ContentBlock(props) {
-  const content = props.content;
-  const textAlign = props.textAlign || "left";
-  const padding = props.padding || "165px 20px";
-  const fontSize = props.fontSize || 22;
-
-  const styles = stylex.create({
-    contentBlock: {
-      whiteSpace: "pre-wrap",
-      color: "#222",
-      fontSize: {
-        default: 22,
-        "@media (max-width: 767px)": 19.8,
-      },
-      textAlign: "left",
-      lineHeight: {
-        default: "1.15",
-        "@media (max-width: 767px)": "1.05",
-      },
-      padding: {
-        default: "165px 20px",
-        "@media (max-width: 767px)": "140px 20px",
-      },
-      letterSpacing: -0.1,
-      fontFamily: "Helvetica",
-      zIndex: 1000000,
-      pointerEvents: "none",
-    },
+function ContentBlock({
+  content,
+  textAlign = "left",
+  padding = "165px 20px",
+  fontSize = 22,
+}) {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px)",
   });
 
-  // Dynamic styles that depend on props
-  const dynamicStyles = {
-    fontSize: fontSize,
-    textAlign: textAlign,
-    padding: padding,
-  };
-
   return (
-    <div {...stylex.props(styles.contentBlock)} style={dynamicStyles}>
+    <div
+      style={{
+        whiteSpace: "pre-wrap",
+        color: "#222",
+        fontSize: isMobile ? fontSize * 0.9 : fontSize,
+        textAlign,
+        lineHeight: isMobile ? "1.05" : "1.15",
+        padding: isMobile ? "155px 20px" : padding,
+        letterSpacing: -0.1,
+        fontFamily: "Helvetica",
+        zIndex: 1000000,
+        pointerEvents: "none",
+      }}
+    >
       {content}
     </div>
   );
