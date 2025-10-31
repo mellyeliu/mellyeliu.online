@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { selfFacts } from "../../Data/QuotesData";
 import { ThemeContext } from "../../ThemeContext";
-import { Fade } from "react-reveal";
 
 const TextList = ({
   style,
@@ -19,36 +18,39 @@ const TextList = ({
   const [isTyping, setIsTyping] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [reset, setReset] = useState(false);
-  const { cursorString, setCursorString } = useContext(ThemeContext);
+  useContext(ThemeContext);
   const [isVisible, setIsVisible] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
-    // Ensure charIndex is reset to start typing the new fact from the beginning
     setCharIndex(0);
     setIsTyping(true);
-    // Reset visibility and animation states if needed
     setIsVisible(false);
-    setShouldAnimate(false);
-    // Reset currentFact to start displaying the new fact
     setCurrentFact("");
-
-    // This effect runs every time factIndex changes, ensuring textOptions[factIndex] accesses the updated factIndex
   }, [factIndex]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true); // Start fade-in
-      setShouldAnimate(true);
-    }, 150); // Short delay to trigger fade-in effect
+    setShouldAnimate(true);
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+      (window.__textlist_raf2_ids || (window.__textlist_raf2_ids = [])).push(
+        raf2
+      );
+    });
 
-    return () => clearTimeout(timer); // Clean up the timer on component unmount or before the next effect
+    return () => {
+      cancelAnimationFrame(raf1);
+      const ids = window.__textlist_raf2_ids || [];
+      while (ids.length) cancelAnimationFrame(ids.pop());
+    };
   }, [factIndex]);
 
   const styles =
     typing === false
       ? {
-          transition: shouldAnimate ? "opacity 1s ease-in-out" : "none",
+          transition: shouldAnimate ? "opacity 0.25s ease-in-out" : "none",
           opacity: isVisible ? 1 : 0,
         }
       : {};
@@ -56,11 +58,24 @@ const TextList = ({
   useEffect(() => {
     let typingInterval;
 
+    if (typing === false) {
+      const showTimer = setTimeout(() => {
+        setShouldAnimate(true);
+        setIsVisible(false);
+        const switchTimer = setTimeout(() => {
+          order
+            ? setFactIndex((prev) => (prev + 1) % textOptions.length)
+            : setFactIndex(Math.floor(Math.random() * textOptions.length));
+        }, 250);
+        return () => clearTimeout(switchTimer);
+      }, autoplaySpeed);
+
+      return () => clearTimeout(showTimer);
+    }
+
     if (reset) {
-      if (typing) {
-        setIsVisible(false); // Start fade-out
-        setShouldAnimate(false);
-      }
+      setIsVisible(false);
+      setShouldAnimate(false);
       setCurrentFact("");
       setCharIndex(0);
       setIsTyping(true);
@@ -107,12 +122,22 @@ const TextList = ({
 
   const handleClick = (event) => {
     if (event.target.tagName !== "A") {
-      setIsVisible(false); // Start fade-out
-      setShouldAnimate(false); // Reset animation state
-      setReset(true);
-      order
-        ? setFactIndex((prev) => (prev + 1) % textOptions.length)
-        : setFactIndex(Math.floor(Math.random() * textOptions.length));
+      if (typing === false) {
+        setShouldAnimate(true);
+        setIsVisible(false);
+        setTimeout(() => {
+          order
+            ? setFactIndex((prev) => (prev + 1) % textOptions.length)
+            : setFactIndex(Math.floor(Math.random() * textOptions.length));
+        }, 250);
+      } else {
+        setIsVisible(false);
+        setShouldAnimate(false);
+        setReset(true);
+        order
+          ? setFactIndex((prev) => (prev + 1) % textOptions.length)
+          : setFactIndex(Math.floor(Math.random() * textOptions.length));
+      }
     }
   };
 
@@ -139,7 +164,7 @@ const TextList = ({
           className="hvr-line"
           href={links[factIndex]}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           [*]
         </a>

@@ -121,6 +121,7 @@ video {
   /* font-size: 100%; */
   vertical-align: baseline;
   background: transparent;
+  user-select: none;
 }
 
 a {
