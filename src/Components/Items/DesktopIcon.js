@@ -245,7 +245,7 @@ const DesktopIcon = ({
               border: dragging || isClicked ? "1px solid white" : "none",
               borderRadius: "5px",
               maxWidth: isMobile ? "70px" : "clamp(98px, 3vh, 120px)",
-              maxHeight: isMobile ? "65px" : "clamp(95px, 3vw, 120px)",
+              maxHeight: isMobile ? "65px" : "clamp(100px, 3vw, 120px)",
               width: "auto",
               height: "auto",
               filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",

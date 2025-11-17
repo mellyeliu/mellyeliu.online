@@ -10,7 +10,7 @@ const NameTag = () => {
   const styles = {
     container: {
       width: isMobile ? "320px" : "clamp(400px, 20vw, 500px)",
-      height: isMobile ? "105px" : "clamp(125px, 10vh, 200px)",
+      height: isMobile ? "105px" : "clamp(125px, 12vh, 200px)",
       backgroundColor: "white",
       border: "0.5px solid #111",
       display: "flex",
@@ -32,7 +32,7 @@ const NameTag = () => {
       letterSpacing: 0.5,
       transform: "scaleY(1.05)",
       fontFamily: "Cormorant Garamond",
-      fontSize: isMobile ? 24 : "clamp(28px, 2vh, 38px)",
+      fontSize: isMobile ? 24 : "clamp(30px, 2vh, 38px)",
     },
     funFacts: {
       letterSpacing: 1,
