@@ -75,7 +75,7 @@ const DesktopIcon = ({
       fontFamily: "Arimo",
       lineHeight: "14px",
       filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
-      textShadow: "0px 1px 2px rgba(0,0,0,0.45)",
+      textShadow: "0px 3px 3px rgba(0,0,0,0.4)",
       letterSpacing: "0.5px",
       borderRadius: "2px",
       padding: "2px",
