@@ -73,7 +73,7 @@ const PortfolioData = {
           "Interactive fiction documenting dream journal escapism. For <a class='special-links' href='https://tiat.place'>tiat.place</a> at the <a class='special-links' href='https://archive.org/'>Internet Archive</a>. Play the (rough) demo!",
         languages: "Inform7",
         image: "inform.png",
-        year: "2023-",
+        year: "2023",
         type: ["code", "games"],
         url: "https://dreamland-demo.netlify.app/play",
       },
@@ -109,9 +109,10 @@ const PortfolioData = {
           },
         ],
       },
-            {
+      {
         title: "StyleX",
-        description: "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog.</a>",
+        description:
+          "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog.</a>",
         languages: "Javascript",
         image: "stylex.png",
         year: "2024-",
@@ -126,7 +127,8 @@ const PortfolioData = {
       },
       {
         title: "666 Stories",
-        description: "Little Alchemy inspired fragments of the 2nd-gen Asian experience. Dedicated to my family and hometown. Work in progress! For the <a class='special-links' href='https://www.instagram.com/p/DJVkYEJRtSp/'>666 show</a>.",
+        description:
+          "Little Alchemy inspired fragments of the 2nd-gen Asian experience. Dedicated to my family and hometown. Work in progress! For the <a class='special-links' href='https://www.instagram.com/p/DJVkYEJRtSp/'>666 show</a>.",
         languages: "React, Cursor :/",
         image: "666piece.png",
         year: "2024-",

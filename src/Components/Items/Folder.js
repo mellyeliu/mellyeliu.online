@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
 
 const Folder = ({
@@ -43,8 +44,12 @@ const Folder = ({
     textClosed: {
       fontWeight: "400",
     },
-    folderTextHover: {
-      letterSpacing: "2px",
+    textSpacing: {
+      letterSpacing: {
+        default: "0.5px",
+        [stylex.when.ancestor(":hover")]: "2px",
+      },
+      transition: "letter-spacing 120ms ease",
     },
   });
   const handleClick = () => {
@@ -62,7 +67,11 @@ const Folder = ({
   return (
     <div
       onClick={handleClick}
-      {...stylex.props(styles.container, styles.folderIcon)}
+      {...stylex.props(
+        stylex.defaultMarker(),
+        styles.container,
+        styles.folderIcon
+      )}
       onMouseLeave={stopHover}
       onMouseEnter={onHover}
       style={{
@@ -87,7 +96,8 @@ const Folder = ({
         <div
           {...stylex.props(
             styles.text,
-            isOpen ? styles.textOpen : styles.textClosed
+            isOpen ? styles.textOpen : styles.textClosed,
+            styles.textSpacing
           )}
         >
           {caption}
@@ -98,3 +108,14 @@ const Folder = ({
 };
 
 export default Folder;
+
+Folder.propTypes = {
+  scale: PropTypes.number,
+  y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  hoverString: PropTypes.string,
+  onHoverChange: PropTypes.func.isRequired,
+  caption: PropTypes.string,
+  isOpen: PropTypes.bool,
+  onOpen: PropTypes.func.isRequired,
+  image: PropTypes.string,
+};

@@ -16,6 +16,7 @@ export default defineConfig({
               runtimeInjection: false,
               treeshakeCompensation: true,
               styleResolution: "application-order",
+              useLayers: false,
               unstable_moduleResolution: {
                 type: "commonJS",
               },

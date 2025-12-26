@@ -8,6 +8,7 @@ import { useMediaQuery } from "react-responsive";
 import BrowserIcons from "../Items/BrowserIcons";
 import ReactHtmlParser from "react-html-parser";
 import ProjectDetail from "../Items/ProjectDetail";
+import PropTypes from "prop-types";
 
 const Portfolio = ({ setDesktopScreen }) => {
   const isMobile = useMediaQuery({
@@ -17,7 +18,7 @@ const Portfolio = ({ setDesktopScreen }) => {
   const location = useLocation();
   const history = useHistory();
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible] = useState(true);
   const [favourite, setFavourite] = useState("✩");
   const [activeTab, setActiveTab] = useState("one");
   const tabTwoRef = useRef(null);
@@ -74,24 +75,24 @@ const Portfolio = ({ setDesktopScreen }) => {
 
   const projectsWithMeta = useMemo(() => {
     const placeholderParagraph =
-      "Project details coming soon. This is placeholder copy describing the goals, approach, and outcomes.\n\nHere we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time.\n\nWe’ll also add notes about launch learnings and follow-ups so readers can see how the project grew.";
+      "Project details coming soon. This is placeholder copy describing the goals, approach, and outcomes. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. \n\nHere we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time.\n\n Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. We’ll also add notes about launch learnings and follow-ups so readers can see how the project grew. ";
     return PortfolioData.portfolio.projects.map((project) => {
       const slug = project.slug || slugify(project.title);
       return {
         ...project,
         slug,
         detailUrl: project.detailUrl || `/portfolio/projects/${slug}`,
-        longDescription: project.longDescription || `${placeholderParagraph}\n\nMore images and notes will be added later. For now, enjoy these placeholder visuals.`,
-        detailImages:
-          project.detailImages ||
-          [
-            `https://via.placeholder.com/640x360?text=${encodeURIComponent(
-              project.title
-            )}+1`,
-            `https://via.placeholder.com/640x360?text=${encodeURIComponent(
-              project.title
-            )}+2`,
-          ],
+        longDescription:
+          project.longDescription ||
+          `${placeholderParagraph}\n\nMore images and notes will be added later. For now, enjoy these placeholder visuals.`,
+        detailImages: project.detailImages || [
+          `https://via.placeholder.com/640x360?text=${encodeURIComponent(
+            project.title
+          )}+1`,
+          `https://via.placeholder.com/640x360?text=${encodeURIComponent(
+            project.title
+          )}+2`,
+        ],
       };
     });
   }, []);
@@ -102,17 +103,12 @@ const Portfolio = ({ setDesktopScreen }) => {
   const activeProject = projectMatch
     ? projectsWithMeta.find((p) => p.slug === projectMatch[1])
     : null;
-  const enableProjectDetailView = true;
 
   useEffect(() => {
     if (projectMatch && !activeProject) {
       history.replace("/portfolio");
     }
   }, [projectMatch, activeProject, history]);
-
-  const handleBackToGrid = () => {
-    history.push("/portfolio");
-  };
 
   const handleInputChange = (event) => {
     if (event.target.value === "YES" && tabTwoRef.current) {
@@ -132,35 +128,7 @@ const Portfolio = ({ setDesktopScreen }) => {
     history.push(newPath);
   };
 
-  const placeholderDetail =
-    projectMatch && !enableProjectDetailView ? (
-    <div
-      style={{
-        padding: isMobile ? "40px 12px" : "40px 24px",
-        color: "black",
-      }}
-    >
-      <button
-        onClick={handleBackToGrid}
-        style={{
-          border: "1px solid black",
-          background: "white",
-          padding: "6px 10px",
-          cursor: "pointer",
-          marginBottom: 16,
-        }}
-      >
-        ← Back
-      </button>
-      <h3 style={{ marginTop: 0, marginBottom: 12 }}>Project detail coming soon</h3>
-      <p style={{ margin: 0, lineHeight: 1.5 }}>
-        We’re still polishing this view. The grid links stay the same so you can share
-        URLs now, but the embedded detail page will land in a later update.
-      </p>
-    </div>
-  ) : null;
-
-  const urlBar = (tab, tabContent) => {
+  const urlBar = (tab, tabContent, useWrapper = true) => {
     return (
       <>
         <div
@@ -318,18 +286,28 @@ const Portfolio = ({ setDesktopScreen }) => {
             </div>
           </div>
         </div>
-        <div
-          id="portfolio-wrapper"
-          className="bgrid-thirds s-bgrid-thirds cf"
-          style={{
-            padding: isMobile ? "70px 10px 100px" : "50px 80px",
-            minHeight: isMobile ? "calc(100vh - 180px)" : "calc(100vh - 200px)",
-          }}
-        >
-          <Fade duration={500} delay={100}>
-            {tabContent}
-          </Fade>
-        </div>
+        {useWrapper ? (
+          <div
+            id="portfolio-wrapper"
+            className="bgrid-thirds s-bgrid-thirds cf"
+            style={{
+              padding: isMobile ? "70px 10px 100px" : "50px 80px",
+              minHeight: isMobile
+                ? "calc(100vh - 180px)"
+                : "calc(100vh - 200px)",
+            }}
+          >
+            <Fade duration={500} delay={100}>
+              {tabContent}
+            </Fade>
+          </div>
+        ) : (
+          <div>
+            <Fade duration={500} delay={100}>
+              {tabContent}
+            </Fade>
+          </div>
+        )}
       </>
     );
   };
@@ -422,11 +400,11 @@ const Portfolio = ({ setDesktopScreen }) => {
     });
   };
 
-  var projects = getProjects(projectsWithMeta, "all");
-  var code = getProjects(projectsWithMeta, "code");
-  var design = getProjects(projectsWithMeta, "design");
-  var games = getProjects(projectsWithMeta, "games");
-  var conversation = getProjects(projectsWithMeta, "conversation");
+  const projects = getProjects(projectsWithMeta, "all");
+  const code = getProjects(projectsWithMeta, "code");
+  const design = getProjects(projectsWithMeta, "design");
+  const games = getProjects(projectsWithMeta, "games");
+  const conversation = getProjects(projectsWithMeta, "conversation");
   return (
     <section id="portfolio">
       <div
@@ -493,76 +471,56 @@ const Portfolio = ({ setDesktopScreen }) => {
             <TabPanel tabId="one">
               {urlBar(
                 "All",
-                enableProjectDetailView && activeProject ? (
-                  <ProjectDetail
-                    project={activeProject}
-                    onBack={handleBackToGrid}
-                  />
-                ) : placeholderDetail ? (
-                  placeholderDetail
+                activeProject ? (
+                  <ProjectDetail project={activeProject} />
                 ) : (
                   projects
-                )
+                ),
+                !activeProject
               )}
             </TabPanel>
             <TabPanel tabId="two">
               {urlBar(
                 "Code",
-                enableProjectDetailView && activeProject ? (
-                  <ProjectDetail
-                    project={activeProject}
-                    onBack={handleBackToGrid}
-                  />
-                ) : placeholderDetail ? (
-                  placeholderDetail
+                activeProject ? (
+                  <ProjectDetail project={activeProject} />
                 ) : (
                   code
-                )
+                ),
+                !activeProject
               )}
             </TabPanel>
             <TabPanel tabId="three">
               {urlBar(
                 "Design",
-                enableProjectDetailView && activeProject ? (
-                  <ProjectDetail
-                    project={activeProject}
-                    onBack={handleBackToGrid}
-                  />
-                ) : placeholderDetail ? (
-                  placeholderDetail
+                activeProject ? (
+                  <ProjectDetail project={activeProject} />
                 ) : (
                   design
-                )
+                ),
+                !activeProject
               )}
             </TabPanel>
             <TabPanel tabId="four">
               {urlBar(
                 "Games",
-                enableProjectDetailView && activeProject ? (
-                  <ProjectDetail
-                    project={activeProject}
-                    onBack={handleBackToGrid}
-                  />
-                ) : placeholderDetail ? (
-                  placeholderDetail
+                activeProject ? (
+                  <ProjectDetail project={activeProject} />
                 ) : (
                   games
-                )
+                ),
+                !activeProject
               )}
             </TabPanel>
             <TabPanel tabId="five">
               {urlBar(
                 "Conversation",
-                enableProjectDetailView && activeProject ? (
-                  <ProjectDetail
-                    project={activeProject}
-                    onBack={handleBackToGrid}
-                  />
-                ) : placeholderDetail ? (
-                  placeholderDetail
+                activeProject ? (
+                  <ProjectDetail project={activeProject} />
                 ) : (
                   conversation
-                )
+                ),
+                !activeProject
               )}
             </TabPanel>
           </Tabs>
@@ -573,3 +531,7 @@ const Portfolio = ({ setDesktopScreen }) => {
 };
 
 export default Portfolio;
+
+Portfolio.propTypes = {
+  setDesktopScreen: PropTypes.func.isRequired,
+};
