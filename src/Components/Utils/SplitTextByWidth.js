@@ -1,6 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const SplitTextByWidth = ({ text, maxWidth, backgroundColor, style }) => {
+const SplitTextByWidth = ({
+  text,
+  maxWidth,
+  backgroundColor,
+  style,
+  className,
+}) => {
   const containerRef = useRef(null);
   const [lines, setLines] = useState([]);
 
@@ -53,7 +59,7 @@ const SplitTextByWidth = ({ text, maxWidth, backgroundColor, style }) => {
       {lines.map((line, index) => (
         <>
           {" "}
-          <div key={index} style={style}>
+          <div key={index} style={style} className={className}>
             {line}
           </div>
           <span style={{ display: "block" }} />

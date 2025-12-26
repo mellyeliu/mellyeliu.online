@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import SplitTextByWidth from "../Utils/SplitTextByWidth";
 import { useMediaQuery } from "react-responsive";
+import * as stylex from "@stylexjs/stylex";
 
 const DesktopIcon = ({
   src,
@@ -32,6 +33,64 @@ const DesktopIcon = ({
   const imageRef = useRef(null);
   const textRef = useRef(null);
   const dragRef = useRef(null); // Track drag state across fast movements
+
+  const styles = stylex.create({
+    container: {
+      width: "auto",
+      height: "auto",
+      textAlign: "center",
+    },
+    group: {
+      position: "absolute",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      userSelect: "none",
+      gap: 10,
+    },
+    image: {
+      cursor: "grab",
+      display: "block",
+      borderRadius: "5px",
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
+      userSelect: "none",
+    },
+    imageShadow: {
+      boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
+    },
+    imageDesktop: {
+      width: "clamp(100px, 3vw, 122px)",
+      height: "clamp(100px, 3vw, 122px)",
+    },
+    imageMobile: {
+      width: "85px",
+      height: "85px",
+    },
+    text: {
+      fontWeight: 600,
+      color: "white",
+      fontFamily: "Arimo",
+      lineHeight: "14px",
+      filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
+      textShadow: "0px 1px 2px rgba(0,0,0,0.45)",
+      letterSpacing: "0.5px",
+      borderRadius: "2px",
+      padding: "2px",
+      display: "inline-block",
+    },
+    textMobile: {
+      fontSize: 14,
+    },
+    textDesktop: {
+      fontSize: 15,
+    },
+    textActive: {
+      backgroundColor: "#3443eb",
+    },
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,24 +123,6 @@ const DesktopIcon = ({
   const delay = 300;
   const [clickCount, setClickCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
-
-  const iconTextStyle = {
-    fontWeight: 600,
-    color: "white",
-    position: "relative",
-    bottom: 0,
-    fontFamily: "Arimo",
-    fontSize: isMobile ? 14 : 15,
-    lineHeight: "14px",
-    filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
-    letterSpacing: "0.5px",
-    top: isMobile ? 75 : 98,
-    borderRadius: "2px",
-    padding: "2px",
-    marginLeft: "5px",
-    display: "inline-block",
-    backgroundColor: dragging || isClicked ? "#3443eb" : "transparent",
-  };
 
   const handleResize = () => {
     const divs = document.getElementsByClassName("hover-container");
@@ -223,74 +264,49 @@ const DesktopIcon = ({
     e.target.style.cursor = "grab";
   };
 
-  const imageContainerStyle = {
-    width: "auto",
-    height: "auto",
-    textAlign: "center",
-  };
-
   return (
-    <div style={imageContainerStyle}>
+    <div {...stylex.props(styles.container)}>
       {isWidthCalculated && (
-        <div>
+        <div
+          {...stylex.props(styles.group)}
+          style={{
+            left: `${(position.x * width) / 100}px`,
+            top: `${position.y}%`,
+            zIndex: localZIndex,
+          }}
+          onMouseDown={startDrag}
+          onClick={(e) => {
+            handleClickOutside(e);
+            openPopupOnDoubleClick(e);
+          }}
+          onMouseMove={onDrag}
+          onMouseUp={stopDrag}
+          onMouseLeave={stopHover}
+          onMouseEnter={onHover}
+        >
           <img
             src={src}
+            {...stylex.props(
+              styles.image,
+              isMobile ? styles.imageMobile : styles.imageDesktop,
+              border ? styles.imageShadow : null
+            )}
             style={{
-              cursor: "grab",
-              position: "absolute",
-              left: `${(position.x * width) / 100}px`,
-              display: "block",
-              zIndex: localZIndex,
-              top: `${position.y}%`,
               border: dragging || isClicked ? "1px solid white" : "none",
-              borderRadius: "5px",
-              maxWidth: isMobile ? "70px" : "clamp(98px, 3vh, 120px)",
-              maxHeight: isMobile ? "65px" : "clamp(100px, 3vw, 120px)",
-              width: "auto",
-              height: "auto",
-              filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
-              boxShadow: border ? "0 0 0 1px rgba(0,0,0,0.5)" : "none",
-              userSelect: "none",
             }}
-            onMouseDown={startDrag}
-            onClick={(e) => {
-              handleClickOutside(e);
-              openPopupOnDoubleClick(e);
-            }}
-            onMouseMove={onDrag}
-            onMouseUp={stopDrag}
-            onMouseLeave={stopHover}
-            onMouseEnter={onHover}
             ref={imageRef}
             draggable={false}
           />
-          <div
-            style={{
-              cursor: "grab",
-              position: "absolute",
-              left: `${(position.x * width) / 100}px`,
-              zIndex: localZIndex,
-              top: `${position.y}%`,
-              filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.8))",
-              boxShadow: "none",
-              userSelect: "none",
-            }}
-            onMouseDown={startDrag}
-            onClick={(e) => {
-              handleClickOutside(e);
-              openPopupOnDoubleClick(e);
-            }}
-            onMouseMove={onDrag}
-            onMouseUp={stopDrag}
-            onMouseLeave={stopHover}
-            onMouseEnter={onHover}
-            ref={textRef}
-          >
+          <div ref={textRef}>
             <SplitTextByWidth
               text={iconText}
               maxWidth={isMobile ? 75 : 80}
               backgroundColor={"red"}
-              style={iconTextStyle}
+              {...stylex.props(
+                styles.text,
+                isMobile ? styles.textMobile : styles.textDesktop,
+                dragging || isClicked ? styles.textActive : null
+              )}
             />
           </div>
         </div>

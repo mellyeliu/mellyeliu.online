@@ -15,6 +15,7 @@ export default defineConfig({
               test: process.env.NODE_ENV === "test",
               runtimeInjection: false,
               treeshakeCompensation: true,
+              styleResolution: "application-order",
               unstable_moduleResolution: {
                 type: "commonJS",
               },
