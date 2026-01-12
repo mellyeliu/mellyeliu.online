@@ -77,7 +77,7 @@ const FileData = {
       src: "images/icons/shift.png",
       url: "https://armorgames.com/play/751/shift",
       x: 7,
-      y: 17,
+      y: 19,
       iconText: "shift.png",
     },
     {
@@ -109,7 +109,7 @@ const FileData = {
       src: "images/icons/dreamingmary.png",
       url: "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/DreamingMary",
       x: 10,
-      y: 20,
+      y: 25,
       iconText: "dreaming mary.png",
     },
     {

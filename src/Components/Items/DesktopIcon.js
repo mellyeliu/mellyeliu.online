@@ -3,13 +3,7 @@ import PropTypes from "prop-types";
 import SplitTextByWidth from "../Utils/SplitTextByWidth";
 import { useMediaQuery } from "react-responsive";
 import * as stylex from "@stylexjs/stylex";
-import {
-  colors,
-  fonts,
-  radii,
-  shadows,
-  fontSizes,
-} from "../../styles/tokens.stylex";
+import { colors, fonts, radii, fontSizes } from "../../styles/tokens.stylex";
 
 const DesktopIcon = ({
   src,
@@ -62,11 +56,11 @@ const DesktopIcon = ({
       width: "100%",
       height: "100%",
       objectFit: "contain",
-      filter: shadows.lg,
+      filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
       userSelect: "none",
     },
     imageShadow: {
-      boxShadow: shadows.sm,
+      boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
     },
     imageDesktop: {
       width: "clamp(100px, 3vw, 122px)",
@@ -81,7 +75,7 @@ const DesktopIcon = ({
       color: colors.white,
       fontFamily: fonts.arimo,
       lineHeight: "14px",
-      filter: shadows.md,
+      filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
       textShadow: "0px 3px 3px rgba(0,0,0,0.4)",
       letterSpacing: "0.5px",
       borderRadius: radii.sm,

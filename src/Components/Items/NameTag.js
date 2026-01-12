@@ -35,10 +35,7 @@ const styles = stylex.create({
     justifyContent: "center",
     textAlign: "center",
     alignItems: "center",
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
+    padding: 10,
     boxSizing: "border-box",
     position: "absolute",
     left: "50%",
@@ -62,7 +59,7 @@ const styles = stylex.create({
     fontFamily: fonts.serif,
   },
   titleDesktop: {
-    fontSize: "clamp(30px, 2vh, 38px)",
+    fontSize: "clamp(28px, 2vh, 34px)",
   },
   titleMobile: {
     fontSize: 24,
