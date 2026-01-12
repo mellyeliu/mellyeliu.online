@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import PortfolioData from "./PortfolioData";
 import { useMediaQuery } from "react-responsive";
 
@@ -20,6 +21,12 @@ function CustomLink({ text, href, color = "#B666BA" }) {
     </a>
   );
 }
+
+CustomLink.propTypes = {
+  text: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+  color: PropTypes.string,
+};
 
 function ContentBlock({
   content,
@@ -50,6 +57,13 @@ function ContentBlock({
     </div>
   );
 }
+
+ContentBlock.propTypes = {
+  content: PropTypes.node.isRequired,
+  textAlign: PropTypes.string,
+  padding: PropTypes.string,
+  fontSize: PropTypes.number,
+};
 
 const socialsContent = (
   <>

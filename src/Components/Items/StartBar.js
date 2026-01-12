@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "../../ThemeContext";
+import React from "react";
+import { useTheme } from "../../ThemeContext";
 import Clock from "./Clock";
 import TypingToggleTextList from "../Utils/TextList";
 import { quotes } from "../../Data/QuotesData";
@@ -94,16 +94,12 @@ const styles = stylex.create({
 });
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 767px)",
-  });
-
-  const { setCursorString } = useContext(ThemeContext);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const { setCursorString } = useTheme();
 
   const newQuotes = quotes.map((item) => item[0]);
   const linkQuotes = quotes.map((item) => item[1]);
 
-  // Hide StartBar on mobile screens
   if (isMobile) {
     return null;
   }
@@ -111,12 +107,8 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   return (
     <div {...stylex.props(styles.container)}>
       <StartButton
-        onMouseEnter={() => {
-          setCursorString("home page!");
-        }}
-        onMouseLeave={() => {
-          setCursorString("");
-        }}
+        onMouseEnter={() => setCursorString("home page!")}
+        onMouseLeave={() => setCursorString("")}
       />
       <div
         onClick={() => {
@@ -134,7 +126,7 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
             : styles.homeButtonInactive
         )}
       >
-        {desktopScreen === "𐙚 HOME" && "𐙚"} 𐙚 Home{" "}
+        𐙚 Home
       </div>
       <div
         {...stylex.props(
@@ -149,13 +141,12 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           setCursorString("");
         }}
       >
-        ッ <span {...stylex.props(styles.projectsText)}>Projects </span>
+        ッ <span {...stylex.props(styles.projectsText)}>Projects</span>
       </div>
       <div {...stylex.props(styles.quotesContainer)} id="desktop-only">
         <TypingToggleTextList
           textOptions={newQuotes}
           wrapper={false}
-          autoplay={false}
           order={true}
           typing={false}
           speed={30}
