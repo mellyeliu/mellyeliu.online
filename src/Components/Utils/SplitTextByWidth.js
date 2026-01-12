@@ -6,6 +6,7 @@ const SplitTextByWidth = ({
   backgroundColor,
   style,
   className,
+  ...props
 }) => {
   const containerRef = useRef(null);
   const [lines, setLines] = useState([]);
@@ -57,13 +58,11 @@ const SplitTextByWidth = ({
   return (
     <div ref={containerRef} style={{ lineHeight: "1px", textAlign: "center" }}>
       {lines.map((line, index) => (
-        <>
+        <React.Fragment key={index}>
           {" "}
-          <div key={index} style={style} className={className}>
-            {line}
-          </div>
+          <div style={style} className={className} {...props}>{line}</div>
           <span style={{ display: "block" }} />
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

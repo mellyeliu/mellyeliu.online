@@ -3,6 +3,13 @@ import PropTypes from "prop-types";
 import SplitTextByWidth from "../Utils/SplitTextByWidth";
 import { useMediaQuery } from "react-responsive";
 import * as stylex from "@stylexjs/stylex";
+import {
+  colors,
+  fonts,
+  radii,
+  shadows,
+  fontSizes,
+} from "../../styles/tokens.stylex";
 
 const DesktopIcon = ({
   src,
@@ -51,15 +58,15 @@ const DesktopIcon = ({
     image: {
       cursor: "grab",
       display: "block",
-      borderRadius: "5px",
+      borderRadius: radii.md,
       width: "100%",
       height: "100%",
       objectFit: "contain",
-      filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
+      filter: shadows.lg,
       userSelect: "none",
     },
     imageShadow: {
-      boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
+      boxShadow: shadows.sm,
     },
     imageDesktop: {
       width: "clamp(100px, 3vw, 122px)",
@@ -71,24 +78,28 @@ const DesktopIcon = ({
     },
     text: {
       fontWeight: 600,
-      color: "white",
-      fontFamily: "Arimo",
+      color: colors.white,
+      fontFamily: fonts.arimo,
       lineHeight: "14px",
-      filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
+      filter: shadows.md,
       textShadow: "0px 3px 3px rgba(0,0,0,0.4)",
       letterSpacing: "0.5px",
-      borderRadius: "2px",
-      padding: "2px",
+      borderRadius: radii.sm,
+      paddingTop: 2,
+      paddingRight: 2,
+      paddingBottom: 2,
+      paddingLeft: 2,
       display: "inline-block",
     },
     textMobile: {
-      fontSize: 14,
+      fontSize: fontSizes.md,
     },
     textDesktop: {
-      fontSize: 15,
+      fontSize: fontSizes.base,
     },
     textActive: {
-      backgroundColor: "#3443eb",
+      backgroundImage: "none",
+      backgroundColor: colors.accentBlue,
     },
   });
 
@@ -161,14 +172,6 @@ const DesktopIcon = ({
     setZIndex(newZIndex);
     setLocalZIndex(newZIndex);
 
-    // Update both image and text z-index
-    if (imageRef.current) {
-      imageRef.current.style.zIndex = newZIndex;
-    }
-    if (textRef.current) {
-      textRef.current.style.zIndex = newZIndex;
-    }
-
     timer = setTimeout(() => {
       if (clickCount === 1) {
         if (url) {
@@ -186,8 +189,10 @@ const DesktopIcon = ({
 
   const startDrag = (e) => {
     e.preventDefault();
+    const newZIndex = zIndex + 1;
     setDragging(true);
-    setZIndex(zIndex + 1);
+    setZIndex(newZIndex);
+    setLocalZIndex(newZIndex); // Update local z-index immediately
     setIsClicked(true);
 
     dragRef.current = {
@@ -196,14 +201,6 @@ const DesktopIcon = ({
       startY: e.clientY,
       startPosition: { ...position },
     };
-
-    // Update both image and text z-index
-    if (imageRef.current) {
-      imageRef.current.style.zIndex = zIndex + 1;
-    }
-    if (textRef.current) {
-      textRef.current.style.zIndex = zIndex + 1;
-    }
 
     document.addEventListener("mousemove", onDrag);
     document.addEventListener("mouseup", stopDrag);
@@ -301,12 +298,21 @@ const DesktopIcon = ({
             <SplitTextByWidth
               text={iconText}
               maxWidth={isMobile ? 75 : 80}
-              backgroundColor={"red"}
-              {...stylex.props(
-                styles.text,
-                isMobile ? styles.textMobile : styles.textDesktop,
-                dragging || isClicked ? styles.textActive : null
-              )}
+              style={{
+                fontWeight: 600,
+                color: "white",
+                fontFamily: "Arimo",
+                lineHeight: "14px",
+                filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
+                textShadow: "0px 3px 3px rgba(0,0,0,0.4)",
+                letterSpacing: "0.5px",
+                borderRadius: "2px",
+                padding: "2px",
+                display: "inline-block",
+                fontSize: isMobile ? 14 : 15,
+                backgroundColor:
+                  dragging || isClicked ? "#3443eb" : "transparent",
+              }}
             />
           </div>
         </div>

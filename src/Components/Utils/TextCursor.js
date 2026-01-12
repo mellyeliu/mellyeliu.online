@@ -1,5 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ThemeContext } from "../../ThemeContext";
+import * as stylex from "@stylexjs/stylex";
+
+const styles = stylex.create({
+  cursor: {
+    position: "fixed",
+    pointerEvents: "none",
+    zIndex: 1000000000000000,
+    fontSize: 16,
+    color: "black",
+    fontStyle: "italic",
+    display: "none",
+    textShadow:
+      "1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff",
+    transform: "translate(10px, -25px)",
+  },
+});
 
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -19,19 +35,10 @@ const CustomCursor = () => {
 
   return (
     <div
+      {...stylex.props(styles.cursor)}
       style={{
-        position: "fixed",
-        pointerEvents: "none",
-        zIndex: 1000000000000000,
-        fontSize: "16px",
-        color: "black",
-        fontStyle: "italic",
-        display: "none",
         left: `${position.x}px`,
-        textShadow:
-          "1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff",
         top: `${position.y}px`,
-        transform: "translate(10px, -25px)", // Offset the text from the mouse pointer
       }}
     >
       {cursorString}

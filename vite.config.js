@@ -1,30 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import stylex from "@stylexjs/unplugin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react({
-      include: "**/*.{jsx,tsx,js,ts}",
-      babel: {
-        plugins: [
-          [
-            "@stylexjs/babel-plugin",
-            {
-              dev: process.env.NODE_ENV === "development",
-              test: process.env.NODE_ENV === "test",
-              runtimeInjection: false,
-              treeshakeCompensation: true,
-              styleResolution: "application-order",
-              useLayers: false,
-              unstable_moduleResolution: {
-                type: "commonJS",
-              },
-            },
-          ],
-        ],
-      },
+    // StyleX plugin must come before React plugin to preserve Fast Refresh
+    stylex.vite({
+      useCSSLayers: false,
     }),
+    react(),
   ],
   esbuild: {
     loader: "jsx",

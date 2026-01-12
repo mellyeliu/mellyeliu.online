@@ -7,8 +7,259 @@ import { Screen } from "../../App";
 import { useMediaQuery } from "react-responsive";
 import BrowserIcons from "../Items/BrowserIcons";
 import ReactHtmlParser from "react-html-parser";
-import ProjectDetail from "../Items/ProjectDetail";
+import ProjectDetailMobile from "../Items/ProfileDetail";
 import PropTypes from "prop-types";
+import * as stylex from "@stylexjs/stylex";
+import { colors, fonts, radii, fontSizes } from "../../styles/tokens.stylex";
+
+const styles = stylex.create({
+  hvrGrow: {
+    display: "inline-block",
+    verticalAlign: "middle",
+    transform: {
+      default: "translateZ(0)",
+      ":hover": "scale(1.035)",
+      ":focus": "scale(1.035)",
+      ":active": "scale(1.035)",
+    },
+    boxShadow: "0 0 1px rgba(0, 0, 0, 0)",
+    backfaceVisibility: "hidden",
+    transitionDuration: "0.3s",
+    transitionProperty: "transform",
+  },
+  urlBarContainer: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "nowrap",
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderStyle: "solid",
+    borderColor: colors.black,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    height: 60,
+    justifyContent: "center",
+    position: "absolute",
+    top: 60,
+    backgroundImage: "none",
+    backgroundColor: colors.bgWhite,
+    zIndex: 100,
+    left: 0,
+  },
+  backHoverCircle: (left) => ({
+    position: "absolute",
+    top: 15,
+    left: left,
+    width: 30,
+    height: 30,
+    borderRadius: radii.full,
+    backgroundImage: "none",
+    backgroundColor: "#eee",
+    zIndex: -100,
+  }),
+  navPadding: {
+    padding: 18,
+  },
+  backArrow: {
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+  },
+  spacer: {
+    width: 15,
+  },
+  spacerLarge: {
+    width: 10,
+  },
+  forwardArrow: {
+    fill: "#bbb",
+  },
+  refreshContainer: {
+    height: 30,
+    top: 19,
+    position: "absolute",
+    width: 20,
+    display: "inline-block",
+    marginRight: 10,
+  },
+  refreshIcon: {
+    cursor: "pointer",
+  },
+  urlInputContainer: {
+    flexGrow: 1,
+    borderWidth: 0.5,
+    borderStyle: "solid",
+    borderColor: colors.black,
+    letterSpacing: 2,
+    marginTop: 15,
+    marginRight: 20,
+    marginBottom: 15,
+    marginLeft: 25,
+    height: 30,
+    float: "right",
+    color: colors.black,
+    fontFamily: fonts.serif,
+    fontStyle: "italic",
+    paddingLeft: 20,
+    borderRadius: radii.xl,
+    position: "relative",
+  },
+  urlInput: {
+    borderWidth: 0,
+    borderStyle: "none",
+    borderColor: "transparent",
+    backgroundImage: "none",
+    backgroundColor: "transparent",
+    padding: 0,
+    margin: 0,
+    fontFamily: fonts.serif,
+    outline: "none",
+    color: "inherit",
+    font: "inherit",
+    cursor: "text",
+    width: "100%",
+  },
+  favouriteButton: {
+    position: "absolute",
+    top: "50%",
+    right: 10,
+    transform: "translateY(-50%)",
+    cursor: "pointer",
+    fontStyle: "normal",
+    fontSize: "1.2em",
+  },
+  favouriteButtonMobile: {
+    display: "none",
+  },
+  favouriteButtonDesktop: {
+    display: "block",
+  },
+  layoutToggle: {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: colors.black,
+    backgroundImage: "none",
+    backgroundColor: colors.bgWhite,
+    paddingTop: 4,
+    paddingRight: 8,
+    paddingBottom: 4,
+    paddingLeft: 8,
+    cursor: "pointer",
+    borderRadius: radii.lg,
+    fontSize: fontSizes.sm,
+  },
+  layoutToggleMobile: {
+    right: 12,
+  },
+  layoutToggleDesktop: {
+    right: 48,
+  },
+  portfolioWrapperMobile: {
+    paddingTop: 70,
+    paddingRight: 10,
+    paddingBottom: 100,
+    paddingLeft: 10,
+    minHeight: "calc(100vh - 180px)",
+  },
+  portfolioWrapperDesktop: {
+    paddingTop: 50,
+    paddingRight: 80,
+    paddingBottom: 50,
+    paddingLeft: 80,
+    minHeight: "calc(100vh - 200px)",
+  },
+  projectImage: {
+    height: 200,
+    transform: "scale(0.9)",
+  },
+  projectMetaContainer: {
+    height: 100,
+    width: "100%",
+  },
+  projectMeta: {
+    paddingBottom: 18,
+    paddingLeft: 18,
+    paddingRight: 18,
+  },
+  collaboratorLink: {
+    display: "inline",
+    color: "inherit",
+  },
+  madeWith: {
+    paddingTop: 8,
+  },
+  projectItem: {
+    paddingTop: 0,
+    paddingRight: 15,
+    paddingBottom: 0,
+    paddingLeft: 15,
+  },
+  projectLink: {
+    display: "block",
+    cursor: "pointer",
+  },
+  projectNoLink: {
+    cursor: "default",
+  },
+  sectionContainer: {
+    height: "100%",
+    backgroundImage: "none",
+    backgroundColor: colors.bgWhite,
+    width: "100%",
+    maxWidth: "100%",
+  },
+  tagline: {
+    marginBottom: -15,
+  },
+  columnsContainer: {
+    height: "100%",
+  },
+  tabList: {
+    display: "flex",
+    flexWrap: "nowrap",
+    alignItems: "center",
+    gap: 0,
+  },
+  tabSpacer: {
+    height: 5,
+  },
+  tab: {
+    zIndex: 100000,
+  },
+  projectTab: {
+    zIndex: 100000,
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+    paddingRight: 10,
+    paddingLeft: 10,
+    whiteSpace: "nowrap",
+  },
+  projectTabTitle: {
+    flex: 1,
+    textAlign: "center",
+  },
+  closeButton: {
+    borderWidth: 0,
+    borderStyle: "none",
+    borderColor: "transparent",
+    backgroundImage: "none",
+    backgroundColor: "transparent",
+    paddingTop: 0,
+    paddingRight: 6,
+    paddingBottom: 0,
+    paddingLeft: 6,
+    borderRadius: radii.sm,
+    cursor: "pointer",
+    fontSize: fontSizes.sm,
+    lineHeight: "18px",
+    color: "inherit",
+    position: "relative",
+    right: 0,
+  },
+});
 
 const Portfolio = ({ setDesktopScreen }) => {
   const isMobile = useMediaQuery({
@@ -23,28 +274,24 @@ const Portfolio = ({ setDesktopScreen }) => {
   const [activeTab, setActiveTab] = useState("one");
   const tabTwoRef = useRef(null);
   const [backHover, setBackHover] = useState(0);
+  const [useMobileDetail, setUseMobileDetail] = useState(true);
 
   // Map URL paths to tab IDs
-  const getTabFromPath = (pathname) => {
-    if (pathname.startsWith("/portfolio/projects/")) {
-      return "one";
-    }
-    if (pathname === "/portfolio" || pathname === "/portfolio/") {
-      return "one"; // All tab
-    } else if (pathname === "/portfolio/code") {
-      return "two";
-    } else if (pathname === "/portfolio/design") {
-      return "three";
-    } else if (pathname === "/portfolio/games") {
-      return "four";
-    } else if (pathname === "/portfolio/convos") {
-      return "five";
-    }
-    return "one"; // Default to All
+  const getTabFromPath = (pathname, projectSlug) => {
+    if (projectSlug) return `project-${projectSlug}`;
+    if (pathname === "/portfolio" || pathname === "/portfolio/") return "one";
+    if (pathname === "/portfolio/code") return "two";
+    if (pathname === "/portfolio/design") return "three";
+    if (pathname === "/portfolio/games") return "four";
+    if (pathname === "/portfolio/convos") return "five";
+    return "one";
   };
 
   // Map tab IDs to URL paths
   const getPathFromTab = (tabId) => {
+    if (tabId.startsWith("project-") && activeProject) {
+      return `/portfolio/projects/${activeProject.slug}`;
+    }
     switch (tabId) {
       case "one":
         return "/portfolio";
@@ -63,7 +310,11 @@ const Portfolio = ({ setDesktopScreen }) => {
 
   // Update active tab based on URL
   useEffect(() => {
-    const tabFromPath = getTabFromPath(location.pathname);
+    const projectMatchInner = location.pathname.match(
+      /^\/portfolio\/projects\/([^/]+)\/?$/
+    );
+    const slug = projectMatchInner ? projectMatchInner[1] : null;
+    const tabFromPath = getTabFromPath(location.pathname, slug);
     setActiveTab(tabFromPath);
   }, [location.pathname]);
 
@@ -75,7 +326,7 @@ const Portfolio = ({ setDesktopScreen }) => {
 
   const projectsWithMeta = useMemo(() => {
     const placeholderParagraph =
-      "Project details coming soon. This is placeholder copy describing the goals, approach, and outcomes. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. \n\nHere we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time.\n\n Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. We’ll also add notes about launch learnings and follow-ups so readers can see how the project grew. ";
+      "Project details coming soon. This is placeholder copy describing the goals, approach, and outcomes. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. \n\nHere we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time.\n\n Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. We'll also add notes about launch learnings and follow-ups so readers can see how the project grew. ";
     return PortfolioData.portfolio.projects.map((project) => {
       const slug = project.slug || slugify(project.title);
       return {
@@ -103,6 +354,7 @@ const Portfolio = ({ setDesktopScreen }) => {
   const activeProject = projectMatch
     ? projectsWithMeta.find((p) => p.slug === projectMatch[1])
     : null;
+  const projectTabId = activeProject ? `project-${activeProject.slug}` : null;
 
   useEffect(() => {
     if (projectMatch && !activeProject) {
@@ -128,54 +380,22 @@ const Portfolio = ({ setDesktopScreen }) => {
     history.push(newPath);
   };
 
-  const urlBar = (tab, tabContent, useWrapper = true) => {
+  const urlBar = (
+    tab,
+    tabContent,
+    useWrapper = true,
+    showLayoutToggle = false
+  ) => {
     return (
       <>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexWrap: "nowrap",
-            borderBottom: "0.5px solid black",
-            height: 60,
-            justifyContent: "center",
-            position: "absolute",
-            top: 60,
-            backgroundColor: "white",
-            borderTop: "0.5px solid black",
-            zIndex: 100,
-            left: 0,
-          }}
-        >
+        <div {...stylex.props(styles.urlBarContainer)}>
           {backHover === 1 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "15px",
-                left: "12px",
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                backgroundColor: "#eee",
-                zIndex: -100,
-              }}
-            />
+            <div {...stylex.props(styles.backHoverCircle(12))} />
           )}
           {backHover === 3 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "15px",
-                left: "102px",
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                backgroundColor: "#eee",
-                zIndex: -100,
-              }}
-            />
+            <div {...stylex.props(styles.backHoverCircle(102))} />
           )}
-          <div style={{ padding: 18 }}>
+          <div {...stylex.props(styles.navPadding)}>
             <svg
               width="25"
               height="30"
@@ -183,26 +403,23 @@ const Portfolio = ({ setDesktopScreen }) => {
                 setDesktopScreen(Screen.HOME);
               }}
               xmlns="http://www.w3.org/2000/svg"
-              style={{
-                cursor: "pointer",
-                transition: "background-color 0.3s ease",
-              }}
+              {...stylex.props(styles.backArrow)}
               onMouseEnter={() => setBackHover(1)}
               onMouseLeave={() => setBackHover(0)}
             >
               <path
                 d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.528 6.236h-12.884v1h21.883z"
-                transform="scale(-1, 1) translate(-24, 0)" // Horizontal reflection of the SVG
-                fill="black" // Ensures the arrow stays black
+                transform="scale(-1, 1) translate(-24, 0)"
+                fill="black"
               />
             </svg>
 
-            <span style={{ width: 15 }}>&nbsp;&nbsp;&nbsp;</span>
+            <span {...stylex.props(styles.spacer)}>&nbsp;&nbsp;&nbsp;</span>
             <svg
               width="30"
               height="30"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ fill: "#bbb" }}
+              {...stylex.props(styles.forwardArrow)}
               onMouseEnter={() => setBackHover(2)}
               onMouseLeave={() => setBackHover(0)}
             >
@@ -211,23 +428,17 @@ const Portfolio = ({ setDesktopScreen }) => {
                 transform="translate(-4, 0)"
               />
             </svg>
-            <span style={{ width: 10 }}> &nbsp; &nbsp; &nbsp;</span>
-            <div
-              style={{
-                height: 30,
-                top: 19,
-                position: "absolute",
-                width: 20,
-                display: "inline-block",
-                marginRight: 10,
-              }}
-            >
+            <span {...stylex.props(styles.spacerLarge)}>
+              {" "}
+              &nbsp; &nbsp; &nbsp;
+            </span>
+            <div {...stylex.props(styles.refreshContainer)}>
               <svg
                 width="17"
                 height="17"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ cursor: "pointer" }}
+                {...stylex.props(styles.refreshIcon)}
                 onMouseEnter={() => setBackHover(3)}
                 onMouseLeave={() => setBackHover(0)}
               >
@@ -235,55 +446,38 @@ const Portfolio = ({ setDesktopScreen }) => {
               </svg>
             </div>
           </div>
-          <div
-            style={{
-              flexGrow: 1,
-              border: "0.5px solid black",
-              letterSpacing: 2,
-              margin: "15px 20px 15px 25px",
-              height: 30,
-              float: "right",
-              color: "black",
-              fontFamily: "Cormorant Garamond",
-              fontStyle: "italic",
-              paddingLeft: 20,
-              borderRadius: 20,
-              position: "relative",
-            }}
-          >
+          <div {...stylex.props(styles.urlInputContainer)}>
             {" "}
             <input
               type="text"
               onChange={handleInputChange}
-              style={{
-                border: "none",
-                background: "none",
-                padding: "0",
-                margin: "0",
-                fontFamily: "Cormorant Garamond",
-                outline: "none",
-                color: "inherit",
-                font: "inherit",
-                cursor: "text",
-                width: "100%",
-              }}
+              {...stylex.props(styles.urlInput)}
               defaultValue={`C://Users/mellyeliu/Projects/${tab}`}
             />
             <div
               onClick={handleFavourite}
-              style={{
-                position: "absolute",
-                top: "50%",
-                display: isMobile ? "none" : "block",
-                right: "10px",
-                transform: "translateY(-50%)",
-                cursor: "pointer",
-                fontStyle: "normal",
-                fontSize: "1.2em",
-              }}
+              {...stylex.props(
+                styles.favouriteButton,
+                isMobile
+                  ? styles.favouriteButtonMobile
+                  : styles.favouriteButtonDesktop
+              )}
             >
               {favourite}
             </div>
+            {showLayoutToggle && (
+              <button
+                onClick={() => setUseMobileDetail((prev) => !prev)}
+                {...stylex.props(
+                  styles.layoutToggle,
+                  isMobile
+                    ? styles.layoutToggleMobile
+                    : styles.layoutToggleDesktop
+                )}
+              >
+                {useMobileDetail ? "Desktop layout" : "Alt layout"}
+              </button>
+            )}
           </div>
         </div>
         {useWrapper ? (
@@ -328,10 +522,7 @@ const Portfolio = ({ setDesktopScreen }) => {
             draggable="false"
             alt={projects.title}
             src={projectImage}
-            style={{
-              height: 200,
-              transform: "scale(0.9)",
-            }}
+            {...stylex.props(styles.projectImage)}
           />
           <div style={{ height: 100, width: "100%" }}>
             <div
@@ -357,10 +548,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="collab"
-                          style={{
-                            display: "inline",
-                            color: "inherit",
-                          }}
+                          style={{ display: "inline", color: "inherit" }}
                         >
                           {collaborator.name}
                         </a>
@@ -368,7 +556,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                       .reduce((prev, curr) => [prev, ", ", curr])
                   : null}
               </p>
-              <p style={{ paddingTop: 8 }}>
+              <p {...stylex.props(styles.madeWith)}>
                 Made with {projects.languages}, &lt;3
               </p>
             </div>
@@ -381,18 +569,18 @@ const Portfolio = ({ setDesktopScreen }) => {
           style={{ padding: "0 15px" }}
           className="two columns portfolio-item"
         >
-          <div className="hvr-grow">
+          <div {...stylex.props(styles.hvrGrow)}>
             {projects.url ? (
               <a
                 target="_blank"
                 href={projects.url}
                 rel="noopener noreferrer"
-                style={{ display: "block", cursor: "pointer" }}
+                {...stylex.props(styles.projectLink)}
               >
                 {project}
               </a>
             ) : (
-              <div style={{ cursor: "default" }}>{project}</div>
+              <div {...stylex.props(styles.projectNoLink)}>{project}</div>
             )}
           </div>
         </div>
@@ -421,108 +609,113 @@ const Portfolio = ({ setDesktopScreen }) => {
         </Fade>
         <div className="twelve columns collapsed" style={{ height: "100%" }}>
           <Tabs defaultTab={activeTab}>
-            <TabList>
-              <div style={{ height: 5 }}></div>
+            <TabList {...stylex.props(styles.tabList)}>
+              <div {...stylex.props(styles.tabSpacer)}></div>
               <Tab
-                style={{ zIndex: 100000 }}
+                {...stylex.props(styles.tab)}
                 tabFor="one"
                 onClick={() => handleTabChange("one")}
               >
                 {" "}
                 All ⋆𐙚₊˚⊹♡{" "}
               </Tab>
-              <Tab
-                selected={activeTab === "two"}
-                ref={tabTwoRef}
-                style={{ zIndex: 100000 }}
-                tabFor="two"
-                onClick={() => handleTabChange("two")}
-              >
-                {" "}
-                Code ‧&lt;₊˚🔗✩ /&gt;₊
-              </Tab>
-              <Tab
-                style={{ zIndex: 100000 }}
-                tabFor="three"
-                onClick={() => handleTabChange("three")}
-              >
-                {" "}
-                Design ‧⊹˚🕊️☽₊⟡⋆
-              </Tab>
-              <Tab
-                style={{ zIndex: 100000 }}
-                tabFor="four"
-                onClick={() => handleTabChange("four")}
-              >
-                {" "}
-                Games ‧₊🎧ྀི☾⋆₊⟡⁺.
-              </Tab>
-              <Tab
-                style={{ zIndex: 100000 }}
-                tabFor="five"
-                onClick={() => handleTabChange("five")}
-              >
-                {" "}
-                Convos ⁺.💭.˚✩˚⊹‧
-              </Tab>
+              {activeProject ? (
+                <Tab
+                  {...stylex.props(styles.projectTab)}
+                  tabFor={projectTabId}
+                  onClick={() => handleTabChange(projectTabId)}
+                >
+                  <span {...stylex.props(styles.projectTabTitle)}>
+                    {activeProject.title}
+                  </span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      history.push("/portfolio");
+                      setActiveTab("one");
+                    }}
+                    {...stylex.props(styles.closeButton)}
+                  >
+                    ×
+                  </button>
+                </Tab>
+              ) : (
+                <>
+                  <Tab
+                    selected={activeTab === "two"}
+                    ref={tabTwoRef}
+                    {...stylex.props(styles.tab)}
+                    tabFor="two"
+                    onClick={() => handleTabChange("two")}
+                  >
+                    {" "}
+                    Code ‧&lt;₊˚🔗✩ /&gt;₊
+                  </Tab>
+                  <Tab
+                    {...stylex.props(styles.tab)}
+                    tabFor="three"
+                    onClick={() => handleTabChange("three")}
+                  >
+                    {" "}
+                    Design ‧⊹˚🕊️☽₊⟡⋆
+                  </Tab>
+                  <Tab
+                    {...stylex.props(styles.tab)}
+                    tabFor="four"
+                    onClick={() => handleTabChange("four")}
+                  >
+                    {" "}
+                    Games ‧₊🎧ྀི☾⋆₊⟡⁺.
+                  </Tab>
+                  <Tab
+                    {...stylex.props(styles.tab)}
+                    tabFor="five"
+                    onClick={() => handleTabChange("five")}
+                  >
+                    {" "}
+                    Convos ⁺.💭.˚✩˚⊹‧
+                  </Tab>
+                </>
+              )}
               <BrowserIcons setDesktopScreen={setDesktopScreen} />
-              {/* <span className="browsero">○ ○ ○</span> */}
             </TabList>
             <TabPanel tabId="one">
               {urlBar(
                 "All",
                 activeProject ? (
-                  <ProjectDetail project={activeProject} />
+                  <ProjectDetailMobile project={activeProject} />
                 ) : (
                   projects
                 ),
-                !activeProject
+                !activeProject,
+                !!activeProject
               )}
             </TabPanel>
-            <TabPanel tabId="two">
-              {urlBar(
-                "Code",
-                activeProject ? (
-                  <ProjectDetail project={activeProject} />
-                ) : (
-                  code
-                ),
-                !activeProject
-              )}
-            </TabPanel>
-            <TabPanel tabId="three">
-              {urlBar(
-                "Design",
-                activeProject ? (
-                  <ProjectDetail project={activeProject} />
-                ) : (
-                  design
-                ),
-                !activeProject
-              )}
-            </TabPanel>
-            <TabPanel tabId="four">
-              {urlBar(
-                "Games",
-                activeProject ? (
-                  <ProjectDetail project={activeProject} />
-                ) : (
-                  games
-                ),
-                !activeProject
-              )}
-            </TabPanel>
-            <TabPanel tabId="five">
-              {urlBar(
-                "Conversation",
-                activeProject ? (
-                  <ProjectDetail project={activeProject} />
-                ) : (
-                  conversation
-                ),
-                !activeProject
-              )}
-            </TabPanel>
+            {activeProject ? (
+              <TabPanel tabId={projectTabId}>
+                {urlBar(
+                  activeProject.title,
+                  <ProjectDetailMobile project={activeProject} />,
+                  false,
+                  true
+                )}
+              </TabPanel>
+            ) : (
+              <>
+                <TabPanel tabId="two">
+                  {urlBar("Code", code, true, false)}
+                </TabPanel>
+                <TabPanel tabId="three">
+                  {urlBar("Design", design, true, false)}
+                </TabPanel>
+                <TabPanel tabId="four">
+                  {urlBar("Games", games, true, false)}
+                </TabPanel>
+                <TabPanel tabId="five">
+                  {urlBar("Conversation", conversation, true, false)}
+                </TabPanel>
+              </>
+            )}
           </Tabs>
         </div>
       </div>

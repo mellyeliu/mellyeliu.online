@@ -6,6 +6,92 @@ import { quotes } from "../../Data/QuotesData";
 import { useMediaQuery } from "react-responsive";
 import StartButton from "./StartButton";
 import PropTypes from "prop-types";
+import * as stylex from "@stylexjs/stylex";
+import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
+
+const styles = stylex.create({
+  hvrShade: {
+    backgroundColor: {
+      default: "transparent",
+      ":hover": "rgb(223, 223, 223)",
+    },
+  },
+  container: {
+    position: "absolute",
+    zIndex: 110000000,
+    backgroundImage: "none",
+    backgroundColor: colors.bgGray,
+    height: 60,
+    width: "100%",
+    padding: 0,
+    display: "flex",
+    fontFamily: fonts.serif,
+    fontSize: 16,
+    letterSpacing: 1,
+    overflow: "hidden",
+    bottom: 0,
+    borderWidth: 0.5,
+    borderStyle: "solid",
+    borderColor: colors.black,
+  },
+  projectsText: {
+    fontWeight: 500,
+  },
+  quotesContainer: {
+    textAlign: "right",
+    position: "absolute",
+    right: 130,
+    height: 60,
+    paddingTop: 15,
+    maxWidth: "50%",
+  },
+  quoteStyle: {
+    letterSpacing: -0.2,
+    marginBottom: 5,
+    fontFamily: fonts.serif,
+    fontWeight: 300,
+    fontStyle: "italic",
+    fontSize: fontSizes.base,
+    color: colors.black,
+    maxHeight: 40,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    display: "block",
+  },
+  homeButton: {
+    paddingTop: 15,
+    paddingRight: 15,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    color: colors.black,
+    fontWeight: 500,
+    fontStyle: "italic",
+    cursor: "pointer",
+  },
+  homeButtonActive: {
+    backgroundColor: colors.bgHover,
+  },
+  homeButtonInactive: {
+    backgroundColor: "transparent",
+  },
+  projectsButton: {
+    paddingTop: 15,
+    paddingRight: 10,
+    paddingBottom: 15,
+    paddingLeft: 10,
+    color: colors.black,
+    fontStyle: "italic",
+    fontSize: fontSizes.lg,
+    cursor: "pointer",
+  },
+  projectsButtonActive: {
+    backgroundColor: colors.bgHover,
+  },
+  projectsButtonInactive: {
+    backgroundColor: "transparent",
+  },
+});
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const isMobile = useMediaQuery({
@@ -17,37 +103,13 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const newQuotes = quotes.map((item) => item[0]);
   const linkQuotes = quotes.map((item) => item[1]);
 
-  const tabStyle = {
-    padding: "15px 10px",
-    color: "black",
-    fontStyle: "italic",
-    fontSize: 17,
-    cursor: "pointer",
-  };
-
   // Hide StartBar on mobile screens
   if (isMobile) {
     return null;
   }
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        zIndex: 110000000,
-        background: "rgb(241 241 241)",
-        height: 60,
-        width: "100%",
-        padding: "0px",
-        display: "flex",
-        fontFamily: "Cormorant Garamond",
-        fontSize: 16,
-        letterSpacing: 1,
-        overflow: "hidden",
-        bottom: 0,
-        border: "0.5px solid black",
-      }}
-    >
+    <div {...stylex.props(styles.container)}>
       <StartButton
         onMouseEnter={() => {
           setCursorString("home page!");
@@ -64,44 +126,33 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           setDesktopScreen("HOME");
           setCursorString("");
         }}
-        style={{
-          padding: "15px 15px 5px 15px",
-          color: "black",
-          fontWeight: "500",
-          fontStyle: "italic",
-          cursor: "pointer",
-          background: desktopScreen === "HOME" && "rgb(225 225 225)",
-        }}
-        className="hvr-shade"
+        {...stylex.props(
+          styles.hvrShade,
+          styles.homeButton,
+          desktopScreen === "HOME"
+            ? styles.homeButtonActive
+            : styles.homeButtonInactive
+        )}
       >
         {desktopScreen === "𐙚 HOME" && "𐙚"} 𐙚 Home{" "}
       </div>
       <div
-        style={{
-          ...tabStyle,
-          background: desktopScreen === "PORTFOLIO" && "rgb(225 225 225)",
-        }}
-        className="hvr-shade"
+        {...stylex.props(
+          styles.hvrShade,
+          styles.projectsButton,
+          desktopScreen === "PORTFOLIO"
+            ? styles.projectsButtonActive
+            : styles.projectsButtonInactive
+        )}
         onClick={() => {
           setDesktopScreen("PORTFOLIO");
           setCursorString("");
         }}
       >
-        ッ <span style={{ fontWeight: 500 }}>Projects </span>
+        ッ <span {...stylex.props(styles.projectsText)}>Projects </span>
       </div>
-      <div
-        style={{
-          textAlign: "right",
-          position: "absolute",
-          right: "130px",
-          height: 60,
-          paddingTop: 15,
-          maxWidth: "50%",
-        }}
-        id="desktop-only"
-      >
+      <div {...stylex.props(styles.quotesContainer)} id="desktop-only">
         <TypingToggleTextList
-          className="control"
           textOptions={newQuotes}
           wrapper={false}
           autoplay={false}
@@ -110,21 +161,8 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
           speed={30}
           autoplaySpeed={50000}
           links={linkQuotes}
-          style={{
-            letterSpacing: -0.2,
-            marginBottom: 5,
-            fontFamily: "Cormorant Garamond",
-            fontWeight: 300,
-            fontStyle: "italic",
-            fontSize: 15,
-            color: "black",
-            maxHeight: "40px",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            display: "block",
-          }}
-        ></TypingToggleTextList>{" "}
+          xstyle={styles.quoteStyle}
+        />
       </div>
       <Clock />
     </div>

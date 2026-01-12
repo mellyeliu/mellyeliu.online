@@ -17,8 +17,17 @@ export const Screen = {
   PORTFOLIO: "PORTFOLIO",
 };
 
-const App = () => {
+const styles = stylex.create({
+  app: {
+    overflow: "hidden",
+  },
+  appContainer: (height) => ({
+    overflow: "hidden",
+    height: `${height}px`,
+  }),
+});
 
+const App = () => {
   const location = useLocation();
   const history = useHistory();
   const [isFoldersOff, setisFoldersOff] = useState(false);
@@ -66,10 +75,7 @@ const App = () => {
             <TextCursor />
             <div
               className={`App ${theme === "dark" ? "" : ""}`}
-              style={{
-                overflow: "hidden",
-                height: `${windowHeight}px`,
-              }}
+              {...stylex.props(styles.appContainer(windowHeight))}
             >
               {!isFoldersOff && desktopScreen === Screen.HOME && <NameTag />}
               <Switch>
@@ -84,7 +90,6 @@ const App = () => {
                 </Route>
                 <Route path="/portfolio">
                   <Portfolio
-                    style={{ zIndex: 1000000, position: "relative" }}
                     data={PortfolioData.portfolio}
                     setDesktopScreen={setDesktopScreen}
                   />

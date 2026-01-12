@@ -1,5 +1,50 @@
 import React, { useState } from "react";
 import { Screen } from "../../App";
+import * as stylex from "@stylexjs/stylex";
+import { colors, radii } from "../../styles/tokens.stylex";
+
+const styles = stylex.create({
+  container: {
+    cursor: "pointer",
+  },
+  iconBase: {
+    display: "inline-block",
+    position: "relative",
+    width: 16,
+    height: 16,
+    textAlign: "center",
+    lineHeight: "16px",
+    marginRight: 5,
+  },
+  iconDisabled: {
+    cursor: "not-allowed",
+  },
+  iconClickable: {
+    cursor: "pointer",
+  },
+  hoverCircle: {
+    position: "absolute",
+    top: 3,
+    left: 2.5,
+    width: "65%",
+    height: "65%",
+    borderRadius: radii.full,
+    opacity: 1,
+    zIndex: -1,
+  },
+  greenCircle: {
+    backgroundImage: "none",
+    backgroundColor: colors.iconGreen,
+  },
+  yellowCircle: {
+    backgroundImage: "none",
+    backgroundColor: colors.iconYellow,
+  },
+  redCircle: {
+    backgroundImage: "none",
+    backgroundColor: colors.iconRed,
+  },
+});
 
 const BrowserIcons = ({ setDesktopScreen }) => {
   const [hovered, setHovered] = useState(false);
@@ -23,95 +68,31 @@ const BrowserIcons = ({ setDesktopScreen }) => {
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      <span
-        style={{
-          display: "inline-block",
-          position: "relative",
-          width: "16px",
-          height: "16px",
-          textAlign: "center",
-          lineHeight: "16px",
-          cursor: "not-allowed",
-          marginRight: "5px",
-        }}
-      >
+      <span {...stylex.props(styles.iconBase, styles.iconDisabled)}>
         ○
         {hovered && (
           <span
-            style={{
-              content: "",
-              position: "absolute",
-              top: 3,
-              left: 2.5,
-              cursor: "not-allowed",
-              width: "65%",
-              height: "65%",
-              borderRadius: "50%",
-              backgroundColor: "#00CA4E",
-              opacity: 1,
-              zIndex: -1,
-            }}
+            {...stylex.props(
+              styles.hoverCircle,
+              styles.greenCircle,
+              styles.iconDisabled
+            )}
           />
         )}
       </span>
-      <span
-        style={{
-          display: "inline-block",
-          position: "relative",
-          width: "16px",
-          height: "16px",
-          cursor: "not-allowed",
-          textAlign: "center",
-          lineHeight: "16px",
-          marginRight: "5px",
-        }}
-      >
+      <span {...stylex.props(styles.iconBase, styles.iconDisabled)}>
         ○
         {hovered && (
-          <span
-            style={{
-              content: "",
-              position: "absolute",
-              top: 3,
-              left: 2.5,
-              width: "65%",
-              height: "65%",
-              borderRadius: "50%",
-              backgroundColor: "#FFBD44",
-              opacity: 1,
-              zIndex: -1,
-            }}
-          />
+          <span {...stylex.props(styles.hoverCircle, styles.yellowCircle)} />
         )}
       </span>
       <span
-        style={{
-          cursor: "pointer",
-          display: "inline-block",
-          position: "relative",
-          width: "16px",
-          height: "16px",
-          textAlign: "center",
-          lineHeight: "16px",
-        }}
+        {...stylex.props(styles.iconBase, styles.iconClickable)}
         onClick={handleClick}
       >
         ○
         {hovered && (
-          <span
-            style={{
-              content: "",
-              position: "absolute",
-              top: 3,
-              left: 2.5,
-              width: "65%",
-              height: "65%",
-              borderRadius: "50%",
-              backgroundColor: "#FF605C",
-              opacity: 1,
-              zIndex: -1,
-            }}
-          />
+          <span {...stylex.props(styles.hoverCircle, styles.redCircle)} />
         )}
       </span>
     </span>

@@ -1,5 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import * as stylex from "@stylexjs/stylex";
+
+const styles = stylex.create({
+  container: {
+    width: "auto",
+    height: "auto",
+    textAlign: "center",
+    overflow: "hidden",
+  },
+});
 
 const Popup = ({
   src,
@@ -190,32 +200,25 @@ const Popup = ({
     e.target.style.cursor = "grab";
   };
 
-  const imageContainerStyle = {
-    width: "auto",
-    height: "auto",
-    textAlign: "center",
-    overflow: "hidden",
-  };
-
   return (
-    <div style={imageContainerStyle}>
+    <div {...stylex.props(styles.container)}>
       {isWidthCalculated && (
         <div
           style={{
             cursor: "grab",
             position: "absolute",
-            left: `${(position.x * width) / 100}px`,
             zIndex: 1,
-            top: `${position.y}%`,
             filter: "drop-shadow(8px 8px 10px rgba(0,0,0,0.3))",
             boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
             userSelect: "none",
-            borderRadius: "20px",
+            borderRadius: 20,
             transition: "transform 0.3s ease-in-out",
             transformOrigin: "top left",
-            backgroundImage: `url(${src})`,
-            backgroundSize: isMobile ? "cover" : "cover",
+            backgroundSize: "cover",
             backgroundPosition: "center",
+            left: `${(position.x * width) / 100}px`,
+            top: `${position.y}%`,
+            backgroundImage: `url(${src})`,
             ...imageSize,
           }}
           className="draggableImage"

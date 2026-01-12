@@ -10,6 +10,17 @@ import { Screen } from "../../App";
 import Popup from "../Items/Popup";
 import { useMediaQuery } from "react-responsive";
 import PropTypes from "prop-types";
+import * as stylex from "@stylexjs/stylex";
+
+const styles = stylex.create({
+  projectsButton: {
+    zIndex: 1000,
+    cursor: "pointer",
+  },
+  headerImage: {
+    opacity: 0,
+  },
+});
 
 const Header = (props) => {
   const isMobile = useMediaQuery({
@@ -238,10 +249,7 @@ const Header = (props) => {
               }}
             >
               <span
-                style={{
-                  zIndex: 1000,
-                  cursor: "pointer",
-                }}
+                {...stylex.props(styles.projectsButton)}
                 id="mobile-only"
                 onMouseEnter={handleFullscreenHoverChange}
                 onMouseLeave={handleFullscreenHoverChange}
@@ -256,13 +264,7 @@ const Header = (props) => {
                 props.setisFoldersOff(!props.isFoldersOff);
               }}
             >
-              <span
-                style={{
-                  zIndex: 1000,
-                  cursor: "pointer",
-                }}
-                id="mobile-only"
-              >
+              <span {...stylex.props(styles.projectsButton)} id="mobile-only">
                 &#40; Menus &#41;
               </span>
             </div>
@@ -298,7 +300,7 @@ const Header = (props) => {
             </div>
             <div className="hover-container" ref={parentRef}>
               <img
-                style={{ opacity: 0 }}
+                {...stylex.props(styles.headerImage)}
                 id="headerpic"
                 draggable="false"
                 src={photoData.image}

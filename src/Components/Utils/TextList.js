@@ -1,9 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import { selfFacts } from "../../Data/QuotesData";
 import { ThemeContext } from "../../ThemeContext";
+import * as stylex from "@stylexjs/stylex";
+
+const styles = stylex.create({
+  hvrLine: {
+    textDecoration: {
+      default: "none",
+      ":hover": "underline",
+    },
+  },
+});
 
 const TextList = ({
   style,
+  xstyle,
   wrapper = true,
   textOptions = selfFacts,
   speed = 50,
@@ -46,14 +57,6 @@ const TextList = ({
       while (ids.length) cancelAnimationFrame(ids.pop());
     };
   }, [factIndex]);
-
-  const styles =
-    typing === false
-      ? {
-          transition: shouldAnimate ? "opacity 0.25s ease-in-out" : "none",
-          opacity: isVisible ? 1 : 0,
-        }
-      : {};
 
   useEffect(() => {
     let typingInterval;
@@ -141,15 +144,20 @@ const TextList = ({
     }
   };
 
+  // Dynamic styles that need runtime values
+  const dynamicStyle =
+    typing === false
+      ? {
+          transition: shouldAnimate ? "opacity 0.25s ease-in-out" : "none",
+          opacity: isVisible ? 1 : 0,
+        }
+      : {};
+
   return (
     <span
-      style={{
-        ...style,
-        cursor: "pointer",
-        ...styles,
-      }}
+      {...stylex.props(styles.hvrLine, xstyle)}
+      style={{ ...style, ...dynamicStyle, cursor: "pointer" }}
       onClick={handleClick}
-      className="hvr-line"
     >
       {typing === false
         ? wrapper === true
@@ -161,7 +169,7 @@ const TextList = ({
       &nbsp;
       {links.length > 0 && (
         <a
-          className="hvr-line"
+          {...stylex.props(styles.hvrLine)}
           href={links[factIndex]}
           target="_blank"
           rel="noopener noreferrer"

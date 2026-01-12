@@ -9,7 +9,7 @@ const styles = stylex.create({
     gap: 12,
     width: "100%",
     height: "100%",
-    minHeight: "calc(100vh - 140px)", // fill viewport minus nav/start bar area
+    minHeight: "calc(100vh - 140px)",
     color: "#000",
   },
   topBar: {
@@ -19,16 +19,28 @@ const styles = stylex.create({
   },
   backButton: {
     cursor: "pointer",
-    border: "1px solid black",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "black",
     borderRadius: 6,
-    padding: "6px 10px",
+    paddingTop: 6,
+    paddingRight: 10,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    backgroundImage: "none",
     backgroundColor: "white",
   },
   linkButton: {
     cursor: "pointer",
-    border: "1px solid black",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "black",
     borderRadius: 6,
-    padding: "6px 10px",
+    paddingTop: 6,
+    paddingRight: 10,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    backgroundImage: "none",
     backgroundColor: "#f5f5f5",
     textDecoration: "none",
     color: "black",
@@ -55,11 +67,11 @@ const styles = stylex.create({
   image: {
     width: "100%",
     height: "auto",
-    // border: "0.5px solid #000",
     objectFit: "cover",
   },
   divider: {
     width: 1,
+    backgroundImage: "none",
     backgroundColor: "black",
     opacity: 0.5,
     alignSelf: "stretch",
@@ -72,7 +84,9 @@ const styles = stylex.create({
     display: "flex",
     flexDirection: "column",
     gap: 16,
-    borderLeft: "0.5px solid black",
+    borderLeftWidth: 0.5,
+    borderLeftStyle: "solid",
+    borderLeftColor: "black",
     paddingLeft: 28,
     paddingRight: 12,
     paddingTop: 100,
@@ -83,18 +97,31 @@ const styles = stylex.create({
   },
   title: {
     fontSize: 24,
-    margin: 0,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
     color: "#000",
     fontWeight: 600,
     fontFamily: "Cormorant Garamond",
   },
+  titleLink: {
+    color: "inherit",
+    fontFamily: "inherit",
+  },
   meta: {
-    margin: 0,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
     color: "#444",
     fontSize: 14,
   },
   paragraph: {
-    margin: 0,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
     lineHeight: 1.5,
     fontSize: 12,
     color: "#000",
@@ -105,6 +132,11 @@ const ProjectDetail = ({ project }) => {
   const [resolvedImages, setResolvedImages] = useState(
     project.detailImages || []
   );
+  const coverSrc =
+    project.image &&
+    (project.image.startsWith("http")
+      ? project.image
+      : `${window.location.origin}/images/portfolio/${project.image}`);
 
   useEffect(() => {
     let cancelled = false;
@@ -148,6 +180,14 @@ const ProjectDetail = ({ project }) => {
     <div {...stylex.props(styles.wrapper)}>
       <div {...stylex.props(styles.layout)}>
         <div {...stylex.props(styles.imagesCol)}>
+          {coverSrc && (
+            <img
+              src={coverSrc}
+              alt={project.title}
+              draggable="false"
+              {...stylex.props(styles.image)}
+            />
+          )}
           {resolvedImages.map((src, idx) => (
             <img
               key={`${project.slug}-${idx}`}
@@ -159,21 +199,13 @@ const ProjectDetail = ({ project }) => {
           ))}
         </div>
         <div {...stylex.props(styles.textCol)}>
-          {/* <div {...stylex.props(styles.topBar)}>
-            <button {...stylex.props(styles.backButton)} onClick={onBack}>
-              ← Back
-            </button>
-          </div> */}
           <div {...stylex.props(styles.title)}>
             {project.url ? (
               <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  color: "inherit",
-                  fontFamily: "inherit",
-                }}
+                {...stylex.props(styles.titleLink)}
               >
                 {project.title}
               </a>
@@ -182,7 +214,6 @@ const ProjectDetail = ({ project }) => {
             )}{" "}
             {`(${project.year})`}
           </div>
-          {/* <p {...stylex.props(styles.meta)}>Made with {project.languages}</p> */}
           {paragraphs.map((para, idx) => (
             <p key={idx} {...stylex.props(styles.paragraph)}>
               {para}
@@ -206,5 +237,6 @@ ProjectDetail.propTypes = {
     detailUrl: PropTypes.string,
     longDescription: PropTypes.string,
     detailImages: PropTypes.arrayOf(PropTypes.string),
+    image: PropTypes.string,
   }).isRequired,
 };
