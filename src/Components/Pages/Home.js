@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Fade from "react-reveal/Fade";
 import DesktopIcon from "../Items/DesktopIcon";
 import Folder from "../Items/Folder";
 import FileData from "../../Data/FileData";
 import WindowData from "../../Data/WindowData";
 import "@animated-burgers/burger-squeeze/dist/styles.css";
-import { ThemeContext } from "../../ThemeContext";
+import { useUI } from "../../context/UIContext";
 import { Screen } from "../../App";
 import Popup from "../Items/Popup";
 import { useMediaQuery } from "react-responsive";
@@ -22,18 +22,39 @@ const styles = stylex.create({
   },
 });
 
-const Header = (props) => {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 767px)",
-  });
+const FOLDERS = [
+  {
+    key: "games",
+    display: "Games",
+    hoverText: "( Gamemaking as playing god )",
+  },
+  {
+    key: "fandoms",
+    display: "Fandoms",
+    hoverText: "( Parallel universes of fictional worlds )",
+  },
+  {
+    key: "tools",
+    display: "Wikis",
+    hoverText: "( Can we build a collective truth ? )",
+  },
+  {
+    key: "About Me",
+    display: "About Me",
+    hoverText: "( Autofiction as therapy )",
+  },
+];
+
+const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const { cursorString, setCursorString } = useUI();
+
   const [isGridLayout, setIsGridLayout] = useState(false);
-  const [openStates, setOpenStates] = useState({
-    0: [true, false, true, true],
-  });
-  const [zIndex, setZIndex] = useState(1);
-  const { cursorString, setCursorString } = useContext(ThemeContext);
+  const [openStates, setOpenStates] = useState([true, false, true, true]);
   const [triggerResize, setTriggerResize] = useState(false);
   const [isFoldersVisible, setIsFoldersVisible] = useState(true);
+  const [zIndex, setZIndex] = useState(1);
+
   const parentRef = useRef(null);
 
   useEffect(() => {
@@ -67,7 +88,7 @@ const Header = (props) => {
     };
   }, []);
 
-  const isElementInViewport = (el) => {
+  const isElementInViewport = useCallback((el) => {
     const rect = el.getBoundingClientRect();
     return (
       rect.top >= 0 &&
@@ -76,7 +97,7 @@ const Header = (props) => {
         (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
-  };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,262 +110,271 @@ const Header = (props) => {
     };
 
     window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isFoldersVisible, isElementInViewport]);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+  const handleFullScreenClick = useCallback(() => {
+    setTriggerResize((prev) => !prev);
   }, []);
 
-  const handleFullScreenClick = () => {
-    setTriggerResize((prevState) => !prevState);
-  };
-
-  const handleFolderOpen = (index, isOpen, key) => {
-    setOpenStates((prevOpenStates) => {
-      const newOpenStates = { ...prevOpenStates };
-      newOpenStates[key][index] = isOpen;
-      return newOpenStates;
+  const handleFolderOpen = useCallback((index, isOpen) => {
+    setOpenStates((prev) => {
+      const newStates = [...prev];
+      newStates[index] = isOpen;
+      return newStates;
     });
-  };
+  }, []);
 
-  const toggleButton = () => {
-    setIsGridLayout((prevIsGridLayout) => !prevIsGridLayout);
-  };
+  const toggleLayout = useCallback(() => {
+    setIsGridLayout((prev) => !prev);
+  }, []);
 
-  const handleHoverChange = (hoverState, hoverString) => {
-    setCursorString(hoverState ? hoverString || "" : "");
-  };
+  const handleHoverChange = useCallback(
+    (hoverState, hoverString) => {
+      setCursorString(hoverState ? hoverString || "" : "");
+    },
+    [setCursorString]
+  );
 
-  const handleFolderHoverChange = (hoverState, folderIndex) => {
-    if (hoverState && folderIndex !== undefined) {
-      setCursorString(display_strings[folderIndex]);
-    } else {
-      setCursorString("");
-    }
-  };
+  const handleFolderHoverChange = useCallback(
+    (hoverState, folderIndex) => {
+      if (hoverState && folderIndex !== undefined) {
+        setCursorString(FOLDERS[folderIndex].hoverText);
+      } else {
+        setCursorString("");
+      }
+    },
+    [setCursorString]
+  );
 
-  const handleSortHoverChange = () => {
-    setCursorString(cursorString === "" ? "Shuffle!" : "");
-  };
+  const handleSortHover = useCallback(
+    (isHovering) => {
+      setCursorString(isHovering ? "Shuffle!" : "");
+    },
+    [setCursorString]
+  );
 
-  const handleFullscreenHoverChange = () => {
-    setCursorString(cursorString === "" ? "fullscreen!" : "");
-  };
+  const handleFullscreenHover = useCallback(
+    (isHovering) => {
+      setCursorString(isHovering ? "fullscreen!" : "");
+    },
+    [setCursorString]
+  );
 
-  const folders = ["Games", "Fandoms", "Wikis", "About Me"];
-  const display_folders = ["games", "fandoms", "tools", "About Me"];
-  const display_strings = [
-    "( Gamemaking as playing god )",
-    "( Parallel universes of fictional worlds )",
-    "( Can we build a collective truth ? )",
-    "( Autofiction as therapy )",
-  ];
-  let alignX = 0;
-  let alignY = 30;
-  let counter = 0;
   const photoData = {
     place: "( Internet dwelling *ੈ✩‧₊˚ )",
-    image: window.location.origin + "/images/bgfinal.png",
+    image: `${window.location.origin}/images/bgfinal.png`,
   };
 
-  const renderItems = () => {
-    if (isFoldersVisible) {
-      return display_folders.map((folder, ind) =>
-        openStates && openStates[0][ind]
-          ? FileData[folder].map((image) => {
-              if (
-                !image.border &&
-                !(isGridLayout && image.hoverString === "")
-              ) {
-                alignY = counter % 5 === 0 ? 10 : alignY + 16;
-                alignX = counter % 5 === 0 ? alignX + 11 : alignX;
-                if (counter === 0) {
-                  alignX = 5;
-                }
-                counter++;
-              }
-              return image.border && isGridLayout ? (
-                <></>
-              ) : image.border ? (
-                <Popup
-                  key={image.url}
-                  url={image.url}
-                  setZIndex={setZIndex}
-                  zIndex={zIndex}
-                  setShowCursor={setCursorString}
-                  border={true}
-                  hoverString={image.hoverString}
-                  onHoverChange={handleHoverChange}
-                  src={image.src}
-                  scale={image.scale}
-                  x={isGridLayout ? alignX : image.x}
-                  y={isGridLayout ? alignY : image.y}
-                  triggerResize={triggerResize}
-                  isGridLayout={isGridLayout}
-                  content={WindowData[image.hoverString]}
-                />
-              ) : (
-                !((isGridLayout || !isMobile) && image.hoverString === "") && (
-                  <DesktopIcon
-                    key={image.url}
-                    url={image.url}
-                    setZIndex={setZIndex}
-                    zIndex={zIndex}
-                    setShowCursor={setCursorString}
-                    border={image.border ? true : false}
-                    hoverString={image.hoverString}
-                    onHoverChange={handleHoverChange}
-                    src={
-                      image.src ? window.location.origin + "/" + image.src : ""
-                    }
-                    scale={image.scale}
-                    x={isGridLayout ? alignX : image.x}
-                    y={isGridLayout ? alignY : image.y}
-                    triggerResize={triggerResize}
-                    isGridLayout={isGridLayout}
-                    iconText={image.iconText}
-                  />
-                )
-              );
-            })
-          : null
-      );
-    }
-    return null;
-  };
+  const renderItems = useCallback(() => {
+    if (!isFoldersVisible) return null;
+
+    let alignX = 0;
+    let alignY = 30;
+    let counter = 0;
+
+    return FOLDERS.map((folder, folderIndex) => {
+      if (!openStates[folderIndex]) return null;
+
+      const folderData = FileData[folder.key];
+      if (!folderData) return null;
+
+      return folderData.map((item, itemIndex) => {
+        if (isGridLayout && item.hoverString === "") return null;
+
+        if (!item.border && !(isGridLayout && item.hoverString === "")) {
+          alignY = counter % 5 === 0 ? 10 : alignY + 16;
+          alignX = counter % 5 === 0 ? alignX + 11 : alignX;
+          if (counter === 0) alignX = 5;
+          counter++;
+        }
+
+        const key = `${folder.key}-${itemIndex}`;
+        const posX = isGridLayout ? alignX : item.x;
+        const posY = isGridLayout ? alignY : item.y;
+
+        if (item.border) {
+          if (isGridLayout) return null;
+
+          return (
+            <Popup
+              key={key}
+              url={item.url}
+              hoverString={item.hoverString}
+              onHoverChange={handleHoverChange}
+              src={`${window.location.origin}/${item.src}`}
+              x={posX}
+              y={posY}
+              zIndex={zIndex}
+              setZIndex={setZIndex}
+              setShowCursor={setCursorString}
+              triggerResize={triggerResize}
+              isGridLayout={isGridLayout}
+              content={WindowData[item.hoverString]}
+            />
+          );
+        }
+
+        if ((isGridLayout || !isMobile) && item.hoverString === "") {
+          return null;
+        }
+
+        return (
+          <DesktopIcon
+            key={key}
+            url={item.url}
+            hoverString={item.hoverString}
+            onHoverChange={handleHoverChange}
+            src={item.src ? `${window.location.origin}/${item.src}` : ""}
+            x={posX}
+            y={posY}
+            triggerResize={triggerResize}
+            isGridLayout={isGridLayout}
+            iconText={item.iconText}
+          />
+        );
+      });
+    });
+  }, [
+    isFoldersVisible,
+    openStates,
+    isGridLayout,
+    isMobile,
+    triggerResize,
+    handleHoverChange,
+  ]);
 
   return (
-    <>
-      <header id="home">
-        <Fade duration={500} delay={200}>
+    <header id="home">
+      <Fade duration={500} delay={200}>
+        <div
+          className="banner"
+          style={{
+            transition: "height 1s ease",
+            display: "inline-block",
+            margin: 0,
+            padding: 0,
+            width: "100%",
+            maxWidth: "100%",
+            textAlign: "center",
+            position: "relative",
+            height: "100%",
+            overflow: "hidden",
+            clipPath: "inset(0 0 0 0)",
+          }}
+        >
+          <div className="bottom-left-2" style={{ top: 15, display: "none" }}>
+            &#40; 🌐🌷 &#41;
+          </div>
+
           <div
-            className="banner"
-            style={{
-              transition: "height 1s ease",
-              display: "inline-block",
-              margin: "0px auto",
-              padding: "0px",
-              width: "100%",
-              maxWidth: "100%",
-              textAlign: "center",
-              position: "relative",
-              height: "100%",
-              overflow: "hidden",
-              clipPath: "inset(0 0 0 0)",
+            className="bottom-right"
+            style={{ bottom: 20 }}
+            onClick={() => {
+              setCursorString("");
+              setDesktopScreen(Screen.PORTFOLIO);
+              handleFullScreenClick();
             }}
           >
-            <div
-              className="bottom-left-2"
-              style={{ top: "15px", display: "none" }}
+            <span
+              {...stylex.props(styles.projectsButton)}
+              id="mobile-only"
+              onMouseEnter={() => handleFullscreenHover(true)}
+              onMouseLeave={() => handleFullscreenHover(false)}
             >
-              &#40; 🌐🌷 &#41;
-            </div>
-            <div
-              className="bottom-right"
-              style={{ bottom: "20px" }}
-              onClick={() => {
-                setCursorString("");
-                props.setDesktopScreen(Screen.PORTFOLIO);
-                handleFullScreenClick();
-              }}
-            >
-              <span
-                {...stylex.props(styles.projectsButton)}
-                id="mobile-only"
-                onMouseEnter={handleFullscreenHoverChange}
-                onMouseLeave={handleFullscreenHoverChange}
-              >
-                &#40; Projects &#41;
-              </span>
-            </div>
-            <div
-              className="bottom-leftt"
-              style={{ bottom: "20px" }}
-              onClick={() => {
-                props.setisFoldersOff(!props.isFoldersOff);
-              }}
-            >
-              <span {...stylex.props(styles.projectsButton)} id="mobile-only">
-                &#40; Menus &#41;
-              </span>
-            </div>
-            <div className="container" style={{ zIndex: 1 }}>
-              <div onClick={toggleButton} className="top-left">
-                {isGridLayout ? (
-                  <span
-                    id="play-button"
-                    onMouseEnter={handleSortHoverChange}
-                    onMouseLeave={handleSortHoverChange}
-                  >
-                    &#40; Shuffle{" "}
-                    <i
-                      style={{ fontSize: 11 }}
-                      className="fa fa-random"
-                      aria-hidden="true"
-                    ></i>
-                    &#41;
-                  </span>
-                ) : (
-                  <span
-                    id="play-button"
-                    onMouseEnter={handleSortHoverChange}
-                    onMouseLeave={handleSortHoverChange}
-                  >
-                    {" "}
-                    &#40; Sort &nbsp;
-                    <i style={{ fontSize: 8 }} className="fas fa-play"></i>{" "}
-                    &#41;
-                  </span>
-                )}{" "}
-              </div>
-            </div>
-            <div className="hover-container" ref={parentRef}>
-              <img
-                {...stylex.props(styles.headerImage)}
-                id="headerpic"
-                draggable="false"
-                src={photoData.image}
-                loading="lazy"
-                alt="Background"
-              />
-              {renderItems()}
-              {!props.isFoldersOff &&
-                folders.map((folder, index) => (
-                  <Folder
-                    key={index}
-                    src={window.location.origin + "/images/folder.png"}
-                    isOpen={openStates[0][index]}
-                    onOpen={(isOpen) => handleFolderOpen(index, isOpen, 0)}
-                    isVisible={isFoldersVisible}
-                    hoverString={display_strings[index]}
-                    onHoverChange={(hoverState) =>
-                      handleFolderHoverChange(hoverState, index)
-                    }
-                    caption={folder}
-                    x={0}
-                    y={150 + 90 * (index + 1)}
-                    scale={0.5}
+              &#40; Projects &#41;
+            </span>
+          </div>
+
+          <div
+            className="bottom-leftt"
+            style={{ bottom: 20 }}
+            onClick={() => setIsFoldersOff(!isFoldersOff)}
+          >
+            <span {...stylex.props(styles.projectsButton)} id="mobile-only">
+              &#40; Menus &#41;
+            </span>
+          </div>
+
+          <div className="container" style={{ zIndex: 1 }}>
+            <div onClick={toggleLayout} className="top-left">
+              {isGridLayout ? (
+                <span
+                  id="play-button"
+                  onMouseEnter={() => handleSortHover(true)}
+                  onMouseLeave={() => handleSortHover(false)}
+                >
+                  &#40; Shuffle{" "}
+                  <i
+                    style={{ fontSize: 11 }}
+                    className="fa fa-random"
+                    aria-hidden="true"
                   />
-                ))}
-              {cursorString ? (
-                <div id="header-hover" className="bottom-left">
-                  {cursorString}
-                </div>
+                  &#41;
+                </span>
               ) : (
-                <div className="bottom-left">{photoData.place}</div>
+                <span
+                  id="play-button"
+                  onMouseEnter={() => handleSortHover(true)}
+                  onMouseLeave={() => handleSortHover(false)}
+                >
+                  {" "}
+                  &#40; Sort &nbsp;
+                  <i style={{ fontSize: 8 }} className="fas fa-play" /> &#41;
+                </span>
               )}
             </div>
           </div>
-        </Fade>
-      </header>
-    </>
+
+          <div className="hover-container" ref={parentRef}>
+            <img
+              {...stylex.props(styles.headerImage)}
+              id="headerpic"
+              draggable="false"
+              src={photoData.image}
+              loading="lazy"
+              alt="Background"
+            />
+
+            {renderItems()}
+
+            {!isFoldersOff &&
+              FOLDERS.map((folder, index) => (
+                <Folder
+                  key={folder.key}
+                  src={`${window.location.origin}/images/folder.png`}
+                  isOpen={openStates[index]}
+                  onOpen={(isOpen) => handleFolderOpen(index, isOpen)}
+                  isVisible={isFoldersVisible}
+                  hoverString={folder.hoverText}
+                  onHoverChange={(hoverState) =>
+                    handleFolderHoverChange(hoverState, index)
+                  }
+                  caption={folder.display}
+                  x={0}
+                  y={150 + 90 * (index + 1)}
+                  scale={0.5}
+                />
+              ))}
+
+            {cursorString ? (
+              <div id="header-hover" className="bottom-left">
+                {cursorString}
+              </div>
+            ) : (
+              <div className="bottom-left">{photoData.place}</div>
+            )}
+          </div>
+        </div>
+      </Fade>
+    </header>
   );
 };
 
-Header.propTypes = {
+Home.propTypes = {
   setDesktopScreen: PropTypes.func.isRequired,
   isFoldersOff: PropTypes.bool.isRequired,
-  setisFoldersOff: PropTypes.func.isRequired,
+  setIsFoldersOff: PropTypes.func.isRequired,
 };
 
-export default Header;
+export default Home;

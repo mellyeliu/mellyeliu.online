@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import PropTypes from "prop-types";
 import { selfFacts } from "../../Data/QuotesData";
-import { ThemeContext } from "../../ThemeContext";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({
@@ -28,10 +28,10 @@ const TextList = ({
   const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
-  const [reset, setReset] = useState(false);
-  useContext(ThemeContext);
   const [isVisible, setIsVisible] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  const rafRef = useRef(null);
 
   useEffect(() => {
     setCharIndex(0);
@@ -42,61 +42,50 @@ const TextList = ({
 
   useEffect(() => {
     setShouldAnimate(true);
-    const raf1 = requestAnimationFrame(() => {
-      const raf2 = requestAnimationFrame(() => {
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = requestAnimationFrame(() => {
         setIsVisible(true);
       });
-      (window.__textlist_raf2_ids || (window.__textlist_raf2_ids = [])).push(
-        raf2
-      );
     });
 
     return () => {
-      cancelAnimationFrame(raf1);
-      const ids = window.__textlist_raf2_ids || [];
-      while (ids.length) cancelAnimationFrame(ids.pop());
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, [factIndex]);
 
-  useEffect(() => {
-    let typingInterval;
+  const advanceToNextFact = useCallback(() => {
+    if (order) {
+      setFactIndex((prev) => (prev + 1) % textOptions.length);
+    } else {
+      setFactIndex(Math.floor(Math.random() * textOptions.length));
+    }
+  }, [order, textOptions.length]);
 
-    if (typing === false) {
-      const showTimer = setTimeout(() => {
+  useEffect(() => {
+    let timer;
+
+    if (!typing) {
+      timer = setTimeout(() => {
         setShouldAnimate(true);
         setIsVisible(false);
-        const switchTimer = setTimeout(() => {
-          order
-            ? setFactIndex((prev) => (prev + 1) % textOptions.length)
-            : setFactIndex(Math.floor(Math.random() * textOptions.length));
-        }, 250);
-        return () => clearTimeout(switchTimer);
+        setTimeout(advanceToNextFact, 250);
       }, autoplaySpeed);
 
-      return () => clearTimeout(showTimer);
-    }
-
-    if (reset) {
-      setIsVisible(false);
-      setShouldAnimate(false);
-      setCurrentFact("");
-      setCharIndex(0);
-      setIsTyping(true);
-      setIsPaused(false);
-      setReset(false);
-      return;
+      return () => clearTimeout(timer);
     }
 
     if (isPaused) {
-      const pauseTimeout = setTimeout(() => {
+      timer = setTimeout(() => {
         setIsPaused(false);
         setIsTyping(false);
       }, autoplaySpeed);
-      return () => clearTimeout(pauseTimeout);
+      return () => clearTimeout(timer);
     }
 
     if (isTyping) {
-      typingInterval = setInterval(() => {
+      timer = setInterval(() => {
         if (charIndex < textOptions[factIndex].length) {
           setCurrentFact((prev) => prev + textOptions[factIndex][charIndex]);
           setCharIndex((prev) => prev + 1);
@@ -106,68 +95,70 @@ const TextList = ({
         }
       }, speed);
     } else {
-      typingInterval = setInterval(() => {
+      timer = setInterval(() => {
         if (charIndex >= 0) {
           setCurrentFact((prev) => prev.slice(0, -1));
           setCharIndex((prev) => prev - 1);
         } else {
-          setReset(true);
-          order
-            ? setFactIndex((prev) => (prev + 1) % textOptions.length)
-            : setFactIndex(Math.floor(Math.random() * textOptions.length));
+          advanceToNextFact();
           setIsTyping(true);
         }
       }, speed);
     }
 
-    return () => clearInterval(typingInterval);
-  }, [charIndex, isTyping, isPaused, reset]);
+    return () => clearInterval(timer);
+  }, [
+    charIndex,
+    isTyping,
+    isPaused,
+    typing,
+    autoplaySpeed,
+    speed,
+    factIndex,
+    textOptions,
+    advanceToNextFact,
+  ]);
 
-  const handleClick = (event) => {
-    if (event.target.tagName !== "A") {
-      if (typing === false) {
+  const handleClick = useCallback(
+    (event) => {
+      if (event.target.tagName === "A") return;
+
+      if (!typing) {
         setShouldAnimate(true);
         setIsVisible(false);
-        setTimeout(() => {
-          order
-            ? setFactIndex((prev) => (prev + 1) % textOptions.length)
-            : setFactIndex(Math.floor(Math.random() * textOptions.length));
-        }, 250);
+        setTimeout(advanceToNextFact, 250);
       } else {
         setIsVisible(false);
         setShouldAnimate(false);
-        setReset(true);
-        order
-          ? setFactIndex((prev) => (prev + 1) % textOptions.length)
-          : setFactIndex(Math.floor(Math.random() * textOptions.length));
+        setCurrentFact("");
+        setCharIndex(0);
+        setIsTyping(true);
+        setIsPaused(false);
+        advanceToNextFact();
       }
-    }
-  };
+    },
+    [typing, advanceToNextFact]
+  );
 
-  // Dynamic styles that need runtime values
-  const dynamicStyle =
-    typing === false
-      ? {
-          transition: shouldAnimate ? "opacity 0.25s ease-in-out" : "none",
-          opacity: isVisible ? 1 : 0,
-        }
-      : {};
+  const dynamicStyle = !typing
+    ? {
+        transition: shouldAnimate ? "opacity 0.25s ease-in-out" : "none",
+        opacity: isVisible ? 1 : 0,
+      }
+    : {};
+
+  const displayText = typing ? currentFact : textOptions[factIndex];
+  const formattedText = wrapper ? `( ${displayText} [...] )` : displayText;
 
   return (
     <span
-      {...stylex.props(styles.hvrLine, xstyle)}
+      {...stylex.props(xstyle)}
       style={{ ...style, ...dynamicStyle, cursor: "pointer" }}
       onClick={handleClick}
     >
-      {typing === false
-        ? wrapper === true
-          ? "( " + textOptions[factIndex] + " [...]" + " )"
-          : textOptions[factIndex]
-        : wrapper === true
-        ? "( " + currentFact + " [...]" + " )"
-        : currentFact}
+      {formattedText}
       &nbsp;
-      {links.length > 0 && (
+      {links.length > 0 && links[factIndex] && (
         <a
           {...stylex.props(styles.hvrLine)}
           href={links[factIndex]}
@@ -179,6 +170,18 @@ const TextList = ({
       )}
     </span>
   );
+};
+
+TextList.propTypes = {
+  style: PropTypes.object,
+  xstyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  wrapper: PropTypes.bool,
+  textOptions: PropTypes.arrayOf(PropTypes.string),
+  speed: PropTypes.number,
+  autoplaySpeed: PropTypes.number,
+  order: PropTypes.bool,
+  typing: PropTypes.bool,
+  links: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default TextList;

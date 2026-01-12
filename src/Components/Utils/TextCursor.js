@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { ThemeContext } from "../../ThemeContext";
+import React, { useEffect, useState } from "react";
+import { useTheme } from "../../ThemeContext";
 import * as stylex from "@stylexjs/stylex";
+import { fonts } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
   cursor: {
@@ -9,6 +10,7 @@ const styles = stylex.create({
     zIndex: 1000000000000000,
     fontSize: 16,
     color: "black",
+    fontFamily: fonts.serif,
     fontStyle: "italic",
     display: "none",
     textShadow:
@@ -17,9 +19,9 @@ const styles = stylex.create({
   },
 });
 
-const CustomCursor = () => {
+const TextCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { cursorString } = useContext(ThemeContext);
+  const { cursorString } = useTheme();
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -46,4 +48,4 @@ const CustomCursor = () => {
   );
 };
 
-export default CustomCursor;
+export default TextCursor;

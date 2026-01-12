@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Screen } from "../../App";
 import * as stylex from "@stylexjs/stylex";
 import { colors, radii } from "../../styles/tokens.stylex";
@@ -97,6 +98,10 @@ const BrowserIcons = ({ setDesktopScreen }) => {
       </span>
     </span>
   );
+};
+
+BrowserIcons.propTypes = {
+  setDesktopScreen: PropTypes.func.isRequired,
 };
 
 export default BrowserIcons;
