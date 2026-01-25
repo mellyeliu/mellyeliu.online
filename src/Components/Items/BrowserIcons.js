@@ -25,7 +25,7 @@ const styles = stylex.create({
   },
   hoverCircle: {
     position: "absolute",
-    top: 3,
+    top: 4.7,
     left: 2.5,
     width: "65%",
     height: "65%",

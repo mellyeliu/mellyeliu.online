@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../../ThemeContext";
+import { useUI } from "../../context/UIContext";
 import * as stylex from "@stylexjs/stylex";
 import { fonts } from "../../styles/tokens.stylex";
 
@@ -21,7 +21,7 @@ const styles = stylex.create({
 
 const TextCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { cursorString } = useTheme();
+  const { cursorString } = useUI();
 
   useEffect(() => {
     const handleMouseMove = (e) => {

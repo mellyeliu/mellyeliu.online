@@ -1,6 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useMediaQuery } from "react-responsive";
+import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
+
+const DOUBLE_CLICK_DELAY = 300;
 
 const styles = stylex.create({
   container: {
@@ -13,31 +16,42 @@ const styles = stylex.create({
 
 const Popup = ({
   src,
-  url,
+  url = "",
   x,
   y,
-  isGridLayout,
+  isGridLayout = false,
   onHoverChange,
-  hoverString,
+  hoverString = "",
   zIndex,
   setZIndex,
   setShowCursor,
-  triggerResize,
-  content,
+  triggerResize = false,
+  content = null,
 }) => {
   const isMobile = useMediaQuery({
     query: "(max-width: 767px)",
   });
 
   const [position, setPosition] = useState({ x: x, y: y });
-  const [dragging, setDragging] = useState(false);
   const minWidth = 900;
   const [width, setWidth] = useState(minWidth);
   const [isWidthCalculated, setIsWidthCalculated] = useState(false);
   const ref = useRef(null);
-  const dragRef = useRef(null); // Track drag state across fast movements
+  const dragRef = useRef(null);
+  const clickTimerRef = useRef(null);
+  const [clickCount, setClickCount] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
 
   const [imageSize, setImageSize] = useState({ width: "auto", height: "auto" });
+
+  const handleResize = useCallback(() => {
+    const divs = document.getElementsByClassName("hover-container");
+    if (divs.length > 0) {
+      const divWidth = divs[0].clientWidth;
+      setWidth(Math.max(divWidth, minWidth));
+      setIsWidthCalculated(true);
+    }
+  }, []);
 
   useEffect(() => {
     const img = new Image();
@@ -53,86 +67,96 @@ const Popup = ({
   }, [src, isMobile]);
 
   useEffect(() => {
-    const handleResize = () => {
-      const divs = document.getElementsByClassName("hover-container");
-      if (divs.length > 0) {
-        const divWidth = divs[0].clientWidth;
-        const newWidth = Math.max(divWidth, minWidth);
-        setWidth(newWidth);
-        setIsWidthCalculated(true);
-      }
-    };
-
-    // Calculate initial width
     handleResize();
-
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [handleResize]);
 
   useEffect(() => {
     if (isWidthCalculated) {
       handleResize();
     }
-  }, [triggerResize, isWidthCalculated]);
+  }, [triggerResize, isWidthCalculated, handleResize]);
 
-  let timer = 0;
-  const delay = 300; // milliseconds
-  const [clickCount, setClickCount] = useState(0);
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleResize = () => {
-    const divs = document.getElementsByClassName("hover-container");
-    if (divs.length > 0) {
-      const divWidth = divs[0].clientWidth;
-      setWidth(Math.max(divWidth, minWidth));
-    }
-  };
-
-  const handleClickOutside = (event) => {
+  const handleClickOutside = useCallback((event) => {
     if (!event) return;
     if (ref.current && !ref.current.contains(event.target)) {
       setIsClicked(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
-  const openPopupOnDoubleClick = () => {
-    clearTimeout(timer);
-    setClickCount(clickCount + 1);
+  const openPopupOnDoubleClick = useCallback(() => {
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+    }
+
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
     setIsClicked(true);
 
-    timer = setTimeout(() => {
-      if (clickCount === 1) {
-        if (url) {
-          window.open(url, "popupWindow");
-        }
+    clickTimerRef.current = setTimeout(() => {
+      if (newCount >= 2 && url) {
+        window.open(url, "popupWindow");
       }
       setClickCount(0);
-    }, delay);
-  };
+    }, DOUBLE_CLICK_DELAY);
+  }, [clickCount, url]);
 
   useEffect(() => {
     setPosition({ x, y });
   }, [x, y, isGridLayout]);
 
-  const startDrag = (e) => {
+  const stopDrag = useCallback(() => {
+    onHoverChange("");
+
+    if (dragRef.current) {
+      dragRef.current.isDragging = false;
+    }
+
+    const draggableElement = document.querySelector(".draggableImage");
+    if (draggableElement) {
+      draggableElement.style.cursor = "grab";
+    }
+
+    document.removeEventListener("mousemove", onDrag);
+    document.removeEventListener("mouseup", stopDrag);
+  }, [onHoverChange]);
+
+  const onDrag = useCallback((e) => {
+    if (!dragRef.current || !dragRef.current.isDragging) return;
+
     e.preventDefault();
-    setDragging(true);
+
+    const container = document.querySelector(".hover-container");
+    if (!container) return;
+
+    setWidth(Math.max(container.offsetWidth, minWidth));
+
+    const deltaX =
+      ((e.clientX - dragRef.current.startX) / container.offsetWidth) * 100;
+    const deltaY =
+      ((e.clientY - dragRef.current.startY) / container.offsetHeight) * 100;
+
+    setPosition({
+      x: dragRef.current.startPosition.x + deltaX,
+      y: dragRef.current.startPosition.y + deltaY,
+    });
+  }, []);
+
+  const startDrag = useCallback((e) => {
+    e.preventDefault();
     setZIndex(zIndex + 1);
     setIsClicked(true);
 
-    // Store drag state in ref for consistency across fast movements
     dragRef.current = {
       isDragging: true,
       startX: e.clientX,
@@ -146,59 +170,17 @@ const Popup = ({
 
     document.addEventListener("mousemove", onDrag);
     document.addEventListener("mouseup", stopDrag);
-  };
+  }, [zIndex, setZIndex, position, onDrag, stopDrag]);
 
-  const stopDrag = () => {
-    onHoverChange("");
-    setDragging(false);
-
-    // Clear drag state
-    if (dragRef.current) {
-      dragRef.current.isDragging = false;
-    }
-
-    const draggableElement = document.querySelector(".draggableImage");
-    if (draggableElement) {
-      draggableElement.style.cursor = "grab";
-    }
-
-    // Remove event listeners from document
-    document.removeEventListener("mousemove", onDrag);
-    document.removeEventListener("mouseup", stopDrag);
-  };
-
-  const onDrag = (e) => {
-    if (!dragRef.current || !dragRef.current.isDragging) return;
-
-    e.preventDefault();
-
-    // Get container more reliably
-    const container = document.querySelector(".hover-container");
-    if (!container) return;
-
-    setWidth(Math.max(container.offsetWidth, minWidth));
-
-    // Calculate movement based on absolute positions for better accuracy
-    const deltaX =
-      ((e.clientX - dragRef.current.startX) / container.offsetWidth) * 100;
-    const deltaY =
-      ((e.clientY - dragRef.current.startY) / container.offsetHeight) * 100;
-
-    setPosition({
-      x: dragRef.current.startPosition.x + deltaX,
-      y: dragRef.current.startPosition.y + deltaY,
-    });
-  };
-
-  const onHover = () => {
+  const onHover = useCallback(() => {
     onHoverChange(true, hoverString);
-  };
+  }, [onHoverChange, hoverString]);
 
-  const stopHover = (e) => {
+  const stopHover = useCallback((e) => {
     setShowCursor("");
     onHoverChange(false, "");
     e.target.style.cursor = "grab";
-  };
+  }, [setShowCursor, onHoverChange]);
 
   return (
     <div {...stylex.props(styles.container)}>
@@ -225,7 +207,7 @@ const Popup = ({
           onMouseDown={startDrag}
           onClick={(e) => {
             handleClickOutside(e);
-            openPopupOnDoubleClick(e);
+            openPopupOnDoubleClick();
           }}
           onMouseMove={onDrag}
           onMouseUp={stopDrag}
@@ -238,6 +220,21 @@ const Popup = ({
       )}
     </div>
   );
+};
+
+Popup.propTypes = {
+  src: PropTypes.string.isRequired,
+  url: PropTypes.string,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  isGridLayout: PropTypes.bool,
+  onHoverChange: PropTypes.func.isRequired,
+  hoverString: PropTypes.string,
+  zIndex: PropTypes.number.isRequired,
+  setZIndex: PropTypes.func.isRequired,
+  setShowCursor: PropTypes.func.isRequired,
+  triggerResize: PropTypes.bool,
+  content: PropTypes.node,
 };
 
 export default Popup;

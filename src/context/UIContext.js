@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, { createContext, useContext, useState, useCallback, useRef } from "react";
 
 const UIContext = createContext(null);
 
@@ -12,12 +12,12 @@ export const useUI = () => {
 
 export const UIProvider = ({ children }) => {
   const [cursorString, setCursorString] = useState("");
-  const [globalZIndex, setGlobalZIndex] = useState(1);
+  const zIndexRef = useRef(1);
 
   const getNextZIndex = useCallback(() => {
-    setGlobalZIndex((prev) => prev + 1);
-    return globalZIndex + 1;
-  }, [globalZIndex]);
+    zIndexRef.current += 1;
+    return zIndexRef.current;
+  }, []);
 
   const handleHover = useCallback((isHovering, hoverString = "") => {
     setCursorString(isHovering ? hoverString : "");
@@ -32,7 +32,6 @@ export const UIProvider = ({ children }) => {
     setCursorString,
     handleHover,
     clearCursor,
-    globalZIndex,
     getNextZIndex,
   };
 

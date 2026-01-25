@@ -5,10 +5,7 @@ import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({
   hvrLine: {
-    textDecoration: {
-      default: "none",
-      ":hover": "underline",
-    },
+    textDecoration: "none",
   },
 });
 

@@ -156,45 +156,12 @@ const styles = stylex.create({
   layoutToggleDesktop: {
     right: 48,
   },
-  portfolioWrapperMobile: {
-    paddingTop: 70,
-    paddingRight: 10,
-    paddingBottom: 100,
-    paddingLeft: 10,
-    minHeight: "calc(100vh - 180px)",
-  },
-  portfolioWrapperDesktop: {
-    paddingTop: 50,
-    paddingRight: 80,
-    paddingBottom: 50,
-    paddingLeft: 80,
-    minHeight: "calc(100vh - 200px)",
-  },
   projectImage: {
     height: 200,
     transform: "scale(0.9)",
   },
-  projectMetaContainer: {
-    height: 100,
-    width: "100%",
-  },
-  projectMeta: {
-    paddingBottom: 18,
-    paddingLeft: 18,
-    paddingRight: 18,
-  },
-  collaboratorLink: {
-    display: "inline",
-    color: "inherit",
-  },
   madeWith: {
     paddingTop: 8,
-  },
-  projectItem: {
-    paddingTop: 0,
-    paddingRight: 15,
-    paddingBottom: 0,
-    paddingLeft: 15,
   },
   projectLink: {
     display: "block",
@@ -202,19 +169,6 @@ const styles = stylex.create({
   },
   projectNoLink: {
     cursor: "default",
-  },
-  sectionContainer: {
-    height: "100%",
-    backgroundImage: "none",
-    backgroundColor: colors.bgWhite,
-    width: "100%",
-    maxWidth: "100%",
-  },
-  tagline: {
-    marginBottom: -15,
-  },
-  columnsContainer: {
-    height: "100%",
   },
   tabList: {
     display: "flex",
@@ -269,7 +223,6 @@ const Portfolio = ({ setDesktopScreen }) => {
   const location = useLocation();
   const history = useHistory();
 
-  const [isVisible] = useState(true);
   const [favourite, setFavourite] = useState("✩");
   const [activeTab, setActiveTab] = useState("one");
   const tabTwoRef = useRef(null);
@@ -513,10 +466,10 @@ const Portfolio = ({ setDesktopScreen }) => {
         : projects.filter((item) => item.type.includes(category));
 
     return filteredProjects.map(function (projects, i) {
-      var projectImage =
+      const projectImage =
         window.location.origin + "/images/portfolio/" + projects.image;
 
-      var project = (
+      const project = (
         <>
           <img
             draggable="false"
@@ -596,7 +549,7 @@ const Portfolio = ({ setDesktopScreen }) => {
   return (
     <section id="portfolio">
       <div
-        className={`row fade-in custom-scrollbar ${isVisible ? "visible" : ""}`}
+        className="row fade-in custom-scrollbar visible"
         style={{
           height: "100%",
           backgroundColor: "white",
@@ -723,8 +676,8 @@ const Portfolio = ({ setDesktopScreen }) => {
   );
 };
 
-export default Portfolio;
-
 Portfolio.propTypes = {
   setDesktopScreen: PropTypes.func.isRequired,
 };
+
+export default Portfolio;

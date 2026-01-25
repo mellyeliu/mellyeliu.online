@@ -76,14 +76,14 @@ const styles = stylex.create({
 
 const DesktopIcon = ({
   src,
-  url,
+  url = "",
   x,
   y,
-  isGridLayout,
-  onHoverChange,
-  hoverString,
-  border,
-  triggerResize,
+  isGridLayout = false,
+  onHoverChange = () => {},
+  hoverString = "",
+  border = false,
+  triggerResize = false,
   iconText,
 }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -112,8 +112,6 @@ const DesktopIcon = ({
         }
       },
     });
-
-  useEffect(() => {}, [triggerResize, isGridLayout]);
 
   const handleClickOutside = useCallback((event) => {
     if (!event) return;
@@ -237,15 +235,6 @@ DesktopIcon.propTypes = {
   border: PropTypes.bool,
   triggerResize: PropTypes.bool,
   iconText: PropTypes.string.isRequired,
-};
-
-DesktopIcon.defaultProps = {
-  url: "",
-  isGridLayout: false,
-  onHoverChange: () => {},
-  hoverString: "",
-  border: false,
-  triggerResize: false,
 };
 
 export default DesktopIcon;

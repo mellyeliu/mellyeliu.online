@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from "../../ThemeContext";
 import Clock from "./Clock";
 import TypingToggleTextList from "../Utils/TextList";
 import { quotes } from "../../Data/QuotesData";
@@ -8,6 +7,7 @@ import StartButton from "./StartButton";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
 import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
+import { useUI } from "../../context/UIContext";
 
 const styles = stylex.create({
   hvrShade: {
@@ -95,7 +95,7 @@ const styles = stylex.create({
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const { setCursorString } = useTheme();
+  const { setCursorString } = useUI();
 
   const newQuotes = quotes.map((item) => item[0]);
   const linkQuotes = quotes.map((item) => item[1]);
