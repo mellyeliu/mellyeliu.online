@@ -6,7 +6,7 @@ import PortfolioData from "../../Data/PortfolioData";
 import { Screen } from "../../App";
 import { useMediaQuery } from "react-responsive";
 import BrowserIcons from "../Items/BrowserIcons";
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 import ProjectDetailMobile from "../Items/ProfileDetail";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
@@ -490,7 +490,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                 &#40;{i + 1}&#41; {projects.title}; {projects.year}
               </h5>
               <p className="collab">
-                {ReactHtmlParser(projects.description)}{" "}
+                {parse(projects.description)}{" "}
                 {projects.collaborators && "Collaborators: "}
                 {projects.collaborators && projects.collaborators.length > 0
                   ? projects.collaborators
