@@ -6,6 +6,7 @@ import * as stylex from "@stylexjs/stylex";
 const styles = stylex.create({
   hvrLine: {
     textDecoration: "none",
+    color: "black",
   },
 });
 
