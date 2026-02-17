@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import { useLocation, useHistory } from "react-router-dom";
-import Fade from "react-reveal/Fade";
+import Fade from "../Items/Fade";
 import PortfolioData from "../../Data/PortfolioData";
 import { Screen } from "../../App";
 import { useMediaQuery } from "react-responsive";

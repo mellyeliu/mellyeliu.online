@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Fade from "react-reveal/Fade";
+import Fade from "../Items/Fade";
 import DesktopIcon from "../Items/DesktopIcon";
 import Folder from "../Items/Folder";
 import FileData from "../../Data/FileData";
