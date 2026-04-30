@@ -440,8 +440,8 @@ const Portfolio = ({ setDesktopScreen }) => {
             style={{
               padding: isMobile ? "70px 10px 100px" : "50px 80px",
               minHeight: isMobile
-                ? "calc(100vh - 180px)"
-                : "calc(100vh - 200px)",
+                ? "calc(100vh / 1.1 - 180px)"
+                : "calc(100vh / 1.1 - 200px)",
             }}
           >
             <Fade duration={500} delay={100}>
