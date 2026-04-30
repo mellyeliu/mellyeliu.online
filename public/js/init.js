@@ -5,6 +5,7 @@
 -----------------------------------------------------------------------------------*/
 
 jQuery(document).ready(function ($) {
+  var ZOOM = 1.1;
   /*----------------------------------------------------*/
   /* FitText Settings
 ------------------------------------------------------ */
@@ -71,17 +72,17 @@ jQuery(document).ready(function ($) {
 /* equal to the browser height.
 ------------------------------------------------------ */
   $(window).load(function () {
-    var h = $(window).height();
+    var h = $(window).height() / ZOOM;
     $("img#headerpic").css({ "min-height": h * 0.95 - 80 });
   });
 
-  $("header").css({ height: $(window).height() });
+  $("header").css({ height: $(window).height() / ZOOM });
   //  $('img#headerpic').css({ 'min-height': $(window).height() });
   //  $('body').css({ 'width': $(window).width() })
   $(window).on("resize", function () {
-    var w = $(window).width();
-    var h = $(window).height() * 0.95 - 80;
-    $("header").css({ height: $(window).height() });
+    var w = $(window).width() / ZOOM;
+    var h = $(window).height() / ZOOM * 0.95 - 80;
+    $("header").css({ height: $(window).height() / ZOOM });
     // // $('.banner').css({ 'height': $(window).height() });
     // $('body').css({ 'width': $(window).width() })
     $("img#headerpic").css({ "min-height": h });
@@ -96,7 +97,7 @@ jQuery(document).ready(function ($) {
     // $('img#headerpic').css({ 'min-height': $(window).height() });
 
     var h = $("header").height();
-    var w = $(window).width();
+    var w = $(window).width() / ZOOM;
     var y = $(window).scrollTop();
 
     if (w > 1350 && h > 890 && y < h * 0.05) {

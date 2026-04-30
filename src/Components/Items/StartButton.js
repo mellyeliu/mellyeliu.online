@@ -27,7 +27,7 @@ const styles = stylex.create({
     borderColor: colors.black,
     textAlign: "center",
     minWidth: 120,
-    maxHeight: "80vh",
+    maxHeight: "calc(80vh / 1.1)",
     zIndex: 1,
   },
   verticalBlock: {
@@ -57,14 +57,14 @@ const styles = stylex.create({
   optionsContainer: {
     flex: 1,
     overflowY: "auto",
-    maxHeight: "80vh",
+    maxHeight: "calc(80vh / 1.1)",
   },
   sidePanel: {
     position: "absolute",
     left: 183,
     bottom: 40,
     width: 220,
-    maxHeight: "80vh",
+    maxHeight: "calc(80vh / 1.1)",
     backgroundImage: "none",
     backgroundColor: colors.bgWhite,
     borderWidth: 0.5,

@@ -89,13 +89,14 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
   }, []);
 
   const isElementInViewport = useCallback((el) => {
+    const ZOOM = 1.1;
     const rect = el.getBoundingClientRect();
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
       rect.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        ((window.innerHeight || document.documentElement.clientHeight) / ZOOM) &&
+      rect.right <= ((window.innerWidth || document.documentElement.clientWidth) / ZOOM)
     );
   }, []);
 

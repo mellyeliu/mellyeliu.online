@@ -26,9 +26,8 @@ e. Others
  ------------------------------------------------------------------ */
 
 @import url("fonts.css");
-@import url("react-web-tabs/dist/react-web-tabs.css");
-
-@import url("fontello/css/fontello.css");
+/* @import url("react-web-tabs/dist/react-web-tabs.css"); */
+/* @import url("fontello/css/fontello.css"); */
 /* @import url("font-awesome/css/font-awesome.min.css"); */
 @import url("font-awesome-5/css/fontawesome-all.css");
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
@@ -334,6 +333,7 @@ body {
   font-size: 15px;
   line-height: 30px;
   color: #838c95;
+  zoom: 1.1;
 
   -webkit-font-smoothing: antialiased;
   /* Fix for webkit rendering */

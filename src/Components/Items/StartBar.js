@@ -21,7 +21,7 @@ const styles = stylex.create({
     zIndex: 110000000,
     backgroundImage: "none",
     backgroundColor: colors.bgGray,
-    height: 60,
+    height: 63,
     width: "100%",
     padding: 0,
     display: "flex",
