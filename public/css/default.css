@@ -340,6 +340,30 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: 0.5px solid #bbb;
+  border-radius: 0;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  border-color: #999;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
 /*  2. Typography
        Vertical rhythm with leading derived from 6
 --------------------------------------------------------------------- */
