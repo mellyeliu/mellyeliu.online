@@ -7,7 +7,7 @@ const styles = stylex.create({
   hvrShade: {
     backgroundColor: {
       default: "transparent",
-      ":hover": "rgb(223, 223, 223)",
+      ":hover": "rgb(232, 232, 232)",
     },
   },
   wrapper: {
@@ -19,7 +19,7 @@ const styles = stylex.create({
     position: "fixed",
     left: 0,
     letterSpacing: 0,
-    bottom: 59.5,
+    bottom: 62,
     backgroundImage: "none",
     backgroundColor: colors.bgLight,
     borderWidth: 0.5,
@@ -95,14 +95,17 @@ const styles = stylex.create({
     borderRightWidth: 0.5,
     borderRightStyle: "solid",
     borderRightColor: colors.black,
-    height: 60,
+    height: 63,
     paddingTop: 15,
   },
   tabButtonActive: {
     backgroundColor: colors.bgActive,
   },
   tabButtonInactive: {
-    backgroundColor: "transparent",
+    backgroundColor: {
+      default: "transparent",
+      ":hover": "rgb(232, 232, 232)",
+    },
   },
   optionButton: {
     paddingTop: 8,

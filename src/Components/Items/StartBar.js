@@ -13,7 +13,7 @@ const styles = stylex.create({
   hvrShade: {
     backgroundColor: {
       default: "transparent",
-      ":hover": "rgb(223, 223, 223)",
+      ":hover": "rgb(232, 232, 232)",
     },
   },
   container: {
@@ -89,7 +89,10 @@ const styles = stylex.create({
     backgroundColor: colors.bgHover,
   },
   projectsButtonInactive: {
-    backgroundColor: "transparent",
+    backgroundColor: {
+      default: "transparent",
+      ":hover": "rgb(232, 232, 232)",
+    },
   },
 });
 

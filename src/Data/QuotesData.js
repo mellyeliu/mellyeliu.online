@@ -205,4 +205,8 @@ export const quotes = [
     "If the grand promise of the internet was to be whoever you want, in reality it makes of you whatever it wants. Beneath every mask is another mask mistaken for a face.",
     "https://www.goodreads.com/book/show/199635125-rejection",
   ],
+  [
+    "I could see no way out, and yet I had to find one. So crushed was I between the walls of femininity and masculinity that I felt I would inevitably die.",
+    "https://www.goodreads.com/book/show/57030264-can-the-monster-speak-a-report-to-an-academy-of-psychoanalysts",
+  ],
 ];
