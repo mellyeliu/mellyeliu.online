@@ -48,7 +48,7 @@ const PortfolioData = {
         languages: "React, NodeJS/SQLite, Figma",
         image: "boygame2.png",
         year: "2024",
-        type: ["code", "design", "games"],
+        type: ["games"],
         url: "https://instagram.com/b0ygame",
         collaborators: [
           {
@@ -112,7 +112,7 @@ const PortfolioData = {
       {
         title: "StyleX",
         description:
-          "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog.</a>",
+          "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog</a> and <a class='special-links' href='https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/'>podcast.</a>",
         languages: "Javascript",
         image: "stylex.png",
         year: "2024-",
@@ -132,7 +132,7 @@ const PortfolioData = {
         languages: "React, Cursor :/",
         image: "666piece.png",
         year: "2024-",
-        type: ["code", "games"],
+        type: ["games"],
         url: "",
       },
       {
@@ -178,7 +178,7 @@ const PortfolioData = {
         languages: "React?",
         image: "healinggame.png",
         year: "2024",
-        type: ["code", "games"],
+        type: ["games"],
         url: "https://healing-game.netlify.app/",
         collaborators: [
           {
@@ -246,7 +246,7 @@ const PortfolioData = {
         languages: "Framer, Figma",
         image: "serif.png",
         year: "2024",
-        type: ["code", "design"],
+        type: ["design"],
         url: "https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed",
         collaborators: [
           {
@@ -291,7 +291,7 @@ const PortfolioData = {
         languages: "Figma",
         image: "obsession.png",
         year: "2023",
-        type: ["design", "conversation"],
+        type: ["conversation"],
         url: "https://www.instagram.com/p/CpESuQsploR/?img_index=1",
         collaborators: [
           {

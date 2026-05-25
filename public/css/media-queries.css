@@ -136,6 +136,10 @@
     min-height: 0px;
   }
 
+  .hover-container {
+    height: 100% !important;
+  }
+
   .bottom-left {
     top: 20px;
     font-weight: 600;

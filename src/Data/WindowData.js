@@ -96,7 +96,8 @@ const siteContent = (
       text="open source"
       href="https://github.com/mellyeliu/mellyeliu.online"
     />
-    , made with <CustomLink text="react" href="https://react.dev/" />, and
+    , made with <CustomLink text="react" href="https://react.dev/" /> +{" "}
+    <CustomLink text="vite" href="https://vite.dev/" />, and
     inspired by{" "}
     <CustomLink
       text="everything before me"
@@ -114,12 +115,12 @@ const bioContent = (
     <br />
     Melissa (思源) is a software engineer and net artist. Interests include:
     messaging systems, creation myths, fandom as worldbuilding, recursive
-    autofiction, video game as art form, literary tropes, pseudoscientific
-    personality tests, relational psychology, bed rotting [...] They maintain an
+    autofiction, video game as art form, personality tests, relational
+    psychology, bed rotting [...] They maintain an
     enduring belief in the internet as identity play and softness as defiance.
     <br />
     <br />
-    In the day they work on web infra like{" "}
+    In the day they work on web infrastructure like{" "}
     <CustomLink text="StyleX" href="https://stylexjs.com/" />, a css-in-js
     compiler, and at night they work on web games. Before that they worked on{" "}
     <CustomLink text="Messenger" href="https://messenger.com" />, the website
