@@ -131,15 +131,17 @@
     display: none;
   }
 
+  body {
+    zoom: 1 !important;
+  }
+
   header#home {
     margin: 0px;
     min-height: 0px;
-    height: 100vh;
     height: 100dvh;
   }
 
   .hover-container {
-    height: 100vh !important;
     height: 100dvh !important;
   }
 
