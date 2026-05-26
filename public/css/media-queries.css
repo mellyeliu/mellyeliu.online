@@ -134,11 +134,11 @@
   header#home {
     margin: 0px;
     min-height: 0px;
-    height: 100vh;
+    height: calc(100vh / 1.1);
   }
 
   .hover-container {
-    height: 100vh !important;
+    height: calc(100vh / 1.1) !important;
   }
 
   .bottom-left {
