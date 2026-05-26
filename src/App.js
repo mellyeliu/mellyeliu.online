@@ -21,8 +21,11 @@ const AppContent = () => {
   const history = useHistory();
   const { theme } = useTheme();
   const [isFoldersOff, setIsFoldersOff] = useState(false);
+  const isMobile = window.innerWidth <= 767;
   const ZOOM = 1.1;
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight / ZOOM);
+  const [windowHeight, setWindowHeight] = useState(
+    isMobile ? window.innerHeight : window.innerHeight / ZOOM
+  );
 
   const isPortfolioPage = location.pathname.startsWith("/portfolio");
   const desktopScreen = isPortfolioPage ? Screen.PORTFOLIO : Screen.HOME;
@@ -50,7 +53,8 @@ const AppContent = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowHeight(window.innerHeight / ZOOM);
+      const mobile = window.innerWidth <= 767;
+      setWindowHeight(mobile ? window.innerHeight : window.innerHeight / ZOOM);
     };
 
     window.addEventListener("resize", handleResize);
