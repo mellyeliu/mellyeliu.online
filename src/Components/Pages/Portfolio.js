@@ -314,10 +314,33 @@ const Portfolio = ({ setDesktopScreen }) => {
     }
   }, [projectMatch, activeProject, history]);
 
+  const TAB_ROUTES = {
+    all: { tab: "one", path: "/portfolio" },
+    code: { tab: "two", path: "/portfolio/code" },
+    design: { tab: "three", path: "/portfolio/design" },
+    games: { tab: "four", path: "/portfolio/games" },
+    convos: { tab: "five", path: "/portfolio/convos" },
+    conversation: { tab: "five", path: "/portfolio/convos" },
+    conversations: { tab: "five", path: "/portfolio/convos" },
+  };
+
   const handleInputChange = (event) => {
     if (event.target.value === "YES" && tabTwoRef.current) {
       setActiveTab("two");
       history.push("/portfolio/code");
+    }
+  };
+
+  const handleUrlBarSubmit = (event) => {
+    if (event.key !== "Enter") return;
+    const value = event.target.value.trim();
+    const parts = value.split("/");
+    const lastSegment = parts[parts.length - 1].trim().toLowerCase();
+    const route = TAB_ROUTES[lastSegment];
+    if (route) {
+      setActiveTab(route.tab);
+      history.push(route.path);
+      event.target.value = `C://Users/mellyeliu/Projects/${lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)}`;
     }
   };
 
@@ -403,6 +426,7 @@ const Portfolio = ({ setDesktopScreen }) => {
             <input
               type="text"
               onChange={handleInputChange}
+              onKeyDown={handleUrlBarSubmit}
               {...stylex.props(styles.urlInput)}
               defaultValue={`C://Users/mellyeliu/Projects/${tab}`}
             />
