@@ -71,22 +71,22 @@ jQuery(document).ready(function ($) {
   /*	Make sure that #header-background-image height is
 /* equal to the browser height.
 ------------------------------------------------------ */
+  function getZoom() {
+    return $(window).width() <= 860 ? 1 : ZOOM;
+  }
+
   $(window).load(function () {
-    var h = $(window).height() / ZOOM;
+    var z = getZoom();
+    var h = $(window).height() / z;
     $("img#headerpic").css({ "min-height": h * 0.95 - 80 });
   });
 
-  $("header").css({ height: $(window).height() / ZOOM });
-  //  $('img#headerpic').css({ 'min-height': $(window).height() });
-  //  $('body').css({ 'width': $(window).width() })
+  $("header").css({ height: $(window).height() / getZoom() });
   $(window).on("resize", function () {
-    var w = $(window).width() / ZOOM;
-    var h = $(window).height() / ZOOM * 0.95 - 80;
-    $("header").css({ height: $(window).height() / ZOOM });
-    // // $('.banner').css({ 'height': $(window).height() });
-    // $('body').css({ 'width': $(window).width() })
+    var z = getZoom();
+    var h = $(window).height() / z * 0.95 - 80;
+    $("header").css({ height: $(window).height() / z });
     $("img#headerpic").css({ "min-height": h });
-    // document.getElementById("headerpic").style.height = '900px';
   });
 
   /*----------------------------------------------------*/
