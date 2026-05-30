@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import { useLocation, useHistory } from "react-router-dom";
-import Fade from "react-reveal/Fade";
 import PortfolioData from "../../Data/PortfolioData";
 import { Screen } from "../../App";
 import { useMediaQuery } from "react-responsive";
@@ -444,15 +443,15 @@ const Portfolio = ({ setDesktopScreen }) => {
                 : "calc(100vh / 1.1 - 200px)",
             }}
           >
-            <Fade duration={500} delay={100}>
+            <div style={{ animation: "fadeInContent 500ms 100ms both" }}>
               {tabContent}
-            </Fade>
+            </div>
           </div>
         ) : (
           <div>
-            <Fade duration={500} delay={100}>
+            <div style={{ animation: "fadeInContent 500ms 100ms both" }}>
               {tabContent}
-            </Fade>
+            </div>
           </div>
         )}
       </>
@@ -557,9 +556,7 @@ const Portfolio = ({ setDesktopScreen }) => {
           maxWidth: "100%",
         }}
       >
-        <Fade top>
-          <div style={{ marginBottom: -15 }} className="tagline"></div>
-        </Fade>
+        <div style={{ marginBottom: -15 }} className="tagline"></div>
         <div className="twelve columns collapsed" style={{ height: "100%" }}>
           <Tabs defaultTab={activeTab}>
             <TabList {...stylex.props(styles.tabList)}>
