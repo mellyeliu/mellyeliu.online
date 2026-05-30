@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Fade from "react-reveal/Fade";
 import DesktopIcon from "../Items/DesktopIcon";
 import Folder from "../Items/Folder";
 import FileData from "../../Data/FileData";
@@ -246,11 +245,14 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
   ]);
 
   return (
-    <header id="home">
-      <Fade duration={500} delay={200}>
+    <header
+        id="home"
+        style={!isMobile ? { height: "calc(100vh / 1.1)" } : undefined}
+      >
         <div
           className="banner"
           style={{
+            animation: "fadeInContent 500ms 200ms both",
             transition: "height 1s ease",
             display: "inline-block",
             margin: 0,
@@ -367,7 +369,6 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
             )}
           </div>
         </div>
-      </Fade>
     </header>
   );
 };

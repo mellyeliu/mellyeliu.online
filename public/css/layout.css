@@ -437,3 +437,8 @@ button#one-tab {
 #desktop-only {
   display: block;
 }
+
+@keyframes fadeInContent {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
