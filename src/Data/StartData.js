@@ -9,7 +9,6 @@ export const startData = {
     ["Stuffed animal paracosms", ""],
   ],
   "𖧷 Interests": [
-    ["Jumping spiders", "https://en.wikipedia.org/wiki/Jumping_spider"],
     ["Theories of God", "https://en.wikipedia.org/wiki/Transtheism"],
     ["Parser-based interactive fiction", "https://eblong.com/zarf/if.html"],
     [
@@ -78,6 +77,7 @@ export const startData = {
       "Relationship anarchy and queer temporality",
       "https://images.aeonmedia.co/user_image_upload/744/v2-smorgasbord-b8wpopb56r4y.jpg?width=3840&quality=75&format=auto",
     ],
+    ["Jumping spiders", "https://en.wikipedia.org/wiki/Jumping_spider"],
   ],
   "⚘ Media Recs": [
     [
