@@ -22,7 +22,9 @@ const TextList = ({
   links = [],
 }) => {
   const [currentFact, setCurrentFact] = useState("");
-  const [factIndex, setFactIndex] = useState(0);
+  const [factIndex, setFactIndex] = useState(() =>
+    Math.floor(Math.random() * textOptions.length)
+  );
   const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [isPaused, setIsPaused] = useState(false);

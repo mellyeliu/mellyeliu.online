@@ -9,6 +9,7 @@ export const startData = {
     ["Stuffed animal paracosms", ""],
   ],
   "𖧷 Interests": [
+    ["Jumping spiders", "https://en.wikipedia.org/wiki/Jumping_spider"],
     ["Theories of God", "https://en.wikipedia.org/wiki/Transtheism"],
     ["Parser-based interactive fiction", "https://eblong.com/zarf/if.html"],
     [

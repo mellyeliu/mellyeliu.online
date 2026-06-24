@@ -96,7 +96,7 @@ const styles = stylex.create({
     borderRightStyle: "solid",
     borderRightColor: colors.black,
     height: 63,
-    paddingTop: 15,
+    paddingTop: 16,
   },
   tabButtonActive: {
     backgroundColor: colors.bgActive,

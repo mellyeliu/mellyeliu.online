@@ -110,6 +110,16 @@ const PortfolioData = {
         ],
       },
       {
+        title: "Risopaint",
+        description:
+          "MS Paint-like tool with stamps, gravity, and dithered textures.",
+        languages: "p5.grain (port), Matter.js",
+        image: "risopaint.png",
+        year: "2026",
+        type: ["code"],
+        url: "https://risopaint.space/",
+      },
+      {
         title: "StyleX",
         description:
           "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog</a> and <a class='special-links' href='https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/'>podcast.</a>",

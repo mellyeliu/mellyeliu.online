@@ -103,6 +103,7 @@ const NameTag = () => {
       </div>
       <TypingToggleTextList
         wrapper={true}
+        typing={false}
         {...stylex.props(styles.control)}
         xstyle={[
           styles.funFacts,

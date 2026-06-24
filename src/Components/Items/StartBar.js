@@ -42,7 +42,7 @@ const styles = stylex.create({
     position: "absolute",
     right: 130,
     height: 60,
-    paddingTop: 15,
+    paddingTop: 16,
     maxWidth: "50%",
   },
   quoteStyle: {
@@ -60,7 +60,7 @@ const styles = stylex.create({
     display: "block",
   },
   homeButton: {
-    paddingTop: 15,
+    paddingTop: 16,
     paddingRight: 15,
     paddingBottom: 5,
     paddingLeft: 15,
@@ -76,7 +76,7 @@ const styles = stylex.create({
     backgroundColor: "transparent",
   },
   projectsButton: {
-    paddingTop: 15,
+    paddingTop: 16,
     paddingRight: 10,
     paddingBottom: 15,
     paddingLeft: 10,
@@ -97,7 +97,9 @@ const styles = stylex.create({
 });
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  // Hide below 860px to match the CSS zoom reset breakpoint; above 860px the
+  // body zoom is a constant 1.1, so the bar renders at a consistent height.
+  const isMobile = useMediaQuery({ query: "(max-width: 860px)" });
   const { setCursorString } = useUI();
 
   const newQuotes = quotes.map((item) => item[0]);
