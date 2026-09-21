@@ -96,14 +96,14 @@ const styles = stylex.create({
   },
 });
 
+const quoteTexts = quotes.map((item) => item[0]);
+const quoteLinks = quotes.map((item) => item[1]);
+
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   // Hide below 860px to match the CSS zoom reset breakpoint; above 860px the
   // body zoom is a constant 1.1, so the bar renders at a consistent height.
   const isMobile = useMediaQuery({ query: "(max-width: 860px)" });
   const { setCursorString } = useUI();
-
-  const newQuotes = quotes.map((item) => item[0]);
-  const linkQuotes = quotes.map((item) => item[1]);
 
   if (isMobile) {
     return null;
@@ -150,13 +150,13 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
       </div>
       <div {...stylex.props(styles.quotesContainer)} id="desktop-only">
         <TypingToggleTextList
-          textOptions={newQuotes}
+          textOptions={quoteTexts}
           wrapper={false}
           order={true}
           typing={false}
           speed={30}
           autoplaySpeed={50000}
-          links={linkQuotes}
+          links={quoteLinks}
           xstyle={styles.quoteStyle}
         />
       </div>
