@@ -110,16 +110,6 @@ const PortfolioData = {
         ],
       },
       {
-        title: "Risopaint",
-        description:
-          "MS Paint-like tool with stamps, gravity, and dithered textures.",
-        languages: "p5.grain (port), Matter.js",
-        image: "risopaint.png",
-        year: "2026",
-        type: ["code"],
-        url: "https://risopaint.space/",
-      },
-      {
         title: "StyleX",
         description:
           "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog</a> and <a class='special-links' href='https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/'>podcast.</a>",
@@ -144,26 +134,6 @@ const PortfolioData = {
         year: "2024-",
         type: ["games"],
         url: "",
-      },
-      {
-        title: "Ascii Storybook",
-        description:
-          "A storybooking tool to turn writing into ascii visuals. (Server not running! Tokens are expensive...)",
-        languages: "React, Python, NLTK, DALL-E",
-        image: "ascii.png",
-        year: "2024",
-        url: "https://ascii-storybook.netlify.app/",
-        type: ["code"],
-        collaborators: [
-          {
-            name: "Madeleine Lee",
-            url: "http://madlee.me/",
-          },
-          {
-            name: "Christina Huang",
-            url: "https://www.instagram.com/christina.is.huang/",
-          },
-        ],
       },
       {
         title: "BOY♡GAME",
@@ -252,7 +222,7 @@ const PortfolioData = {
       {
         title: "Serif",
         description:
-          "Tiktok meets Goodreads. View the <a class='special-links' href='https://www.serif.app/publishers'>website</a> and <a class='special-links' href='https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed'>mocks</a> here.",
+          "Tiktok meets Goodreads. View the <a class='special-links' href='https://www.serif.app/publishers'>website</a>, <a class='special-links' href='https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed'>mocks</a>, and <a class='special-links' href='https://ascii-storybook.netlify.app/'>ascii explorations</a> here.",
         languages: "Framer, Figma",
         image: "serif.png",
         year: "2024",
@@ -333,15 +303,6 @@ const PortfolioData = {
             url: "https://www.instagram.com/sttevengong/",
           },
         ],
-      },
-      {
-        title: "Dimensional Fanfic",
-        description: "Fictional Dimensional personality archetypes.",
-        languages: "Figma",
-        image: "dimensional.png",
-        type: ["design"],
-        year: "2023",
-        url: "https://www.figma.com/file/3iixmn0kM36OZ3ZSyQtyyX/Dimensional-Fanfic?type=design&node-id=0%3A1&mode=design&t=S5uZcbhh0HrO2QbB-1",
       },
       {
         title: "Internet (2 Sides)",

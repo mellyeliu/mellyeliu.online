@@ -120,9 +120,9 @@ const bioContent = (
     enduring belief in the internet as identity play and softness as defiance.
     <br />
     <br />
-    In the day they work on web infrastructure like{" "}
-    <CustomLink text="StyleX" href="https://stylexjs.com/" />, a css-in-js
-    compiler, and at night they work on web games. Before that they worked on{" "}
+    In the day they work on web infrastructure including JS frameworks, build
+    systems, and <CustomLink text="StyleX" href="https://stylexjs.com/" />, and
+    at night they work on web games. Before that they worked on{" "}
     <CustomLink text="Messenger" href="https://messenger.com" />, the website
     that first taught them how to talk to people. They still beta test it every
     day with their friends. The rest of their life is just content for their
