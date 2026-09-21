@@ -10,6 +10,8 @@ const styles = stylex.create({
   },
 });
 
+const FADE_DURATION = 250;
+
 const TextList = ({
   style,
   xstyle,
@@ -28,34 +30,19 @@ const TextList = ({
   const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
-  const rafRef = useRef(null);
+  const transitionTimerRef = useRef(null);
 
   useEffect(() => {
     setCharIndex(0);
     setIsTyping(true);
-    setIsVisible(false);
     setCurrentFact("");
   }, [factIndex]);
 
-  useEffect(() => {
-    setShouldAnimate(true);
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = requestAnimationFrame(() => {
-        setIsVisible(true);
-      });
-    });
-
-    return () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, [factIndex]);
-
   const advanceToNextFact = useCallback(() => {
+    if (textOptions.length === 0) return;
+
     if (order) {
       setFactIndex((prev) => (prev + 1) % textOptions.length);
     } else {
@@ -63,18 +50,69 @@ const TextList = ({
     }
   }, [order, textOptions.length]);
 
+  const finishTransition = useCallback(() => {
+    if (transitionTimerRef.current !== null) {
+      clearTimeout(transitionTimerRef.current);
+      transitionTimerRef.current = null;
+    }
+
+    advanceToNextFact();
+    setIsVisible(true);
+  }, [advanceToNextFact]);
+
+  const startTransition = useCallback(() => {
+    // Ignore extra clicks (or an autoplay tick) while a fade is in progress.
+    // Otherwise, several delayed advances can race and leave the text hidden.
+    if (transitionTimerRef.current !== null) return;
+
+    setIsVisible(false);
+    transitionTimerRef.current = setTimeout(
+      finishTransition,
+      FADE_DURATION
+    );
+  }, [finishTransition]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      // Browsers may pause timers while a tab is in the background. Complete
+      // an interrupted fade as soon as the page is visible again.
+      if (
+        document.visibilityState === "visible" &&
+        transitionTimerRef.current !== null
+      ) {
+        finishTransition();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [finishTransition]);
+
+  useEffect(
+    () => () => {
+      if (transitionTimerRef.current !== null) {
+        clearTimeout(transitionTimerRef.current);
+        transitionTimerRef.current = null;
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     let timer;
 
-    if (!typing) {
+    if (!typing && isVisible) {
       timer = setTimeout(() => {
-        setShouldAnimate(true);
-        setIsVisible(false);
-        setTimeout(advanceToNextFact, 250);
+        startTransition();
       }, autoplaySpeed);
 
       return () => clearTimeout(timer);
     }
+
+    if (!typing) return undefined;
 
     if (isPaused) {
       timer = setTimeout(() => {
@@ -117,6 +155,8 @@ const TextList = ({
     factIndex,
     textOptions,
     advanceToNextFact,
+    isVisible,
+    startTransition,
   ]);
 
   const handleClick = useCallback(
@@ -124,12 +164,8 @@ const TextList = ({
       if (event.target.tagName === "A") return;
 
       if (!typing) {
-        setShouldAnimate(true);
-        setIsVisible(false);
-        setTimeout(advanceToNextFact, 250);
+        startTransition();
       } else {
-        setIsVisible(false);
-        setShouldAnimate(false);
         setCurrentFact("");
         setCharIndex(0);
         setIsTyping(true);
@@ -137,12 +173,12 @@ const TextList = ({
         advanceToNextFact();
       }
     },
-    [typing, advanceToNextFact]
+    [typing, advanceToNextFact, startTransition]
   );
 
   const dynamicStyle = !typing
     ? {
-        transition: shouldAnimate ? "opacity 0.25s ease-in-out" : "none",
+        transition: `opacity ${FADE_DURATION}ms ease-in-out`,
         opacity: isVisible ? 1 : 0,
       }
     : {};
