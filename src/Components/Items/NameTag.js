@@ -1,29 +1,9 @@
 import React from "react";
-import TypingToggleTextList from "../Utils/TextList";
 import { useMediaQuery } from "react-responsive";
 import * as stylex from "@stylexjs/stylex";
-import { colors, fonts, breakpoints } from "../../styles/tokens.stylex";
+import { colors, fonts } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
-  control: {
-    display: "block",
-    letterSpacing: "2.5px",
-    height: {
-      default: null,
-      [breakpoints.tabletShort]: "28px",
-      [breakpoints.smallTablet]: "38px",
-    },
-    fontSize: {
-      default: null,
-      [breakpoints.tabletShort]: "12px",
-      [breakpoints.smallTablet]: "11.5px",
-    },
-    marginTop: {
-      default: null,
-      [breakpoints.tabletShort]: "-8px",
-      [breakpoints.smallTablet]: "-22px",
-    },
-  },
   container: {
     backgroundImage: "none",
     backgroundColor: colors.bgWhite,
@@ -64,21 +44,6 @@ const styles = stylex.create({
   titleMobile: {
     fontSize: 24,
   },
-  funFacts: {
-    letterSpacing: 1,
-    fontFamily: fonts.serif,
-    fontWeight: 300,
-    fontStyle: "italic",
-    color: colors.mediumGray,
-  },
-  funFactsDesktop: {
-    fontSize: "clamp(17px, 1vh, 26px)",
-    paddingTop: 6,
-  },
-  funFactsMobile: {
-    fontSize: 14,
-    paddingTop: 2,
-  },
 });
 
 const NameTag = () => {
@@ -101,15 +66,6 @@ const NameTag = () => {
       >
         {"mellye.liu ໒ ྀིྀིྀིྀིྀི꒰っ˕ -｡꒱ ྀིྀིྀིྀིྀི১ ♡ "}
       </div>
-      <TypingToggleTextList
-        wrapper={true}
-        typing={false}
-        {...stylex.props(styles.control)}
-        xstyle={[
-          styles.funFacts,
-          isMobile ? styles.funFactsMobile : styles.funFactsDesktop,
-        ]}
-      />
     </div>
   );
 };
