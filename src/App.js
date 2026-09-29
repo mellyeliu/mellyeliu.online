@@ -16,6 +16,9 @@ export const Screen = {
   PORTFOLIO: "PORTFOLIO",
 };
 
+const HOME_BACKGROUND_SRC = "/images/bgfinal.png";
+const LOAD_FALLBACK_MS = 4000;
+
 const AppContent = () => {
   const location = useLocation();
   const history = useHistory();
@@ -32,6 +35,7 @@ const AppContent = () => {
 
   const isPortfolioPage = location.pathname.startsWith("/portfolio");
   const desktopScreen = isPortfolioPage ? Screen.PORTFOLIO : Screen.HOME;
+  const [isPageReady, setIsPageReady] = useState(isPortfolioPage);
 
   const setDesktopScreen = (screen) => {
     if (screen === Screen.HOME) {
@@ -48,6 +52,47 @@ const AppContent = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isPortfolioPage) {
+      setIsPageReady(true);
+      return undefined;
+    }
+
+    let cancelled = false;
+    let fallbackTimer;
+    const backgroundImage = new Image();
+
+    const revealPage = () => {
+      if (cancelled) return;
+      window.clearTimeout(fallbackTimer);
+      setIsPageReady(true);
+    };
+
+    const handleLoad = () => {
+      if (typeof backgroundImage.decode === "function") {
+        backgroundImage.decode().then(revealPage, revealPage);
+      } else {
+        revealPage();
+      }
+    };
+
+    backgroundImage.addEventListener("load", handleLoad);
+    backgroundImage.addEventListener("error", revealPage);
+    fallbackTimer = window.setTimeout(revealPage, LOAD_FALLBACK_MS);
+    backgroundImage.src = HOME_BACKGROUND_SRC;
+
+    if (backgroundImage.complete) {
+      handleLoad();
+    }
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
+      backgroundImage.removeEventListener("load", handleLoad);
+      backgroundImage.removeEventListener("error", revealPage);
+    };
+  }, [isPortfolioPage]);
 
   useEffect(() => {
     ReactGA.initialize("UA-110570651-1");
@@ -71,7 +116,14 @@ const AppContent = () => {
       <TextCursor />
       <div
         className={themeClass}
-        style={{ height: `${windowHeight}px`, overflow: "hidden" }}
+        aria-busy={!isPageReady}
+        style={{
+          height: `${windowHeight}px`,
+          overflow: "hidden",
+          opacity: isPageReady ? 1 : 0,
+          pointerEvents: isPageReady ? "auto" : "none",
+          transition: "opacity 250ms ease-out",
+        }}
       >
         {!isFoldersOff && desktopScreen === Screen.HOME && <NameTag />}
         <Switch>

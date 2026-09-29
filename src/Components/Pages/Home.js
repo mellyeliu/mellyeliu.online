@@ -52,7 +52,6 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
   const [openStates, setOpenStates] = useState([true, false, true, true]);
   const [triggerResize, setTriggerResize] = useState(false);
   const [isFoldersVisible, setIsFoldersVisible] = useState(true);
-  const [zIndex, setZIndex] = useState(1);
 
   const parentRef = useRef(null);
 
@@ -205,8 +204,6 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
               src={`${window.location.origin}/${item.src}`}
               x={posX}
               y={posY}
-              zIndex={zIndex}
-              setZIndex={setZIndex}
               setShowCursor={setCursorString}
               triggerResize={triggerResize}
               isGridLayout={isGridLayout}
@@ -252,7 +249,6 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
         <div
           className="banner"
           style={{
-            animation: "fadeInContent 500ms 200ms both",
             transition: "height 1s ease",
             display: "inline-block",
             margin: 0,
@@ -335,7 +331,8 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
               id="headerpic"
               draggable="false"
               src={photoData.image}
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               alt="Background"
             />
 
