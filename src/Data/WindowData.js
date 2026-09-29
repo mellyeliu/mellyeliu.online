@@ -113,7 +113,7 @@ const bioContent = (
       <br />
     </div>
     <br />
-    Melissa (思源) is a software engineer and net artist. Interests include:
+    Melly (思源) is a software engineer and net artist. Interests include:
     messaging systems, creation myths, fandom as worldbuilding, recursive
     autofiction, video game as art form, personality tests, relational
     psychology, bed rotting [...] They maintain an

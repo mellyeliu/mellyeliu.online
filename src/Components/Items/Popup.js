@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useMediaQuery } from "react-responsive";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
+import { useUI } from "../../context/UIContext";
 
 const DOUBLE_CLICK_DELAY = 300;
 
@@ -22,8 +23,6 @@ const Popup = ({
   isGridLayout = false,
   onHoverChange,
   hoverString = "",
-  zIndex,
-  setZIndex,
   setShowCursor,
   triggerResize = false,
   content = null,
@@ -31,8 +30,10 @@ const Popup = ({
   const isMobile = useMediaQuery({
     query: "(max-width: 767px)",
   });
+  const { getNextZIndex } = useUI();
 
   const [position, setPosition] = useState({ x: x, y: y });
+  const [localZIndex, setLocalZIndex] = useState(1);
   const minWidth = 900;
   const [width, setWidth] = useState(minWidth);
   const [isWidthCalculated, setIsWidthCalculated] = useState(false);
@@ -43,6 +44,7 @@ const Popup = ({
   const [isClicked, setIsClicked] = useState(false);
 
   const [imageSize, setImageSize] = useState({ width: "auto", height: "auto" });
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const handleResize = useCallback(() => {
     const divs = document.getElementsByClassName("hover-container");
@@ -54,16 +56,31 @@ const Popup = ({
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     const img = new Image();
+    setIsImageLoaded(false);
+
     img.onload = () => {
+      if (cancelled) return;
+
       isMobile
         ? setImageSize({
             width: `${img.width * 0.85}px`,
             height: `${img.height * 0.85}px`,
           })
         : setImageSize({ width: img.width + "px", height: img.height + "px" });
+      setIsImageLoaded(true);
+    };
+    img.onerror = () => {
+      if (!cancelled) setIsImageLoaded(true);
     };
     img.src = src;
+
+    return () => {
+      cancelled = true;
+      img.onload = null;
+      img.onerror = null;
+    };
   }, [src, isMobile]);
 
   useEffect(() => {
@@ -122,9 +139,8 @@ const Popup = ({
       dragRef.current.isDragging = false;
     }
 
-    const draggableElement = document.querySelector(".draggableImage");
-    if (draggableElement) {
-      draggableElement.style.cursor = "grab";
+    if (ref.current) {
+      ref.current.style.cursor = "grab";
     }
 
     document.removeEventListener("mousemove", onDrag);
@@ -154,7 +170,7 @@ const Popup = ({
 
   const startDrag = useCallback((e) => {
     e.preventDefault();
-    setZIndex(zIndex + 1);
+    setLocalZIndex(getNextZIndex());
     setIsClicked(true);
 
     dragRef.current = {
@@ -164,13 +180,9 @@ const Popup = ({
       startPosition: { ...position },
     };
 
-    if (ref.current) {
-      ref.current.style.zIndex = zIndex + 1;
-    }
-
     document.addEventListener("mousemove", onDrag);
     document.addEventListener("mouseup", stopDrag);
-  }, [zIndex, setZIndex, position, onDrag, stopDrag]);
+  }, [getNextZIndex, position, onDrag, stopDrag]);
 
   const onHover = useCallback(() => {
     onHoverChange(true, hoverString);
@@ -184,12 +196,12 @@ const Popup = ({
 
   return (
     <div {...stylex.props(styles.container)}>
-      {isWidthCalculated && (
+      {isWidthCalculated && isImageLoaded && (
         <div
           style={{
             cursor: "grab",
             position: "absolute",
-            zIndex: 1,
+            zIndex: localZIndex,
             filter: "drop-shadow(8px 8px 10px rgba(0,0,0,0.3))",
             boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
             userSelect: "none",
@@ -230,8 +242,6 @@ Popup.propTypes = {
   isGridLayout: PropTypes.bool,
   onHoverChange: PropTypes.func.isRequired,
   hoverString: PropTypes.string,
-  zIndex: PropTypes.number.isRequired,
-  setZIndex: PropTypes.func.isRequired,
   setShowCursor: PropTypes.func.isRequired,
   triggerResize: PropTypes.bool,
   content: PropTypes.node,

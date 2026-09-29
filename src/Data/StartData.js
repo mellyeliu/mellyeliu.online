@@ -7,6 +7,7 @@ export const startData = {
     ["Internet surfer personality quiz", ""],
     ["Misc personality quizzes", ""],
     ["Stuffed animal paracosms", ""],
+    ["Salticid civilizations", ""],
   ],
   "𖧷 Interests": [
     ["Theories of God", "https://en.wikipedia.org/wiki/Transtheism"],
