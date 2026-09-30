@@ -92,6 +92,7 @@ const DesktopIcon = ({
   const [localZIndex, setLocalZIndex] = useState(1);
   const [isClicked, setIsClicked] = useState(false);
   const [clickCount, setClickCount] = useState(0);
+  const [isImageReady, setIsImageReady] = useState(!src);
 
   const imageRef = useRef(null);
   const textRef = useRef(null);
@@ -112,6 +113,21 @@ const DesktopIcon = ({
         }
       },
     });
+
+  useEffect(() => {
+    setIsImageReady(!src);
+  }, [src]);
+
+  const handleImageLoad = useCallback((event) => {
+    const image = event.currentTarget;
+    const reveal = () => setIsImageReady(true);
+
+    if (typeof image.decode === "function") {
+      image.decode().then(reveal, reveal);
+    } else {
+      reveal();
+    }
+  }, []);
 
   const handleClickOutside = useCallback((event) => {
     if (!event) return;
@@ -181,7 +197,10 @@ const DesktopIcon = ({
           left: pixelPos.left,
           top: pixelPos.top,
           zIndex: localZIndex,
+          opacity: isImageReady ? 1 : 0,
+          transition: "opacity 160ms ease-out",
         }}
+        aria-busy={!isImageReady}
         onMouseDown={handleDragStart}
         onClick={handleClick}
         onMouseLeave={handleMouseLeave}
@@ -192,6 +211,9 @@ const DesktopIcon = ({
           alt={iconText}
           ref={imageRef}
           draggable={false}
+          decoding="async"
+          onLoad={handleImageLoad}
+          onError={() => setIsImageReady(true)}
           {...stylex.props(
             styles.image,
             isMobile ? styles.imageMobile : styles.imageDesktop,

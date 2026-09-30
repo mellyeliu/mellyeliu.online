@@ -35,7 +35,8 @@ const AppContent = () => {
 
   const isPortfolioPage = location.pathname.startsWith("/portfolio");
   const desktopScreen = isPortfolioPage ? Screen.PORTFOLIO : Screen.HOME;
-  const [isPageReady, setIsPageReady] = useState(isPortfolioPage);
+  const [isHomeReady, setIsHomeReady] = useState(false);
+  const isPageReady = isPortfolioPage || isHomeReady;
 
   const setDesktopScreen = (screen) => {
     if (screen === Screen.HOME) {
@@ -54,19 +55,26 @@ const AppContent = () => {
   }, []);
 
   useEffect(() => {
-    if (isPortfolioPage) {
-      setIsPageReady(true);
-      return undefined;
-    }
+    if (isPortfolioPage || isHomeReady) return undefined;
 
     let cancelled = false;
     let fallbackTimer;
     const backgroundImage = new Image();
+    const preloadLink = document.createElement("link");
+
+    preloadLink.rel = "preload";
+    preloadLink.as = "image";
+    preloadLink.href = HOME_BACKGROUND_SRC;
+    preloadLink.fetchPriority = "high";
+    document.head.appendChild(preloadLink);
+
+    backgroundImage.fetchPriority = "high";
+    backgroundImage.decoding = "async";
 
     const revealPage = () => {
       if (cancelled) return;
       window.clearTimeout(fallbackTimer);
-      setIsPageReady(true);
+      setIsHomeReady(true);
     };
 
     const handleLoad = () => {
@@ -91,8 +99,9 @@ const AppContent = () => {
       window.clearTimeout(fallbackTimer);
       backgroundImage.removeEventListener("load", handleLoad);
       backgroundImage.removeEventListener("error", revealPage);
+      preloadLink.remove();
     };
-  }, [isPortfolioPage]);
+  }, [isPortfolioPage, isHomeReady]);
 
   useEffect(() => {
     ReactGA.initialize("UA-110570651-1");

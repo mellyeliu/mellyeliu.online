@@ -70,6 +70,9 @@ const ProjectDetailMobile = ({ project }) => {
           src={coverSrc}
           alt={project.title}
           draggable="false"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           {...stylex.props(styles.image)}
         />
       )}
