@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
 import { fonts } from "../../styles/tokens.stylex";
@@ -46,6 +46,28 @@ const Folder = ({
   onOpen,
   image,
 }) => {
+  const folderImage = image
+    ? image
+    : isOpen
+    ? `${window.location.origin}/images/menu/folderNewOpen.png`
+    : `${window.location.origin}/images/menu/folder.png`;
+  const [isImageReady, setIsImageReady] = useState(false);
+
+  useEffect(() => {
+    setIsImageReady(false);
+  }, [folderImage]);
+
+  const handleImageLoad = useCallback((event) => {
+    const imageElement = event.currentTarget;
+    const reveal = () => setIsImageReady(true);
+
+    if (typeof imageElement.decode === "function") {
+      imageElement.decode().then(reveal, reveal);
+    } else {
+      reveal();
+    }
+  }, []);
+
   const handleClick = useCallback(() => {
     onOpen(!isOpen);
   }, [isOpen, onOpen]);
@@ -58,12 +80,6 @@ const Folder = ({
     onHoverChange(false, "");
   }, [onHoverChange]);
 
-  const folderImage = image
-    ? image
-    : isOpen
-    ? `${window.location.origin}/images/menu/folderNewOpen.png`
-    : `${window.location.origin}/images/menu/folder.png`;
-
   return (
     <div
       onClick={handleClick}
@@ -73,12 +89,18 @@ const Folder = ({
       style={{
         top: y,
         transform: `scale(${scale})`,
+        opacity: isImageReady ? 1 : 0,
+        transition: "opacity 160ms ease-out",
       }}
+      aria-busy={!isImageReady}
     >
       <img
         src={folderImage}
         alt={caption || "folder"}
         draggable={false}
+        decoding="async"
+        onLoad={handleImageLoad}
+        onError={() => setIsImageReady(true)}
         {...stylex.props(styles.folder)}
       />
       {caption && (

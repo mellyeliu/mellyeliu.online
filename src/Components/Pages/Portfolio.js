@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import { useLocation, useHistory } from "react-router-dom";
 import PortfolioData from "../../Data/PortfolioData";
@@ -10,6 +16,30 @@ import ProjectDetailMobile from "../Items/ProfileDetail";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
 import { colors, fonts, radii, fontSizes } from "../../styles/tokens.stylex";
+
+const PORTFOLIO_LOAD_FALLBACK_MS = 4000;
+const TAB_CATEGORIES = {
+  one: "all",
+  two: "code",
+  three: "design",
+  four: "games",
+  five: "conversation",
+};
+
+const getProjectImageUrl = (image) =>
+  image.startsWith("http")
+    ? image
+    : new URL(`/images/portfolio/${image}`, window.location.origin).href;
+
+const getTabFromPath = (pathname, projectSlug) => {
+  if (projectSlug) return `project-${projectSlug}`;
+  if (pathname === "/portfolio" || pathname === "/portfolio/") return "one";
+  if (pathname === "/portfolio/code") return "two";
+  if (pathname === "/portfolio/design") return "three";
+  if (pathname === "/portfolio/games") return "four";
+  if (pathname === "/portfolio/convos") return "five";
+  return "one";
+};
 
 const styles = stylex.create({
   hvrGrow: {
@@ -223,21 +253,18 @@ const Portfolio = ({ setDesktopScreen }) => {
   const history = useHistory();
 
   const [favourite, setFavourite] = useState("✩");
-  const [activeTab, setActiveTab] = useState("one");
+  const [activeTab, setActiveTab] = useState(() => {
+    const projectMatch = location.pathname.match(
+      /^\/portfolio\/projects\/([^/]+)\/?$/
+    );
+    return getTabFromPath(
+      location.pathname,
+      projectMatch ? projectMatch[1] : null
+    );
+  });
   const tabTwoRef = useRef(null);
   const [backHover, setBackHover] = useState(0);
   const [useMobileDetail, setUseMobileDetail] = useState(true);
-
-  // Map URL paths to tab IDs
-  const getTabFromPath = (pathname, projectSlug) => {
-    if (projectSlug) return `project-${projectSlug}`;
-    if (pathname === "/portfolio" || pathname === "/portfolio/") return "one";
-    if (pathname === "/portfolio/code") return "two";
-    if (pathname === "/portfolio/design") return "three";
-    if (pathname === "/portfolio/games") return "four";
-    if (pathname === "/portfolio/convos") return "five";
-    return "one";
-  };
 
   // Map tab IDs to URL paths
   const getPathFromTab = (tabId) => {
@@ -307,6 +334,113 @@ const Portfolio = ({ setDesktopScreen }) => {
     ? projectsWithMeta.find((p) => p.slug === projectMatch[1])
     : null;
   const projectTabId = activeProject ? `project-${activeProject.slug}` : null;
+  const priorityImageCount = isMobile ? 1 : 3;
+  const activeCategory = TAB_CATEGORIES[activeTab] || "all";
+  const activeProjects = useMemo(() => {
+    if (activeProject) return [activeProject];
+    if (activeCategory === "all") return projectsWithMeta;
+    return projectsWithMeta.filter((project) =>
+      project.type.includes(activeCategory)
+    );
+  }, [activeProject, activeCategory, projectsWithMeta]);
+  const priorityImageUrls = useMemo(
+    () =>
+      activeProjects
+        .slice(0, priorityImageCount)
+        .map((project) => project.image)
+        .filter(Boolean)
+        .map(getProjectImageUrl),
+    [activeProjects, priorityImageCount]
+  );
+  const imageLoadKey = `${activeTab}:${priorityImageCount}:${priorityImageUrls.join(
+    "|"
+  )}`;
+  const [readyImageLoadKey, setReadyImageLoadKey] = useState("");
+  const [readyProjectImages, setReadyProjectImages] = useState(
+    () => new Set()
+  );
+  const isPortfolioContentReady = readyImageLoadKey === imageLoadKey;
+
+  const handleProjectImageLoad = useCallback((event, imageUrl) => {
+    const image = event.currentTarget;
+    const markReady = () => {
+      setReadyProjectImages((current) => {
+        if (current.has(imageUrl)) return current;
+        const next = new Set(current);
+        next.add(imageUrl);
+        return next;
+      });
+    };
+
+    if (typeof image.decode === "function") {
+      image.decode().then(markReady, markReady);
+    } else {
+      markReady();
+    }
+  }, []);
+
+  const handleProjectImageError = useCallback((imageUrl) => {
+    setReadyProjectImages((current) => {
+      if (current.has(imageUrl)) return current;
+      const next = new Set(current);
+      next.add(imageUrl);
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const preloadLinks = priorityImageUrls.map((url) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = url;
+      link.fetchPriority = "high";
+      document.head.appendChild(link);
+      return link;
+    });
+
+    const loadImage = (url) =>
+      new Promise((resolve) => {
+        const image = new Image();
+        image.fetchPriority = "high";
+        image.decoding = "async";
+
+        const finish = () => {
+          image.onload = null;
+          image.onerror = null;
+          resolve();
+        };
+
+        image.onload = () => {
+          if (typeof image.decode === "function") {
+            image.decode().then(finish, finish);
+          } else {
+            finish();
+          }
+        };
+        image.onerror = finish;
+        image.src = url;
+      });
+
+    let fallbackTimer;
+    const markReady = () => {
+      window.clearTimeout(fallbackTimer);
+      if (!cancelled) setReadyImageLoadKey(imageLoadKey);
+    };
+    fallbackTimer = window.setTimeout(
+      markReady,
+      PORTFOLIO_LOAD_FALLBACK_MS
+    );
+
+    Promise.all(priorityImageUrls.map(loadImage)).then(markReady);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
+      preloadLinks.forEach((link) => link.remove());
+    };
+  }, [imageLoadKey, priorityImageUrls]);
 
   useEffect(() => {
     if (projectMatch && !activeProject) {
@@ -467,13 +601,25 @@ const Portfolio = ({ setDesktopScreen }) => {
                 : "calc(100vh / 1.1 - 200px)",
             }}
           >
-            <div style={{ animation: "fadeInContent 500ms 100ms both" }}>
+            <div
+              aria-busy={!isPortfolioContentReady}
+              style={{
+                opacity: isPortfolioContentReady ? 1 : 0,
+                transition: "opacity 250ms ease-out",
+              }}
+            >
               {tabContent}
             </div>
           </div>
         ) : (
           <div>
-            <div style={{ animation: "fadeInContent 500ms 100ms both" }}>
+            <div
+              aria-busy={!isPortfolioContentReady}
+              style={{
+                opacity: isPortfolioContentReady ? 1 : 0,
+                transition: "opacity 250ms ease-out",
+              }}
+            >
               {tabContent}
             </div>
           </div>
@@ -482,15 +628,16 @@ const Portfolio = ({ setDesktopScreen }) => {
     );
   };
 
-  const getProjects = (projects, category) => {
+  const getProjects = (projects, category, tabId) => {
     const filteredProjects =
       category === "all"
         ? projects
         : projects.filter((item) => item.type.includes(category));
 
     return filteredProjects.map(function (projects, i) {
-      const projectImage =
-        window.location.origin + "/images/portfolio/" + projects.image;
+      const projectImage = getProjectImageUrl(projects.image);
+      const isPriorityImage =
+        !activeProject && activeTab === tabId && i < priorityImageCount;
 
       const project = (
         <>
@@ -498,6 +645,11 @@ const Portfolio = ({ setDesktopScreen }) => {
             draggable="false"
             alt={projects.title}
             src={projectImage}
+            loading={isPriorityImage ? "eager" : "lazy"}
+            fetchPriority={isPriorityImage ? "high" : "low"}
+            decoding="async"
+            onLoad={(event) => handleProjectImageLoad(event, projectImage)}
+            onError={() => handleProjectImageError(projectImage)}
             {...stylex.props(styles.projectImage)}
           />
           <div style={{ height: 100, width: "100%" }}>
@@ -542,7 +694,12 @@ const Portfolio = ({ setDesktopScreen }) => {
       return (
         <div
           key={projects.title}
-          style={{ padding: "0 15px" }}
+          style={{
+            padding: "0 15px",
+            opacity: readyProjectImages.has(projectImage) ? 1 : 0,
+            transition: "opacity 160ms ease-out",
+          }}
+          aria-busy={!readyProjectImages.has(projectImage)}
           className="two columns portfolio-item"
         >
           <div {...stylex.props(styles.hvrGrow)}>
@@ -564,11 +721,15 @@ const Portfolio = ({ setDesktopScreen }) => {
     });
   };
 
-  const projects = getProjects(projectsWithMeta, "all");
-  const code = getProjects(projectsWithMeta, "code");
-  const design = getProjects(projectsWithMeta, "design");
-  const games = getProjects(projectsWithMeta, "games");
-  const conversation = getProjects(projectsWithMeta, "conversation");
+  const projects = getProjects(projectsWithMeta, "all", "one");
+  const code = getProjects(projectsWithMeta, "code", "two");
+  const design = getProjects(projectsWithMeta, "design", "three");
+  const games = getProjects(projectsWithMeta, "games", "four");
+  const conversation = getProjects(
+    projectsWithMeta,
+    "conversation",
+    "five"
+  );
   return (
     <section id="portfolio">
       <div
