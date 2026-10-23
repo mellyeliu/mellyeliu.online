@@ -24,7 +24,6 @@ const AppContent = () => {
   const history = useHistory();
   const { theme } = useTheme();
   const [isFoldersOff, setIsFoldersOff] = useState(false);
-  const isMobile = window.innerWidth <= 767;
   const ZOOM = 1.1;
   // body zoom:1.1 is only active above 860px (it's reset to 1 at <=860 in
   // media-queries.css), so only divide by ZOOM where the zoom actually applies.

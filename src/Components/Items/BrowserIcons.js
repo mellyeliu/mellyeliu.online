@@ -5,9 +5,6 @@ import * as stylex from "@stylexjs/stylex";
 import { colors, radii } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
-  container: {
-    cursor: "pointer",
-  },
   iconBase: {
     display: "inline-block",
     position: "relative",

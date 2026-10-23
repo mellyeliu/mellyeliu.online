@@ -170,9 +170,6 @@ const styles = stylex.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  dayOther: {
-    cursor: "default",
-  },
   dayInner: {
     width: 28,
     height: 28,
@@ -197,10 +194,6 @@ const styles = stylex.create({
   },
   dayOtherMonth: {
     color: colors.mediumGray,
-  },
-  dayMilestone: {
-    fontWeight: 600,
-    color: colors.accentBlue,
   },
   todayDot: {
     position: "absolute",
@@ -233,7 +226,6 @@ const styles = stylex.create({
     paddingRight: 14,
     backgroundColor: colors.bgGray,
   },
-
 
 
 
@@ -304,22 +296,6 @@ const styles = stylex.create({
     outline: "none",
     paddingTop: 2,
     paddingBottom: 2,
-  },
-  yearNavButton: {
-    background: "none",
-    border: "none",
-    fontSize: 16,
-    cursor: "pointer",
-    fontFamily: fonts.serif,
-    color: colors.black,
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: 6,
-    paddingRight: 6,
-    backgroundColor: {
-      default: "transparent",
-      ":hover": colors.bgGray,
-    },
   },
   monthGrid: {
     display: "grid",

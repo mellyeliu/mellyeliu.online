@@ -1,14 +1,6 @@
-/*-----------------------------------------------------------------------------------
-/*
-/* Init JS
-/*
------------------------------------------------------------------------------------*/
 
 jQuery(document).ready(function ($) {
   var ZOOM = 1.1;
-  /*----------------------------------------------------*/
-  /* FitText Settings
------------------------------------------------------- */
 
   setTimeout(function () {
     $("h1.responsive-headline").fitText(1, {
@@ -17,9 +9,6 @@ jQuery(document).ready(function ($) {
     });
   }, 100);
 
-  /*----------------------------------------------------*/
-  /* Smooth Scrolling
------------------------------------------------------- */
 
   $(".smoothscroll").on("click", function (e) {
     e.preventDefault();
@@ -41,36 +30,16 @@ jQuery(document).ready(function ($) {
       );
   });
 
-  /*----------------------------------------------------*/
-  /* Highlight the current section in the navigation bar
-------------------------------------------------------*/
 
-  // var sections = $("section");
-  // var navigation_links = $("#nav-wrap a");
 
-  // sections.waypoint({
 
-  //    handler: function(event, direction) {
 
-  // 	   var active_section;
 
-  // 		active_section = $(this);
-  // 		if (direction === "up") active_section = active_section.prev();
 
-  // 		var active_link = $('#nav-wrap a[href="#' + active_section.attr("id") + '"]');
 
-  //       navigation_links.parent().removeClass("current");
-  // 		active_link.parent().addClass("current");
 
-  // 	},
-  // 	offset: '35%'
 
-  // });
 
-  /*----------------------------------------------------*/
-  /*	Make sure that #header-background-image height is
-/* equal to the browser height.
------------------------------------------------------- */
   function getZoom() {
     return $(window).width() <= 860 ? 1 : ZOOM;
   }
@@ -89,12 +58,8 @@ jQuery(document).ready(function ($) {
     $("img#headerpic").css({ "min-height": h });
   });
 
-  /*----------------------------------------------------*/
-  /*	Fade In/Out Primary Navigation
-------------------------------------------------------*/
 
   $(window).on("scroll", function () {
-    // $('img#headerpic').css({ 'min-height': $(window).height() });
 
     var h = $("header").height();
     var w = $(window).width() / ZOOM;
@@ -112,28 +77,11 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  /*----------------------------------------------------*/
-  /*	Modal Popup
-------------------------------------------------------*/
 
-  //  $('.item-wrap a').magnificPopup({
 
-  //     type:'inline',
-  //     fixedContentPos: false,
-  //     removalDelay: 200,
-  //     showCloseBtn: false,
-  //     mainClass: 'mfp-fade'
 
-  //  });
 
-  //  $(document).on('click', '.popup-modal-dismiss', function (e) {
-  //  		e.preventDefault();
-  //  		$.magnificPopup.close();
-  //  });
 
-  /*----------------------------------------------------*/
-  /*	Flexslider
-/*----------------------------------------------------*/
   $(".flexslider").flexslider({
     namespace: "flex-",
     controlsContainer: ".flex-container",
@@ -164,18 +112,7 @@ jQuery(document).ready(function ($) {
     }
   );
 
-  //   $(".rwt__tab[aria-selected='false']").click(function () {
-  //    $(".rwt__tab[aria-selected='true']").removeClass("no-width");
-  // })
-  //   $(".rwt__tab[aria-selected='false']").hover(function () {
-  //    $(".rwt__tab[aria-selected='true']").append('<style>:before{width:0px !important;}</style>');
-  // }, function () {
-  //    $(".rwt__tab[aria-selected='true']").children('style').remove();
-  // });
 
-  /*----------------------------------------------------*/
-  /*	contact form
-------------------------------------------------------*/
 
   $("form#contactForm button.submit").click(function () {
     $("#image-loader").fadeIn();
@@ -200,14 +137,12 @@ jQuery(document).ready(function ($) {
       url: "inc/sendEmail.php",
       data: data,
       success: function (msg) {
-        // Message was sent
         if (msg == "OK") {
           $("#image-loader").fadeOut();
           $("#message-warning").hide();
           $("#contactForm").fadeOut();
           $("#message-success").fadeIn();
         }
-        // There was an error
         else {
           $("#image-loader").fadeOut();
           $("#message-warning").html(msg);

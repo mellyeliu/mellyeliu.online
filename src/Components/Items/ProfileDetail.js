@@ -33,14 +33,6 @@ const styles = stylex.create({
     color: "inherit",
     textDecoration: "underline",
   },
-  meta: {
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    color: "#444",
-    fontSize: 15,
-  },
   paragraph: {
     marginTop: 0,
     marginRight: 0,

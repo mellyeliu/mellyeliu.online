@@ -225,8 +225,6 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
             src={item.src ? `${window.location.origin}/${item.src}` : ""}
             x={posX}
             y={posY}
-            triggerResize={triggerResize}
-            isGridLayout={isGridLayout}
             iconText={item.iconText}
           />
         );

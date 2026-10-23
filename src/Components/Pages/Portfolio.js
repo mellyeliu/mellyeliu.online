@@ -266,7 +266,6 @@ const Portfolio = ({ setDesktopScreen }) => {
   const [backHover, setBackHover] = useState(0);
   const [useMobileDetail, setUseMobileDetail] = useState(true);
 
-  // Map tab IDs to URL paths
   const getPathFromTab = (tabId) => {
     if (tabId.startsWith("project-") && activeProject) {
       return `/portfolio/projects/${activeProject.slug}`;
@@ -287,7 +286,6 @@ const Portfolio = ({ setDesktopScreen }) => {
     }
   };
 
-  // Update active tab based on URL
   useEffect(() => {
     const projectMatchInner = location.pathname.match(
       /^\/portfolio\/projects\/([^/]+)\/?$/
@@ -482,7 +480,6 @@ const Portfolio = ({ setDesktopScreen }) => {
     setFavourite(favourite === "✩" ? "✮" : "✩");
   };
 
-  // Handle tab changes and update URL
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
     const newPath = getPathFromTab(tabId);

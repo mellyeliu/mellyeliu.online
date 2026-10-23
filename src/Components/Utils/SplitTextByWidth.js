@@ -24,13 +24,12 @@ const SplitTextByWidth = ({
           // If the word is a period, attach it to the next word
           if (index + 1 < words.length && words[index + 1].trim()) {
             word = word + words[index + 1];
-            words[index + 1] = ""; // Clear the next word as it is now combined with the period
+            words[index + 1] = "";
           }
         }
 
         testLine = currentLine + word;
 
-        // Measure the test line width
         const span = document.createElement("span");
         span.style.visibility = "hidden";
         span.style.whiteSpace = "nowrap";

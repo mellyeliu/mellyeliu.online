@@ -12,39 +12,6 @@ const styles = stylex.create({
     minHeight: "calc(100vh - 140px)",
     color: "#000",
   },
-  topBar: {
-    display: "flex",
-    alignItems: "center",
-    gap: 12,
-  },
-  backButton: {
-    cursor: "pointer",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "black",
-    borderRadius: 6,
-    paddingTop: 6,
-    paddingRight: 10,
-    paddingBottom: 6,
-    paddingLeft: 10,
-    backgroundImage: "none",
-    backgroundColor: "white",
-  },
-  linkButton: {
-    cursor: "pointer",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "black",
-    borderRadius: 6,
-    paddingTop: 6,
-    paddingRight: 10,
-    paddingBottom: 6,
-    paddingLeft: 10,
-    backgroundImage: "none",
-    backgroundColor: "#f5f5f5",
-    textDecoration: "none",
-    color: "black",
-  },
   layout: {
     display: "flex",
     flexDirection: "row",
@@ -68,16 +35,6 @@ const styles = stylex.create({
     width: "100%",
     height: "auto",
     objectFit: "cover",
-  },
-  divider: {
-    width: 1,
-    backgroundImage: "none",
-    backgroundColor: "black",
-    opacity: 0.5,
-    alignSelf: "stretch",
-    height: "100%",
-    minHeight: "100%",
-    flexShrink: 0,
   },
   textCol: {
     flex: "1 1 67%",
@@ -108,14 +65,6 @@ const styles = stylex.create({
   titleLink: {
     color: "inherit",
     fontFamily: "inherit",
-  },
-  meta: {
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    color: "#444",
-    fontSize: 14,
   },
   paragraph: {
     marginTop: 0,
@@ -155,7 +104,6 @@ const ProjectDetail = ({ project }) => {
               break;
             }
           } catch (_) {
-            // ignore errors and continue probing
           }
         }
       }

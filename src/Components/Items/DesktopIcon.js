@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import useDraggable from "../../hooks/useDraggable";
 import { useUI } from "../../context/UIContext";
 import * as stylex from "@stylexjs/stylex";
-import { colors, fonts, radii, fontSizes } from "../../styles/tokens.stylex";
+import { colors, radii } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
   container: {
@@ -47,31 +47,6 @@ const styles = stylex.create({
     borderStyle: "solid",
     borderColor: colors.white,
   },
-  text: {
-    fontWeight: 600,
-    color: colors.white,
-    fontFamily: fonts.arimo,
-    lineHeight: "14px",
-    filter: "drop-shadow(0px 3px 3px rgba(0,0,0,0.3))",
-    textShadow: "0px 3px 3px rgba(0,0,0,0.4)",
-    letterSpacing: "0.5px",
-    borderRadius: radii.sm,
-    paddingTop: 2,
-    paddingRight: 2,
-    paddingBottom: 2,
-    paddingLeft: 2,
-    display: "inline-block",
-  },
-  textMobile: {
-    fontSize: fontSizes.md,
-  },
-  textDesktop: {
-    fontSize: fontSizes.base,
-  },
-  textActive: {
-    backgroundImage: "none",
-    backgroundColor: colors.accentBlue,
-  },
 });
 
 const DesktopIcon = ({
@@ -79,11 +54,9 @@ const DesktopIcon = ({
   url = "",
   x,
   y,
-  isGridLayout = false,
   onHoverChange = () => {},
   hoverString = "",
   border = false,
-  triggerResize = false,
   iconText,
 }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -251,11 +224,9 @@ DesktopIcon.propTypes = {
   url: PropTypes.string,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  isGridLayout: PropTypes.bool,
   onHoverChange: PropTypes.func,
   hoverString: PropTypes.string,
   border: PropTypes.bool,
-  triggerResize: PropTypes.bool,
   iconText: PropTypes.string.isRequired,
 };
 

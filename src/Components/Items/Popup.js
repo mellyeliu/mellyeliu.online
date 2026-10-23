@@ -41,7 +41,6 @@ const Popup = ({
   const dragRef = useRef(null);
   const clickTimerRef = useRef(null);
   const [clickCount, setClickCount] = useState(0);
-  const [isClicked, setIsClicked] = useState(false);
 
   const [imageSize, setImageSize] = useState({ width: "auto", height: "auto" });
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -97,20 +96,6 @@ const Popup = ({
     }
   }, [triggerResize, isWidthCalculated, handleResize]);
 
-  const handleClickOutside = useCallback((event) => {
-    if (!event) return;
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsClicked(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClickOutside]);
-
   const openPopupOnDoubleClick = useCallback(() => {
     if (clickTimerRef.current) {
       clearTimeout(clickTimerRef.current);
@@ -118,7 +103,6 @@ const Popup = ({
 
     const newCount = clickCount + 1;
     setClickCount(newCount);
-    setIsClicked(true);
 
     clickTimerRef.current = setTimeout(() => {
       if (newCount >= 2 && url) {
@@ -171,7 +155,6 @@ const Popup = ({
   const startDrag = useCallback((e) => {
     e.preventDefault();
     setLocalZIndex(getNextZIndex());
-    setIsClicked(true);
 
     dragRef.current = {
       isDragging: true,
