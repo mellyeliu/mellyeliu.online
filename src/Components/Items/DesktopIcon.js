@@ -4,8 +4,9 @@ import SplitTextByWidth from "../Utils/SplitTextByWidth";
 import { useMediaQuery } from "react-responsive";
 import useDraggable from "../../hooks/useDraggable";
 import { useUI } from "../../context/UIContext";
+import IconBoundsData from "../../Data/IconBoundsData";
 import * as stylex from "@stylexjs/stylex";
-import { colors, radii } from "../../styles/tokens.stylex";
+import { radii } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
   container: {
@@ -20,6 +21,18 @@ const styles = stylex.create({
     alignItems: "center",
     userSelect: "none",
     gap: 10,
+  },
+  imageFrame: {
+    position: "relative",
+  },
+  selectionOutline: {
+    position: "absolute",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#ffffff",
+    borderRadius: 1.5,
+    pointerEvents: "none",
+    filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
   },
   image: {
     cursor: "grab",
@@ -41,11 +54,6 @@ const styles = stylex.create({
   imageMobile: {
     width: 85,
     height: 85,
-  },
-  imageActive: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: colors.white,
   },
 });
 
@@ -155,6 +163,8 @@ const DesktopIcon = ({
     }
   }, [onHoverChange, setCursorString]);
 
+  const imageBounds =
+    IconBoundsData[new URL(src, window.location.origin).pathname] || [0, 0, 0, 0];
   const isActive = isDragging || isClicked;
   const pixelPos = getPixelPosition();
 
@@ -179,21 +189,35 @@ const DesktopIcon = ({
         onMouseLeave={handleMouseLeave}
         onMouseEnter={handleMouseEnter}
       >
-        <img
-          src={src}
-          alt={iconText}
+        <div
           ref={imageRef}
-          draggable={false}
-          decoding="async"
-          onLoad={handleImageLoad}
-          onError={() => setIsImageReady(true)}
           {...stylex.props(
-            styles.image,
-            isMobile ? styles.imageMobile : styles.imageDesktop,
-            border && styles.imageShadow,
-            isActive && styles.imageActive
+            styles.imageFrame,
+            isMobile ? styles.imageMobile : styles.imageDesktop
           )}
-        />
+        >
+          <img
+            src={src}
+            alt={iconText}
+            draggable={false}
+            decoding="async"
+            onLoad={handleImageLoad}
+            onError={() => setIsImageReady(true)}
+            {...stylex.props(styles.image, border && styles.imageShadow)}
+          />
+          {isActive && src && (
+            <span
+              aria-hidden="true"
+              {...stylex.props(styles.selectionOutline)}
+              style={{
+                left: `calc(${imageBounds[0]}% - 9px)`,
+                top: `calc(${imageBounds[1]}% - 9px)`,
+                right: `calc(${imageBounds[2]}% - 9px)`,
+                bottom: `calc(${imageBounds[3]}% - 9px)`,
+              }}
+            />
+          )}
+        </div>
         <div ref={textRef}>
           <SplitTextByWidth
             text={iconText}

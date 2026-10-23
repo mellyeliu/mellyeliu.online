@@ -38,6 +38,10 @@ export const selfFacts = [
 
 export const quotes = [
   [
+    "I want to talk to everybody as deeply as I can. I want to be able to sleep in an open field, to travel west, to walk freely at night...",
+    "https://www.goodreads.com/quotes/967427-being-born-a-woman-is-my-awful-tragedy-from-the",
+  ],
+  [
     "I am made and remade continually. Different people draw different words from me.",
     "https://www.goodreads.com/quotes/451044-i-am-made-and-remade-continually-different-people-draw-different",
   ],
