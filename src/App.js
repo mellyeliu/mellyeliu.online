@@ -7,8 +7,6 @@ import NameTag from "./Components/Items/NameTag";
 import Portfolio from "./Components/Pages/Portfolio";
 import { ThemeProvider, useTheme } from "./ThemeContext";
 import { UIProvider } from "./context/UIContext";
-import PortfolioData from "./Data/PortfolioData";
-import TextCursor from "./Components/Utils/TextCursor";
 import StartBar from "./Components/Items/StartBar";
 
 export const Screen = {
@@ -121,7 +119,6 @@ const AppContent = () => {
 
   return (
     <>
-      <TextCursor />
       <div
         className={themeClass}
         aria-busy={!isPageReady}
@@ -137,16 +134,13 @@ const AppContent = () => {
         <Switch>
           <Route exact path="/">
             <Home
-              dest="home"
               isFoldersOff={isFoldersOff}
               setIsFoldersOff={setIsFoldersOff}
               setDesktopScreen={setDesktopScreen}
-              desktopScreen={desktopScreen}
             />
           </Route>
           <Route path="/portfolio">
             <Portfolio
-              data={PortfolioData.portfolio}
               setDesktopScreen={setDesktopScreen}
             />
           </Route>

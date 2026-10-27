@@ -19,19 +19,9 @@ export const UIProvider = ({ children }) => {
     return zIndexRef.current;
   }, []);
 
-  const handleHover = useCallback((isHovering, hoverString = "") => {
-    setCursorString(isHovering ? hoverString : "");
-  }, []);
-
-  const clearCursor = useCallback(() => {
-    setCursorString("");
-  }, []);
-
   const value = {
     cursorString,
     setCursorString,
-    handleHover,
-    clearCursor,
     getNextZIndex,
   };
 

@@ -111,15 +111,9 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
 
   return (
     <div {...stylex.props(styles.container)}>
-      <StartButton
-        onMouseEnter={() => setCursorString("home page!")}
-        onMouseLeave={() => setCursorString("")}
-      />
+      <StartButton />
       <div
         onClick={() => {
-          if (isMobile) {
-            window.location.reload();
-          }
           setDesktopScreen("HOME");
           setCursorString("");
         }}

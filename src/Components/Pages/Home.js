@@ -340,16 +340,13 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
               FOLDERS.map((folder, index) => (
                 <Folder
                   key={folder.key}
-                  src={`${window.location.origin}/images/folder.png`}
                   isOpen={openStates[index]}
                   onOpen={(isOpen) => handleFolderOpen(index, isOpen)}
-                  isVisible={isFoldersVisible}
                   hoverString={folder.hoverText}
                   onHoverChange={(hoverState) =>
                     handleFolderHoverChange(hoverState, index)
                   }
                   caption={folder.display}
-                  x={0}
                   y={150 + 90 * (index + 1)}
                   scale={0.5}
                 />

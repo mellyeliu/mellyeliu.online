@@ -12,8 +12,6 @@ const ThemeContext = createContext({
   theme: THEMES.LIGHT,
   setTheme: () => {},
   cycleTheme: () => {},
-  fullScreen: true,
-  toggleFullScreen: () => {},
 });
 
 export const useTheme = () => {
@@ -26,7 +24,6 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setThemeState] = useState(THEMES.LIGHT);
-  const [fullScreen, setFullScreen] = useState(true);
 
   const setTheme = useCallback((newTheme) => {
     if (themeList.includes(newTheme)) {
@@ -42,16 +39,10 @@ export const ThemeProvider = ({ children }) => {
     });
   }, []);
 
-  const toggleFullScreen = useCallback(() => {
-    setFullScreen((prev) => !prev);
-  }, []);
-
   const value = {
     theme,
     setTheme,
     cycleTheme,
-    fullScreen,
-    toggleFullScreen,
   };
 
   return (
