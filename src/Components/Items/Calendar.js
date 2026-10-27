@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import Quote from "./Quote";
 import * as stylex from "@stylexjs/stylex";
 import { colors, fonts } from "../../styles/tokens.stylex";
 
@@ -71,6 +72,8 @@ const styles = stylex.create({
     bottom: 62,
     right: 0,
     width: 280,
+    maxHeight: "calc(100dvh - 80px)",
+    overflowY: "auto",
     backgroundColor: colors.white,
     borderWidth: 0.5,
     borderStyle: "solid",
@@ -519,6 +522,7 @@ const Calendar = ({ onClose }) => {
             )}
           </>
         )}
+        <Quote />
       </div>
     </>,
     document.body

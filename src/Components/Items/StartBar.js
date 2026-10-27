@@ -1,7 +1,5 @@
 import React from "react";
 import Clock from "./Clock";
-import TypingToggleTextList from "../Utils/TextList";
-import { quotes } from "../../Data/QuotesData";
 import { useMediaQuery } from "react-responsive";
 import StartButton from "./StartButton";
 import PropTypes from "prop-types";
@@ -36,28 +34,6 @@ const styles = stylex.create({
   },
   projectsText: {
     fontWeight: 500,
-  },
-  quotesContainer: {
-    textAlign: "right",
-    position: "absolute",
-    right: 130,
-    height: 60,
-    paddingTop: 16,
-    maxWidth: "50%",
-  },
-  quoteStyle: {
-    letterSpacing: -0.2,
-    marginBottom: 5,
-    fontFamily: fonts.serif,
-    fontWeight: 300,
-    fontStyle: "italic",
-    fontSize: fontSizes.base,
-    color: colors.black,
-    maxHeight: 40,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    display: "block",
   },
   homeButton: {
     paddingTop: 16,
@@ -95,9 +71,6 @@ const styles = stylex.create({
     },
   },
 });
-
-const quoteTexts = quotes.map((item) => item[0]);
-const quoteLinks = quotes.map((item) => item[1]);
 
 const StartBar = ({ setDesktopScreen, desktopScreen }) => {
   // Hide below 860px to match the CSS zoom reset breakpoint; above 860px the
@@ -141,18 +114,6 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
         }}
       >
         ッ <span {...stylex.props(styles.projectsText)}>Projects</span>
-      </div>
-      <div {...stylex.props(styles.quotesContainer)} id="desktop-only">
-        <TypingToggleTextList
-          textOptions={quoteTexts}
-          wrapper={false}
-          order={true}
-          typing={false}
-          speed={30}
-          autoplaySpeed={50000}
-          links={quoteLinks}
-          xstyle={styles.quoteStyle}
-        />
       </div>
       <Clock />
     </div>

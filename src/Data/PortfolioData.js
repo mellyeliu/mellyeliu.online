@@ -80,12 +80,12 @@ const PortfolioData = {
       {
         title: "CYBERHUG COLLECTIVE",
         description:
-          "Musings on digital intimacy.  View the <a class='special-links' href='https://cyberhug.studio/'>website</a> and <a class='special-links' href='https://www.instagram.com/cyber.hug/'>brainstorm</a>.",
+          "Musings on digital intimacy.  View the <a class='special-links' href='https://web.archive.org/web/20260414032632/https://cyberhug.studio/'>website</a> and <a class='special-links' href='https://www.instagram.com/cyber.hug/'>brainstorm</a>.",
         languages: "Figma",
         image: "cyberhug.png",
         year: "2022-",
         type: ["design"],
-        url: "https://cyberhug.studio/",
+        url: "https://web.archive.org/web/20260414032632/https://cyberhug.studio/",
         collaborators: [
           {
             name: "Madeleine Lee",
