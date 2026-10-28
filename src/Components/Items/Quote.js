@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import * as stylex from "@stylexjs/stylex";
 import { quotes } from "../../Data/QuotesData";
 import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
+import "./Quote.css";
 
 const styles = stylex.create({
   quoteIcon: {
@@ -23,20 +24,8 @@ const styles = stylex.create({
   },
   quoteText: {
     margin: 0,
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: {
-      default: 3,
-      ":hover": "unset",
-      ":focus-within": "unset",
-    },
-    overflow: {
-      default: "hidden",
-      ":hover": "visible",
-      ":focus-within": "visible",
-    },
     position: "relative",
-    paddingLeft: 28,
+    paddingLeft: 0,
     content: {
       "::before": "none",
     },
@@ -161,25 +150,35 @@ const Quote = () => {
   return (
     <div ref={quotePanelRef} {...stylex.props(styles.quotePanel)}>
       <blockquote
-        {...stylex.props(styles.quoteText)}
-        style={{ opacity: isQuoteFading ? 0 : 1 }}
+        className={`${stylex.props(styles.quoteText).className} calendar-quote`}
+        style={{
+          opacity: isQuoteFading ? 0 : 1,
+          "--quote-duration": `${Math.max(5, currentQuote[0].length * 0.028)}s`,
+        }}
+        onMouseEnter={(event) => {
+          const element = event.currentTarget;
+          const viewport = element.querySelector(".calendar-quote-viewport");
+          element.style.setProperty("--quote-height", `${viewport.clientHeight}px`);
+        }}
         aria-live="polite"
       >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="0.35"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          {...stylex.props(styles.quoteIcon)}
+        >
+          <path d="M3 20h7v-8H6c0-3 1-5 4-7L8 3c-4 2-5 5-5 9v8Z M14 20h7v-8h-4c0-3 1-5 4-7l-2-2c-4 2-5 5-5 9v8Z" />
+        </svg>
+        <div className="calendar-quote-viewport">
+        <span key={currentQuote[0]} className="calendar-quote-content">
         <span
           {...quoteButtonProps}
           {...stylex.props(styles.quoteAdvance)}
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.35"
-            strokeLinejoin="round"
-            aria-hidden="true"
-            {...stylex.props(styles.quoteIcon)}
-          >
-            <path d="M3 20h7v-8H6c0-3 1-5 4-7L8 3c-4 2-5 5-5 9v8Z M14 20h7v-8h-4c0-3 1-5 4-7l-2-2c-4 2-5 5-5 9v8Z" />
-          </svg>
           {quoteBody}
         </span>
         <span {...stylex.props(styles.quoteEnding)}>
@@ -198,6 +197,8 @@ const Quote = () => {
             </a>
           </sup>
         </span>
+        </span>
+        </div>
       </blockquote>
     </div>
   );

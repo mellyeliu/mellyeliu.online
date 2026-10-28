@@ -241,23 +241,6 @@ const styles = stylex.create({
     paddingBottom: 1,
   },
 
-  noteHeader: {
-    fontSize: 12,
-    fontWeight: 600,
-    color: colors.black,
-    letterSpacing: 0.3,
-    paddingTop: 8,
-    paddingBottom: 6,
-    paddingLeft: 14,
-    paddingRight: 14,
-    backgroundColor: colors.bgGray,
-    borderTopWidth: 0.5,
-    borderTopStyle: "solid",
-    borderTopColor: "rgba(0, 0, 0, 0.15)",
-    borderBottomWidth: 0.5,
-    borderBottomStyle: "solid",
-    borderBottomColor: "rgba(0, 0, 0, 0.1)",
-  },
   noteBody: {
     fontSize: 12,
     fontFamily: fonts.helvetica,
@@ -504,9 +487,6 @@ const Calendar = ({ onClose }) => {
 
             {showDayInfo && getNote(viewYear, viewMonth, selectedDay) && (
               <>
-                <div {...stylex.props(styles.noteHeader)}>
-                  {MONTH_NAMES[viewMonth]} {selectedDay}, {viewYear}
-                </div>
                 <div {...stylex.props(styles.noteBody)}>
                   {getNote(viewYear, viewMonth, selectedDay)}
                 </div>
@@ -522,7 +502,7 @@ const Calendar = ({ onClose }) => {
             )}
           </>
         )}
-        <Quote />
+        {!showDayInfo && <Quote />}
       </div>
     </>,
     document.body

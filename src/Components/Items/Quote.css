@@ -1,0 +1,25 @@
+.calendar-quote-viewport {
+  margin-left: 28px;
+  max-height: 63px;
+  overflow: hidden;
+}
+
+.calendar-quote-content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.calendar-quote:hover .calendar-quote-content {
+  display: block;
+  animation: calendar-quote-marquee var(--quote-duration) linear infinite alternate;
+}
+
+@keyframes calendar-quote-marquee {
+  0%, 10% {
+    transform: translateY(0);
+  }
+  90%, 100% {
+    transform: translateY(min(0px, calc(var(--quote-height) - 100%)));
+  }
+}
