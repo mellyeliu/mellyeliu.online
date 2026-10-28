@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import * as stylex from "@stylexjs/stylex";
 import { quotes } from "../../Data/QuotesData";
 import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
@@ -14,6 +14,7 @@ const styles = stylex.create({
   },
   quotePanel: {
     padding: "12px 10px",
+    cursor: "pointer",
     backgroundColor: colors.bgGray,
     borderTopWidth: 0.5,
     borderTopStyle: "solid",
@@ -79,6 +80,8 @@ const shuffleQuotes = (previousQuote) => {
 
 const Quote = () => {
   const quotePanelRef = useRef(null);
+  const quoteContentRef = useRef(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
   const [quoteOrder, setQuoteOrder] = useState(() => shuffleQuotes());
   const [quoteIndex, setQuoteIndex] = useState(0);
   const currentQuote = quotes[quoteOrder[quoteIndex]];
@@ -92,7 +95,6 @@ const Quote = () => {
   const quoteButtonProps = {
     role: "button",
     tabIndex: 0,
-    onClick: advanceQuote,
     onKeyDown: (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
@@ -100,6 +102,18 @@ const Quote = () => {
       }
     },
   };
+
+  useLayoutEffect(() => {
+    const content = quoteContentRef.current;
+    const viewport = content.parentElement;
+    const blockquote = viewport.parentElement;
+    const lineHeight = parseFloat(getComputedStyle(content).lineHeight);
+    content.style.display = "block";
+    const fullHeight = content.getBoundingClientRect().height;
+    content.style.display = "";
+    setHasOverflow(fullHeight > lineHeight * 3 + 0.5);
+    blockquote.style.setProperty("--quote-height", `${Math.min(fullHeight, lineHeight * 3)}px`);
+  }, [currentQuote[0]]);
 
   useEffect(() => {
     if (!isQuoteFading) return undefined;
@@ -148,17 +162,17 @@ const Quote = () => {
   }, []);
 
   return (
-    <div ref={quotePanelRef} {...stylex.props(styles.quotePanel)}>
+    <div
+      ref={quotePanelRef}
+      className={`${stylex.props(styles.quotePanel).className} calendar-quote-panel`}
+      onClick={advanceQuote}
+    >
       <blockquote
         className={`${stylex.props(styles.quoteText).className} calendar-quote`}
+        data-overflow={hasOverflow}
         style={{
           opacity: isQuoteFading ? 0 : 1,
           "--quote-duration": `${Math.max(5, currentQuote[0].length * 0.028)}s`,
-        }}
-        onMouseEnter={(event) => {
-          const element = event.currentTarget;
-          const viewport = element.querySelector(".calendar-quote-viewport");
-          element.style.setProperty("--quote-height", `${viewport.clientHeight}px`);
         }}
         aria-live="polite"
       >
@@ -174,7 +188,7 @@ const Quote = () => {
           <path d="M3 20h7v-8H6c0-3 1-5 4-7L8 3c-4 2-5 5-5 9v8Z M14 20h7v-8h-4c0-3 1-5 4-7l-2-2c-4 2-5 5-5 9v8Z" />
         </svg>
         <div className="calendar-quote-viewport">
-        <span key={currentQuote[0]} className="calendar-quote-content">
+        <span ref={quoteContentRef} key={currentQuote[0]} className="calendar-quote-content">
         <span
           {...quoteButtonProps}
           {...stylex.props(styles.quoteAdvance)}
@@ -191,6 +205,7 @@ const Quote = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Read quote source"
+              onClick={(event) => event.stopPropagation()}
               {...stylex.props(styles.quoteSource)}
             >
               [ref]

@@ -14,40 +14,15 @@ const MONTH_SHORT = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DAY_NAMES = ["S", "M", "T", "W", "T", "F", "S"];
 
 const MIN_YEAR = 1998;
 const MIN_MONTH = 11;
-
-const milestones = [
-  { year: 2006, month: 0, label: "first tamagotchi fansite" },
-  { year: 2007, month: 0, label: "HTML instruction with jessica" },
-  { year: 2016, month: 8, label: "started college" },
-  { year: 2020, month: 5, label: "personal website 1.0" },
-  { year: 2021, month: 5, label: "graduated!" },
-  { year: 2021, month: 6, label: "started at meta" },
-  { year: 2021, month: 6, label: "started on messenger" },
-  { year: 2022, month: 0, label: "cyberhug collective" },
-  { year: 2023, month: 0, label: "digital nostalgia zine" },
-  { year: 2023, month: 0, label: "personal website 2.0" },
-  { year: 2023, month: 5, label: "dreamland @ internet archive" },
-  { year: 2023, month: 8, label: "MOMENTS" },
-  { year: 2024, month: 3, label: "started on stylex" },
-  { year: 2024, month: 3, label: "ascii storybook" },
-  { year: 2024, month: 6, label: "BOY♡GAME" },
-  { year: 2025, month: 5, label: "666 stories" },
-  { year: 2025, month: 1, label: "love love love" },
-];
 
 // Keys are "year-month-day" (month is 0-indexed)
 const notes = {
   "2026-4-23": "added a notes feature to this site ^.^",
 };
-
-function getMilestonesForMonth(year, month) {
-  return milestones.filter((m) => m.year === year && m.month === month);
-}
-
 
 function clampDate(year, month) {
   if (year < MIN_YEAR || (year === MIN_YEAR && month < MIN_MONTH)) {
@@ -69,7 +44,7 @@ const styles = stylex.create({
   },
   container: {
     position: "fixed",
-    bottom: 62,
+    bottom: 62.5,
     right: 0,
     width: 280,
     maxHeight: "calc(100dvh - 80px)",
@@ -141,7 +116,8 @@ const styles = stylex.create({
   dayName: {
     textAlign: "center",
     fontSize: 11,
-    fontWeight: 600,
+    fontWeight: 400,
+    fontStyle: "italic",
     color: colors.black,
     letterSpacing: 0.3,
     fontFamily: fonts.serif,
@@ -219,29 +195,16 @@ const styles = stylex.create({
     lineHeight: 1,
     pointerEvents: "none",
   },
-  infoSection: {
+
+
+
+
+
+
+  noteBody: {
     borderTopWidth: 0.5,
     borderTopStyle: "solid",
     borderTopColor: "rgba(0, 0, 0, 0.15)",
-    paddingTop: 8,
-    paddingBottom: 10,
-    paddingLeft: 14,
-    paddingRight: 14,
-    backgroundColor: colors.bgGray,
-  },
-
-
-
-  infoItem: {
-    fontSize: 13,
-    fontStyle: "italic",
-    letterSpacing: 0.2,
-    color: colors.black,
-    paddingTop: 1,
-    paddingBottom: 1,
-  },
-
-  noteBody: {
     fontSize: 12,
     fontFamily: fonts.helvetica,
     color: colors.black,
@@ -362,7 +325,6 @@ const Calendar = ({ onClose }) => {
     cells.push({ day: cells.length - (firstDay + daysInMonth) + 1, otherMonth: true });
   }
 
-  const monthMilestones = getMilestonesForMonth(viewYear, viewMonth);
 
   const [selectedDay, setSelectedDay] = useState(today.getDate());
 
@@ -379,7 +341,6 @@ const Calendar = ({ onClose }) => {
   const hasNote = (year, month, day) => getNote(year, month, day) != null;
 
   const showDayInfo = selectedDay != null && getNote(viewYear, viewMonth, selectedDay);
-  const showDefaultMilestones = !showDayInfo && monthMilestones.length > 0;
 
   return ReactDOM.createPortal(
     <>
@@ -440,8 +401,8 @@ const Calendar = ({ onClose }) => {
         ) : (
           <>
             <div {...stylex.props(styles.dayNamesRow)}>
-              {DAY_NAMES.map((name) => (
-                <div key={name} {...stylex.props(styles.dayName)}>
+              {DAY_NAMES.map((name, index) => (
+                <div key={index} {...stylex.props(styles.dayName)}>
                   {name}
                 </div>
               ))}
@@ -493,13 +454,7 @@ const Calendar = ({ onClose }) => {
               </>
             )}
 
-            {showDefaultMilestones && (
-              <div {...stylex.props(styles.infoSection)}>
-                <div {...stylex.props(styles.infoItem)}>
-                  {monthMilestones.map((m) => m.label).join(", ")}
-                </div>
-              </div>
-            )}
+
           </>
         )}
         {!showDayInfo && <Quote />}

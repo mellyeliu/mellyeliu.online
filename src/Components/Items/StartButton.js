@@ -19,7 +19,7 @@ const styles = stylex.create({
     position: "fixed",
     left: 0,
     letterSpacing: 0,
-    bottom: 62,
+    bottom: 62.5,
     backgroundImage: "none",
     backgroundColor: colors.bgLight,
     borderWidth: 0.5,

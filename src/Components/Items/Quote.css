@@ -1,6 +1,6 @@
 .calendar-quote-viewport {
   margin-left: 28px;
-  max-height: 63px;
+  height: 63px;
   overflow: hidden;
 }
 
@@ -10,7 +10,7 @@
   -webkit-line-clamp: 3;
 }
 
-.calendar-quote:hover .calendar-quote-content {
+.calendar-quote-panel:hover .calendar-quote[data-overflow="true"] .calendar-quote-content {
   display: block;
   animation: calendar-quote-marquee var(--quote-duration) linear infinite alternate;
 }
