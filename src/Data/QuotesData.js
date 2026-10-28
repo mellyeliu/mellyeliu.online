@@ -214,7 +214,7 @@ export const quotes = [
     "https://www.goodreads.com/book/show/57030264-can-the-monster-speak-a-report-to-an-academy-of-psychoanalysts",
   ],
   [
-    "“Things would get brighter and brighter,” Morehouse tells me. For a jumping spider, getting older “is like watching the sun rising.”",
+    "Things would get brighter and brighter, Morehouse tells me. For a jumping spider, getting older is like watching the sun rising.",
     "https://www.goodreads.com/book/show/59575939-an-immense-world",
   ],
 ];

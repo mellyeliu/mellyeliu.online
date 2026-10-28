@@ -5,14 +5,14 @@ import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
   quoteIcon: {
-    width: 28,
-    height: 28,
+    width: 22,
+    height: 22,
     position: "absolute",
     left: 0,
     top: 3,
   },
   quotePanel: {
-    padding: 14,
+    padding: "12px 10px",
     backgroundColor: colors.bgGray,
     borderTopWidth: 0.5,
     borderTopStyle: "solid",
@@ -23,12 +23,24 @@ const styles = stylex.create({
   },
   quoteText: {
     margin: 0,
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: {
+      default: 3,
+      ":hover": "unset",
+      ":focus-within": "unset",
+    },
+    overflow: {
+      default: "hidden",
+      ":hover": "visible",
+      ":focus-within": "visible",
+    },
     position: "relative",
-    paddingLeft: 40,
+    paddingLeft: 28,
     content: {
       "::before": "none",
     },
-    fontSize: fontSizes.base,
+    fontSize: fontSizes.md,
     fontStyle: "italic",
     lineHeight: 1.5,
     letterSpacing: 0,
@@ -42,7 +54,18 @@ const styles = stylex.create({
   },
   quoteSource: {
     color: colors.black,
+    display: "inline-block",
+    lineHeight: 1,
     textDecoration: "none",
+    borderBottomWidth: "0.5px",
+    borderBottomStyle: "solid",
+    borderBottomColor: {
+      default: "transparent",
+      ":hover": colors.black,
+    },
+    whiteSpace: "nowrap",
+  },
+  quoteEnding: {
     whiteSpace: "nowrap",
   },
   quoteReference: {
@@ -70,9 +93,23 @@ const Quote = () => {
   const [quoteOrder, setQuoteOrder] = useState(() => shuffleQuotes());
   const [quoteIndex, setQuoteIndex] = useState(0);
   const currentQuote = quotes[quoteOrder[quoteIndex]];
+  const lastSpace = currentQuote[0].lastIndexOf(" ");
+  const quoteBody = currentQuote[0].slice(0, lastSpace + 1);
+  const quoteEnding = currentQuote[0].slice(lastSpace + 1);
   const [isQuoteFading, setIsQuoteFading] = useState(false);
   const advanceQuote = () => {
     setIsQuoteFading(true);
+  };
+  const quoteButtonProps = {
+    role: "button",
+    tabIndex: 0,
+    onClick: advanceQuote,
+    onKeyDown: (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        advanceQuote();
+      }
+    },
   };
 
   useEffect(() => {
@@ -129,15 +166,7 @@ const Quote = () => {
         aria-live="polite"
       >
         <span
-          role="button"
-          tabIndex={0}
-          onClick={advanceQuote}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              advanceQuote();
-            }
-          }}
+          {...quoteButtonProps}
           {...stylex.props(styles.quoteAdvance)}
         >
           <svg
@@ -151,17 +180,24 @@ const Quote = () => {
           >
             <path d="M3 20h7v-8H6c0-3 1-5 4-7L8 3c-4 2-5 5-5 9v8Z M14 20h7v-8h-4c0-3 1-5 4-7l-2-2c-4 2-5 5-5 9v8Z" />
           </svg>
-          {currentQuote[0]}
-        </span>{" "}
-        <a
-          href={currentQuote[1]}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Read quote source"
-          {...stylex.props(styles.quoteSource)}
-        >
-          <sup {...stylex.props(styles.quoteReference)}>[ref]</sup>
-        </a>
+          {quoteBody}
+        </span>
+        <span {...stylex.props(styles.quoteEnding)}>
+          <span {...quoteButtonProps} {...stylex.props(styles.quoteAdvance)}>
+            {quoteEnding}
+          </span>{" "}
+          <sup {...stylex.props(styles.quoteReference)}>
+            <a
+              href={currentQuote[1]}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Read quote source"
+              {...stylex.props(styles.quoteSource)}
+            >
+              [ref]
+            </a>
+          </sup>
+        </span>
       </blockquote>
     </div>
   );
