@@ -138,11 +138,11 @@
   header#home {
     margin: 0px;
     min-height: 0px;
-    height: 100dvh;
+    height: 100%;
   }
 
   .hover-container {
-    height: 100dvh !important;
+    height: auto !important;
   }
 
   .bottom-left {

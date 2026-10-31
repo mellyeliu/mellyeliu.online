@@ -40,24 +40,6 @@ jQuery(document).ready(function ($) {
 
 
 
-  function getZoom() {
-    return $(window).width() <= 860 ? 1 : ZOOM;
-  }
-
-  $(window).load(function () {
-    var z = getZoom();
-    var h = $(window).height() / z;
-    $("img#headerpic").css({ "min-height": h * 0.95 - 80 });
-  });
-
-  $("header").css({ height: $(window).height() / getZoom() });
-  $(window).on("resize", function () {
-    var z = getZoom();
-    var h = $(window).height() / z * 0.95 - 80;
-    $("header").css({ height: $(window).height() / z });
-    $("img#headerpic").css({ "min-height": h });
-  });
-
 
   $(window).on("scroll", function () {
 

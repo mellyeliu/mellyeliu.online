@@ -23,7 +23,7 @@ const styles = stylex.create({
   element: {
     position: "absolute",
     right: 0,
-    bottom: 0,
+    bottom: 1.5,
     lineHeight: "60px",
     borderLeftWidth: 0.5,
     borderLeftStyle: "solid",

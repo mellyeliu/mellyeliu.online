@@ -10,7 +10,8 @@ const styles = stylex.create({
     height: 22,
     position: "absolute",
     left: 0,
-    top: 3,
+    top: "50%",
+    transform: "translateY(-50%)",
   },
   quotePanel: {
     padding: "12px 10px",

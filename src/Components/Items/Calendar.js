@@ -77,7 +77,7 @@ const styles = stylex.create({
     gap: 2,
   },
   headerTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 500,
     fontStyle: "italic",
     letterSpacing: 0.5,
@@ -120,7 +120,7 @@ const styles = stylex.create({
     fontStyle: "italic",
     color: colors.black,
     letterSpacing: 0.3,
-    fontFamily: fonts.serif,
+    fontFamily: fonts.helvetica,
   },
   gridWrapper: {
     height: GRID_HEIGHT,

@@ -240,10 +240,7 @@ const Home = ({ isFoldersOff, setIsFoldersOff, setDesktopScreen }) => {
   ]);
 
   return (
-    <header
-        id="home"
-        style={!isMobile ? { height: "calc(100vh / 1.1)" } : undefined}
-      >
+    <header id="home" style={{ height: "100%" }}>
         <div
           className="banner"
           style={{

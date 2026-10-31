@@ -2,9 +2,17 @@
   margin-left: 28px;
   height: 63px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.calendar-quote[data-overflow="true"] .calendar-quote-viewport {
+  justify-content: flex-start;
 }
 
 .calendar-quote-content {
+  flex-shrink: 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;

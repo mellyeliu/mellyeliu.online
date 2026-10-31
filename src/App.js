@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import ReactGA from "react-ga";
 import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import "./App.css";
@@ -16,19 +16,24 @@ export const Screen = {
 
 const HOME_BACKGROUND_SRC = "/images/bgfinal.png";
 const LOAD_FALLBACK_MS = 4000;
+const ZOOM = 1.1;
+const IS_SAFARI =
+  /Safari/i.test(window.navigator.userAgent) &&
+  !/Chrome|Chromium|CriOS|FxiOS|EdgiOS|OPR|Android/i.test(
+    window.navigator.userAgent
+  );
+
+const getAppHeight = () => {
+  const usesPageZoom = window.innerWidth > 860 && !IS_SAFARI;
+  return usesPageZoom ? window.innerHeight / ZOOM : window.innerHeight;
+};
 
 const AppContent = () => {
   const location = useLocation();
   const history = useHistory();
   const { theme } = useTheme();
   const [isFoldersOff, setIsFoldersOff] = useState(false);
-  const ZOOM = 1.1;
-  // body zoom:1.1 is only active above 860px (it's reset to 1 at <=860 in
-  // media-queries.css), so only divide by ZOOM where the zoom actually applies.
-  const isZoomed = window.innerWidth > 860;
-  const [windowHeight, setWindowHeight] = useState(
-    isZoomed ? window.innerHeight / ZOOM : window.innerHeight
-  );
+  const [windowHeight, setWindowHeight] = useState(getAppHeight);
 
   const isPortfolioPage = location.pathname.startsWith("/portfolio");
   const desktopScreen = isPortfolioPage ? Screen.PORTFOLIO : Screen.HOME;
@@ -42,6 +47,18 @@ const AppContent = () => {
       history.push("/portfolio");
     }
   };
+
+  useLayoutEffect(() => {
+    if (!IS_SAFARI) return undefined;
+
+    const previousZoom = document.body.style.zoom;
+    document.body.style.zoom = "1";
+    setWindowHeight(getAppHeight());
+
+    return () => {
+      document.body.style.zoom = previousZoom;
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -107,8 +124,7 @@ const AppContent = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const zoomed = window.innerWidth > 860;
-      setWindowHeight(zoomed ? window.innerHeight / ZOOM : window.innerHeight);
+      setWindowHeight(getAppHeight());
     };
 
     window.addEventListener("resize", handleResize);
@@ -123,7 +139,9 @@ const AppContent = () => {
         className={themeClass}
         aria-busy={!isPageReady}
         style={{
-          height: `${windowHeight}px`,
+          ...(IS_SAFARI
+            ? { position: "fixed", inset: 0, height: "auto" }
+            : { height: `${windowHeight}px` }),
           overflow: "hidden",
           opacity: isPageReady ? 1 : 0,
           pointerEvents: isPageReady ? "auto" : "none",

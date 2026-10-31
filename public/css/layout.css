@@ -377,13 +377,14 @@ button#one-tab {
 }
 
 .hover-container {
-  position: relative;
+  position: absolute;
+  inset: 0;
   display: block;
   background-image: url("../images/bgfinal.png");
   background-size: cover;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: calc(100vh / 1.1);
+  height: auto;
   border: 0.5px solid black;
 }
 

@@ -61,7 +61,7 @@ const styles = stylex.create({
   },
   sidePanel: {
     position: "absolute",
-    left: 183,
+    left: "calc(100% - 0.5px)",
     bottom: 40,
     width: 220,
     maxHeight: "calc(80vh / 1.1)",
@@ -116,7 +116,7 @@ const styles = stylex.create({
     cursor: "pointer",
     fontSize: fontSizes.lg,
     fontStyle: "normal",
-    letterSpacing: 0,
+    letterSpacing: -0.3,
     color: colors.black,
     textAlign: "left",
   },
@@ -128,7 +128,7 @@ const styles = stylex.create({
   },
   sidePanelItem: {
     fontStyle: "normal",
-    letterSpacing: -0.3,
+    letterSpacing: 0,
     textAlign: "left",
     fontSize: fontSizes.lg,
     color: colors.black,
