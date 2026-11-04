@@ -94,6 +94,21 @@ const PortfolioData = {
         ],
       },
       {
+        title: "AO3 is Down",
+        description: "A tribute to the AO3 shutdown of 2026.",
+        languages: "Figma",
+        image: "ao3down.png",
+        year: "2026",
+        type: ["conversation"],
+        url: "https://www.figma.com/design/kscnxTimvnBIFRE5tiRIWN/AO3-is-Down-?node-id=0-1&t=0S6r0hWnrI0disaG-1",
+        collaborators: [
+          {
+            name: "Ariel He",
+            url: "https://arielheyanru.cargo.site/",
+          },
+        ],
+      },
+      {
         title: "Love Love Love",
         description:
           "Two friends use Valentine's Day as an excuse to talk about love again.",
