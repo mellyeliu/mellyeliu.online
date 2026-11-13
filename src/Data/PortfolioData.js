@@ -174,7 +174,7 @@ export const projects = [
     image: "moments.png",
     year: "2023-",
     type: ["code", "games"],
-    url: "https://m0ments.netlify.app/",
+    url: "https://moments.codes/",
   },
   {
     title: "Childhood Convos",
