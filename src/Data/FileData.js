@@ -363,7 +363,6 @@ const FileData = {
       y: 45,
     },
   ],
-  Obsessions: [],
 };
 
 export default FileData;

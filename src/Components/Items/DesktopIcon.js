@@ -1,12 +1,16 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { memo, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import SplitTextByWidth from "../Utils/SplitTextByWidth";
-import { useMediaQuery } from "react-responsive";
-import useDraggable from "../../hooks/useDraggable";
-import { useUI } from "../../context/UIContext";
-import IconBoundsData from "../../Data/IconBoundsData";
 import * as stylex from "@stylexjs/stylex";
+import SplitTextByWidth from "../Utils/SplitTextByWidth";
+import useDraggable from "../../hooks/useDraggable";
+import useIsMobile from "../../hooks/useIsMobile";
+import { useUIActions } from "../../context/UIContext";
+import IconBoundsData from "../../Data/IconBoundsData";
+import whenDecoded from "../../utils/whenDecoded";
 import { radii } from "../../styles/tokens.stylex";
+
+const DOUBLE_CLICK_DELAY = 300;
+const NO_BOUNDS = [0, 0, 0, 0];
 
 const styles = stylex.create({
   container: {
@@ -44,9 +48,6 @@ const styles = stylex.create({
     filter: "drop-shadow(0px 6px 5px rgba(0,0,0,0.5))",
     userSelect: "none",
   },
-  imageShadow: {
-    boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
-  },
   imageDesktop: {
     width: "clamp(100px, 3vw, 122px)",
     height: "clamp(100px, 3vw, 122px)",
@@ -57,144 +58,92 @@ const styles = stylex.create({
   },
 });
 
-const DesktopIcon = ({
-  src,
-  url = "",
-  x,
-  y,
-  onHoverChange = () => {},
-  hoverString = "",
-  border = false,
-  iconText,
-}) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const { setCursorString, getNextZIndex } = useUI();
+const DesktopIcon = ({ src, url = "", x, y, onHoverChange, hoverString = "", iconText }) => {
+  const isMobile = useIsMobile();
+  const { getNextZIndex } = useUIActions();
 
-  const [localZIndex, setLocalZIndex] = useState(1);
-  const [isClicked, setIsClicked] = useState(false);
-  const [clickCount, setClickCount] = useState(0);
-  const [isImageReady, setIsImageReady] = useState(!src);
+  const [zIndex, setZIndex] = useState(1);
+  const [isSelected, setIsSelected] = useState(false);
+  const [readySrc, setReadySrc] = useState(null);
+  const isImageReady = !src || readySrc === src;
 
   const imageRef = useRef(null);
   const textRef = useRef(null);
+  const clickCountRef = useRef(0);
   const clickTimerRef = useRef(null);
 
-  const { isDragging, isReady, handleDragStart, getPixelPosition } =
-    useDraggable({
-      initialX: x,
-      initialY: y,
-      onDragStart: () => {
-        const newZ = getNextZIndex();
-        setLocalZIndex(newZ);
-        setIsClicked(true);
-      },
-      onDragEnd: () => {
-        if (onHoverChange) {
-          onHoverChange(false, "");
-        }
-      },
-    });
+  const bringToFront = () => {
+    setZIndex(getNextZIndex());
+    setIsSelected(true);
+  };
 
+  const { isDragging, isReady, handleDragStart, pixelPosition } = useDraggable({
+    initialX: x,
+    initialY: y,
+    onDragStart: bringToFront,
+    onDragEnd: () => onHoverChange(false, ""),
+  });
+
+  // Deselect when clicking anywhere outside the icon.
   useEffect(() => {
-    setIsImageReady(!src);
-  }, [src]);
-
-  const handleImageLoad = useCallback((event) => {
-    const image = event.currentTarget;
-    const reveal = () => setIsImageReady(true);
-
-    if (typeof image.decode === "function") {
-      image.decode().then(reveal, reveal);
-    } else {
-      reveal();
-    }
+    const handleMouseDown = (event) => {
+      if (
+        !imageRef.current?.contains(event.target) &&
+        !textRef.current?.contains(event.target)
+      ) {
+        setIsSelected(false);
+      }
+    };
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
   }, []);
 
-  const handleClickOutside = useCallback((event) => {
-    if (!event) return;
-    const clickedImage =
-      imageRef.current && imageRef.current.contains(event.target);
-    const clickedText =
-      textRef.current && textRef.current.contains(event.target);
-    if (!clickedImage && !clickedText) {
-      setIsClicked(false);
-    }
-  }, []);
+  useEffect(() => () => clearTimeout(clickTimerRef.current), []);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handleClickOutside]);
-
-  const handleClick = useCallback(() => {
-    if (clickTimerRef.current) {
-      clearTimeout(clickTimerRef.current);
-    }
-
-    const newCount = clickCount + 1;
-    setClickCount(newCount);
-    setIsClicked(true);
-
-    const newZ = getNextZIndex();
-    setLocalZIndex(newZ);
+  // Double click opens the link in a new window.
+  const handleClick = () => {
+    clearTimeout(clickTimerRef.current);
+    clickCountRef.current += 1;
+    bringToFront();
 
     clickTimerRef.current = setTimeout(() => {
-      if (newCount >= 2 && url) {
-        const uniqueName = `popupWindow_${Date.now()}`;
-        window.open(url, uniqueName);
+      if (clickCountRef.current >= 2 && url) {
+        window.open(url, `popupWindow_${Date.now()}`);
       }
-      setClickCount(0);
-    }, 300);
-  }, [clickCount, url, getNextZIndex]);
+      clickCountRef.current = 0;
+    }, DOUBLE_CLICK_DELAY);
+  };
 
-  const handleMouseEnter = useCallback(() => {
-    if (!border) {
-      setCursorString("double click me!");
-    }
-    if (onHoverChange) {
-      onHoverChange(true, hoverString);
-    }
-  }, [border, hoverString, onHoverChange, setCursorString]);
-
-  const handleMouseLeave = useCallback(() => {
-    setCursorString("");
-    if (onHoverChange) {
-      onHoverChange(false, "");
-    }
-  }, [onHoverChange, setCursorString]);
-
-  const imageBounds =
-    IconBoundsData[new URL(src, window.location.origin).pathname] || [0, 0, 0, 0];
-  const isActive = isDragging || isClicked;
-  const pixelPos = getPixelPosition();
+  const handleImageLoad = (event) => {
+    whenDecoded(event.currentTarget, () => setReadySrc(src));
+  };
 
   if (!isReady) {
     return null;
   }
+
+  const imageBounds = IconBoundsData[new URL(src, window.location.origin).pathname] || NO_BOUNDS;
+  const isActive = isDragging || isSelected;
 
   return (
     <div {...stylex.props(styles.container)}>
       <div
         {...stylex.props(styles.group)}
         style={{
-          left: pixelPos.left,
-          top: pixelPos.top,
-          zIndex: localZIndex,
+          ...pixelPosition,
+          zIndex,
           opacity: isImageReady ? 1 : 0,
           transition: "opacity 160ms ease-out",
         }}
         aria-busy={!isImageReady}
         onMouseDown={handleDragStart}
         onClick={handleClick}
-        onMouseLeave={handleMouseLeave}
-        onMouseEnter={handleMouseEnter}
+        onMouseEnter={() => onHoverChange(true, hoverString)}
+        onMouseLeave={() => onHoverChange(false, "")}
       >
         <div
           ref={imageRef}
-          {...stylex.props(
-            styles.imageFrame,
-            isMobile ? styles.imageMobile : styles.imageDesktop
-          )}
+          {...stylex.props(styles.imageFrame, isMobile ? styles.imageMobile : styles.imageDesktop)}
         >
           <img
             src={src}
@@ -202,8 +151,8 @@ const DesktopIcon = ({
             draggable={false}
             decoding="async"
             onLoad={handleImageLoad}
-            onError={() => setIsImageReady(true)}
-            {...stylex.props(styles.image, border && styles.imageShadow)}
+            onError={() => setReadySrc(src)}
+            {...stylex.props(styles.image)}
           />
           {isActive && src && (
             <span
@@ -248,10 +197,9 @@ DesktopIcon.propTypes = {
   url: PropTypes.string,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  onHoverChange: PropTypes.func,
+  onHoverChange: PropTypes.func.isRequired,
   hoverString: PropTypes.string,
-  border: PropTypes.bool,
   iconText: PropTypes.string.isRequired,
 };
 
-export default DesktopIcon;
+export default memo(DesktopIcon);

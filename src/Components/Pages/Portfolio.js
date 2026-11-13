@@ -1,45 +1,78 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import { useLocation, useHistory } from "react-router-dom";
-import PortfolioData from "../../Data/PortfolioData";
-import { Screen } from "../../App";
-import { useMediaQuery } from "react-responsive";
-import BrowserIcons from "../Items/BrowserIcons";
 import parse from "html-react-parser";
-import ProjectDetailMobile from "../Items/ProfileDetail";
-import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
+import BrowserIcons from "../Items/BrowserIcons";
+import ProjectDetail from "../Items/ProjectDetail";
+import { projects, getProjectImageUrl } from "../../Data/PortfolioData";
+import { Screen, useDesktopScreen } from "../../routes";
+import useIsMobile from "../../hooks/useIsMobile";
+import whenDecoded from "../../utils/whenDecoded";
 import { colors, fonts, radii, fontSizes } from "../../styles/tokens.stylex";
 
-const PORTFOLIO_LOAD_FALLBACK_MS = 4000;
-const TAB_CATEGORIES = {
-  one: "all",
-  two: "code",
-  three: "design",
-  four: "games",
-  five: "conversation",
+const LOAD_FALLBACK_MS = 4000;
+const URL_PREFIX = "C://Users/mellyeliu/Projects/";
+const PROJECT_PATH = /^\/portfolio\/projects\/([^/]+)\/?$/;
+
+const TABS = [
+  { id: "one", category: "all", path: "/portfolio", urlName: "All", label: " All ⋆𐙚₊˚⊹♡ " },
+  { id: "two", category: "code", path: "/portfolio/code", urlName: "Code", label: " Code ‧<₊˚🔗✩ />₊" },
+  { id: "three", category: "design", path: "/portfolio/design", urlName: "Design", label: " Design ‧⊹˚🕊️☽₊⟡⋆" },
+  { id: "four", category: "games", path: "/portfolio/games", urlName: "Games", label: " Games ‧₊🎧ྀི☾⋆₊⟡⁺." },
+  { id: "five", category: "conversation", path: "/portfolio/convos", urlName: "Conversation", label: " Convos ⁺.💭.˚✩˚⊹‧" },
+];
+const ALL_TAB = TABS[0];
+
+// Names accepted in the fake URL bar, mapped to their tab.
+const URL_BAR_ROUTES = {
+  all: ALL_TAB,
+  code: TABS[1],
+  design: TABS[2],
+  games: TABS[3],
+  convos: TABS[4],
+  conversation: TABS[4],
+  conversations: TABS[4],
 };
 
-const getProjectImageUrl = (image) =>
-  image.startsWith("http")
-    ? image
-    : new URL(`/images/portfolio/${image}`, window.location.origin).href;
+const slugify = (title) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+const PLACEHOLDER_DESCRIPTION =
+  "Project details coming soon. This is placeholder copy describing the goals, approach, and outcomes. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. \n\nHere we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time.\n\n Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. We'll also add notes about launch learnings and follow-ups so readers can see how the project grew. \n\nMore images and notes will be added later. For now, enjoy these placeholder visuals.";
+
+const PROJECTS = projects.map((project) => ({
+  ...project,
+  slug: project.slug || slugify(project.title),
+  longDescription: project.longDescription || PLACEHOLDER_DESCRIPTION,
+}));
 
 const getTabFromPath = (pathname, projectSlug) => {
   if (projectSlug) return `project-${projectSlug}`;
-  if (pathname === "/portfolio" || pathname === "/portfolio/") return "one";
-  if (pathname === "/portfolio/code") return "two";
-  if (pathname === "/portfolio/design") return "three";
-  if (pathname === "/portfolio/games") return "four";
-  if (pathname === "/portfolio/convos") return "five";
-  return "one";
+  const tab = TABS.find((t) => t.path === pathname || `${t.path}/` === pathname);
+  return (tab || ALL_TAB).id;
 };
+
+const filterProjects = (category) =>
+  category === "all" ? PROJECTS : PROJECTS.filter((p) => p.type.includes(category));
+
+const loadImage = (url) =>
+  new Promise((resolve) => {
+    const image = new Image();
+    image.fetchPriority = "high";
+    image.decoding = "async";
+    const finish = () => {
+      image.onload = null;
+      image.onerror = null;
+      resolve();
+    };
+    image.onload = () => whenDecoded(image, finish);
+    image.onerror = finish;
+    image.src = url;
+  });
 
 const styles = stylex.create({
   hvrGrow: {
@@ -244,140 +277,61 @@ const styles = stylex.create({
   },
 });
 
-const Portfolio = ({ setDesktopScreen }) => {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 767px)",
-  });
-
-  const location = useLocation();
+const Portfolio = () => {
+  const isMobile = useIsMobile();
+  const { pathname } = useLocation();
   const history = useHistory();
+  const [, setDesktopScreen] = useDesktopScreen();
 
   const [favourite, setFavourite] = useState("✩");
-  const [activeTab, setActiveTab] = useState(() => {
-    const projectMatch = location.pathname.match(
-      /^\/portfolio\/projects\/([^/]+)\/?$/
-    );
-    return getTabFromPath(
-      location.pathname,
-      projectMatch ? projectMatch[1] : null
-    );
-  });
-  const tabTwoRef = useRef(null);
   const [backHover, setBackHover] = useState(0);
   const [useMobileDetail, setUseMobileDetail] = useState(true);
+  const [readyImageLoadKey, setReadyImageLoadKey] = useState("");
+  const [readyProjectImages, setReadyProjectImages] = useState(() => new Set());
 
-  const getPathFromTab = (tabId) => {
-    if (tabId.startsWith("project-") && activeProject) {
-      return `/portfolio/projects/${activeProject.slug}`;
-    }
-    switch (tabId) {
-      case "one":
-        return "/portfolio";
-      case "two":
-        return "/portfolio/code";
-      case "three":
-        return "/portfolio/design";
-      case "four":
-        return "/portfolio/games";
-      case "five":
-        return "/portfolio/convos";
-      default:
-        return "/portfolio";
-    }
-  };
-
-  useEffect(() => {
-    const projectMatchInner = location.pathname.match(
-      /^\/portfolio\/projects\/([^/]+)\/?$/
-    );
-    const slug = projectMatchInner ? projectMatchInner[1] : null;
-    const tabFromPath = getTabFromPath(location.pathname, slug);
-    setActiveTab(tabFromPath);
-  }, [location.pathname]);
-
-  const slugify = (title) =>
-    title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-
-  const projectsWithMeta = useMemo(() => {
-    const placeholderParagraph =
-      "Project details coming soon. This is placeholder copy describing the goals, approach, and outcomes. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. \n\nHere we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time.\n\n Here we would talk about the initial spark for the work, what the constraints were, and how the design or code evolved over time. We'll also add notes about launch learnings and follow-ups so readers can see how the project grew. ";
-    return PortfolioData.portfolio.projects.map((project) => {
-      const slug = project.slug || slugify(project.title);
-      return {
-        ...project,
-        slug,
-        detailUrl: project.detailUrl || `/portfolio/projects/${slug}`,
-        longDescription:
-          project.longDescription ||
-          `${placeholderParagraph}\n\nMore images and notes will be added later. For now, enjoy these placeholder visuals.`,
-        detailImages: project.detailImages || [
-          `https://via.placeholder.com/640x360?text=${encodeURIComponent(
-            project.title
-          )}+1`,
-          `https://via.placeholder.com/640x360?text=${encodeURIComponent(
-            project.title
-          )}+2`,
-        ],
-      };
-    });
-  }, []);
-
-  const projectMatch = location.pathname.match(
-    /^\/portfolio\/projects\/([^/]+)\/?$/
-  );
-  const activeProject = projectMatch
-    ? projectsWithMeta.find((p) => p.slug === projectMatch[1])
-    : null;
+  const projectSlug = pathname.match(PROJECT_PATH)?.[1] ?? null;
+  const activeProject = projectSlug ? PROJECTS.find((p) => p.slug === projectSlug) : null;
   const projectTabId = activeProject ? `project-${activeProject.slug}` : null;
+  const activeTab = getTabFromPath(pathname, projectSlug);
+  const activeCategory = TABS.find((t) => t.id === activeTab)?.category || "all";
+
+  // Hold the grid back until the first row of images is ready, so it fades in whole.
   const priorityImageCount = isMobile ? 1 : 3;
-  const activeCategory = TAB_CATEGORIES[activeTab] || "all";
-  const activeProjects = useMemo(() => {
-    if (activeProject) return [activeProject];
-    if (activeCategory === "all") return projectsWithMeta;
-    return projectsWithMeta.filter((project) =>
-      project.type.includes(activeCategory)
-    );
-  }, [activeProject, activeCategory, projectsWithMeta]);
   const priorityImageUrls = useMemo(
     () =>
-      activeProjects
+      (activeProject ? [activeProject] : filterProjects(activeCategory))
         .slice(0, priorityImageCount)
         .map((project) => project.image)
         .filter(Boolean)
         .map(getProjectImageUrl),
-    [activeProjects, priorityImageCount]
+    [activeProject, activeCategory, priorityImageCount]
   );
-  const imageLoadKey = `${activeTab}:${priorityImageCount}:${priorityImageUrls.join(
-    "|"
-  )}`;
-  const [readyImageLoadKey, setReadyImageLoadKey] = useState("");
-  const [readyProjectImages, setReadyProjectImages] = useState(
-    () => new Set()
-  );
-  const isPortfolioContentReady = readyImageLoadKey === imageLoadKey;
+  const imageLoadKey = `${activeTab}:${priorityImageCount}:${priorityImageUrls.join("|")}`;
+  const isContentReady = readyImageLoadKey === imageLoadKey;
 
-  const handleProjectImageLoad = useCallback((event, imageUrl) => {
-    const image = event.currentTarget;
+  useEffect(() => {
+    let cancelled = false;
     const markReady = () => {
-      setReadyProjectImages((current) => {
-        if (current.has(imageUrl)) return current;
-        const next = new Set(current);
-        next.add(imageUrl);
-        return next;
-      });
+      window.clearTimeout(fallbackTimer);
+      if (!cancelled) setReadyImageLoadKey(imageLoadKey);
     };
+    const fallbackTimer = window.setTimeout(markReady, LOAD_FALLBACK_MS);
+    Promise.all(priorityImageUrls.map(loadImage)).then(markReady);
 
-    if (typeof image.decode === "function") {
-      image.decode().then(markReady, markReady);
-    } else {
-      markReady();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
+    };
+  }, [imageLoadKey, priorityImageUrls]);
+
+  // Unknown project slugs fall back to the grid.
+  useEffect(() => {
+    if (projectSlug && !activeProject) {
+      history.replace("/portfolio");
     }
-  }, []);
+  }, [projectSlug, activeProject, history]);
 
-  const handleProjectImageError = useCallback((imageUrl) => {
+  const markImageReady = useCallback((imageUrl) => {
     setReadyProjectImages((current) => {
       if (current.has(imageUrl)) return current;
       const next = new Set(current);
@@ -386,128 +340,44 @@ const Portfolio = ({ setDesktopScreen }) => {
     });
   }, []);
 
-  useEffect(() => {
-    let cancelled = false;
-    const preloadLinks = priorityImageUrls.map((url) => {
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.as = "image";
-      link.href = url;
-      link.fetchPriority = "high";
-      document.head.appendChild(link);
-      return link;
-    });
-
-    const loadImage = (url) =>
-      new Promise((resolve) => {
-        const image = new Image();
-        image.fetchPriority = "high";
-        image.decoding = "async";
-
-        const finish = () => {
-          image.onload = null;
-          image.onerror = null;
-          resolve();
-        };
-
-        image.onload = () => {
-          if (typeof image.decode === "function") {
-            image.decode().then(finish, finish);
-          } else {
-            finish();
-          }
-        };
-        image.onerror = finish;
-        image.src = url;
-      });
-
-    let fallbackTimer;
-    const markReady = () => {
-      window.clearTimeout(fallbackTimer);
-      if (!cancelled) setReadyImageLoadKey(imageLoadKey);
-    };
-    fallbackTimer = window.setTimeout(
-      markReady,
-      PORTFOLIO_LOAD_FALLBACK_MS
+  const handleTabChange = (tabId) => {
+    history.push(
+      tabId === projectTabId
+        ? `/portfolio/projects/${activeProject.slug}`
+        : (TABS.find((t) => t.id === tabId) || ALL_TAB).path
     );
-
-    Promise.all(priorityImageUrls.map(loadImage)).then(markReady);
-
-    return () => {
-      cancelled = true;
-      window.clearTimeout(fallbackTimer);
-      preloadLinks.forEach((link) => link.remove());
-    };
-  }, [imageLoadKey, priorityImageUrls]);
-
-  useEffect(() => {
-    if (projectMatch && !activeProject) {
-      history.replace("/portfolio");
-    }
-  }, [projectMatch, activeProject, history]);
-
-  const TAB_ROUTES = {
-    all: { tab: "one", path: "/portfolio" },
-    code: { tab: "two", path: "/portfolio/code" },
-    design: { tab: "three", path: "/portfolio/design" },
-    games: { tab: "four", path: "/portfolio/games" },
-    convos: { tab: "five", path: "/portfolio/convos" },
-    conversation: { tab: "five", path: "/portfolio/convos" },
-    conversations: { tab: "five", path: "/portfolio/convos" },
-  };
-
-  const handleInputChange = (event) => {
-    if (event.target.value === "YES" && tabTwoRef.current) {
-      setActiveTab("two");
-      history.push("/portfolio/code");
-    }
   };
 
   const handleUrlBarSubmit = (event) => {
     if (event.key !== "Enter") return;
-    const value = event.target.value.trim();
-    const parts = value.split("/");
-    const lastSegment = parts[parts.length - 1].trim().toLowerCase();
-    const route = TAB_ROUTES[lastSegment];
-    if (route) {
-      setActiveTab(route.tab);
-      history.push(route.path);
-      event.target.value = `C://Users/mellyeliu/Projects/${lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)}`;
+    const lastSegment = event.target.value.trim().split("/").pop().trim().toLowerCase();
+    const tab = URL_BAR_ROUTES[lastSegment];
+    if (tab) {
+      history.push(tab.path);
+      event.target.value = `${URL_PREFIX}${lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)}`;
     }
   };
 
-  const handleFavourite = () => {
-    setFavourite(favourite === "✩" ? "✮" : "✩");
-  };
+  const renderUrlBar = (urlName, content, { grid = true, showLayoutToggle = false } = {}) => {
+    const fadedContent = (
+      <div
+        aria-busy={!isContentReady}
+        style={{ opacity: isContentReady ? 1 : 0, transition: "opacity 250ms ease-out" }}
+      >
+        {content}
+      </div>
+    );
 
-  const handleTabChange = (tabId) => {
-    setActiveTab(tabId);
-    const newPath = getPathFromTab(tabId);
-    history.push(newPath);
-  };
-
-  const urlBar = (
-    tab,
-    tabContent,
-    useWrapper = true,
-    showLayoutToggle = false
-  ) => {
     return (
       <>
         <div {...stylex.props(styles.urlBarContainer)}>
-          {backHover === 1 && (
-            <div {...stylex.props(styles.backHoverCircle(12))} />
-          )}
-          {backHover === 3 && (
-            <div {...stylex.props(styles.backHoverCircle(102))} />
-          )}
+          {backHover === 1 && <div {...stylex.props(styles.backHoverCircle(12))} />}
+          {backHover === 3 && <div {...stylex.props(styles.backHoverCircle(102))} />}
           <div {...stylex.props(styles.navPadding)}>
             <svg
               width="25"
               height="30"
-              onClick={() => {
-                setDesktopScreen(Screen.HOME);
-              }}
+              onClick={() => setDesktopScreen(Screen.HOME)}
               xmlns="http://www.w3.org/2000/svg"
               {...stylex.props(styles.backArrow)}
               onMouseEnter={() => setBackHover(1)}
@@ -534,10 +404,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                 transform="translate(-4, 0)"
               />
             </svg>
-            <span {...stylex.props(styles.spacerLarge)}>
-              {" "}
-              &nbsp; &nbsp; &nbsp;
-            </span>
+            <span {...stylex.props(styles.spacerLarge)}> &nbsp; &nbsp; &nbsp;</span>
             <div {...stylex.props(styles.refreshContainer)}>
               <svg
                 width="17"
@@ -556,18 +423,15 @@ const Portfolio = ({ setDesktopScreen }) => {
             {" "}
             <input
               type="text"
-              onChange={handleInputChange}
               onKeyDown={handleUrlBarSubmit}
               {...stylex.props(styles.urlInput)}
-              defaultValue={`C://Users/mellyeliu/Projects/${tab}`}
+              defaultValue={`${URL_PREFIX}${urlName}`}
             />
             <div
-              onClick={handleFavourite}
+              onClick={() => setFavourite(favourite === "✩" ? "✮" : "✩")}
               {...stylex.props(
                 styles.favouriteButton,
-                isMobile
-                  ? styles.favouriteButtonMobile
-                  : styles.favouriteButtonDesktop
+                isMobile ? styles.favouriteButtonMobile : styles.favouriteButtonDesktop
               )}
             >
               {favourite}
@@ -577,9 +441,7 @@ const Portfolio = ({ setDesktopScreen }) => {
                 onClick={() => setUseMobileDetail((prev) => !prev)}
                 {...stylex.props(
                   styles.layoutToggle,
-                  isMobile
-                    ? styles.layoutToggleMobile
-                    : styles.layoutToggleDesktop
+                  isMobile ? styles.layoutToggleMobile : styles.layoutToggleDesktop
                 )}
               >
                 {useMobileDetail ? "Desktop layout" : "Alt layout"}
@@ -587,156 +449,115 @@ const Portfolio = ({ setDesktopScreen }) => {
             )}
           </div>
         </div>
-        {useWrapper ? (
+        {grid ? (
           <div
             id="portfolio-wrapper"
             className="bgrid-thirds s-bgrid-thirds cf"
             style={{
               padding: isMobile ? "70px 10px 100px" : "50px 80px",
-              minHeight: isMobile
-                ? "calc(100vh / 1.1 - 180px)"
-                : "calc(100vh / 1.1 - 200px)",
+              minHeight: isMobile ? "calc(100vh / 1.1 - 180px)" : "calc(100vh / 1.1 - 200px)",
             }}
           >
-            <div
-              aria-busy={!isPortfolioContentReady}
-              style={{
-                opacity: isPortfolioContentReady ? 1 : 0,
-                transition: "opacity 250ms ease-out",
-              }}
-            >
-              {tabContent}
-            </div>
+            {fadedContent}
           </div>
         ) : (
-          <div>
-            <div
-              aria-busy={!isPortfolioContentReady}
-              style={{
-                opacity: isPortfolioContentReady ? 1 : 0,
-                transition: "opacity 250ms ease-out",
-              }}
-            >
-              {tabContent}
-            </div>
-          </div>
+          <div>{fadedContent}</div>
         )}
       </>
     );
   };
 
-  const getProjects = (projects, category, tabId) => {
-    const filteredProjects =
-      category === "all"
-        ? projects
-        : projects.filter((item) => item.type.includes(category));
+  const renderProject = (project, index) => {
+    const imageUrl = getProjectImageUrl(project.image);
+    const isPriorityImage = index < priorityImageCount;
+    const isImageReady = readyProjectImages.has(imageUrl);
 
-    return filteredProjects.map(function (projects, i) {
-      const projectImage = getProjectImageUrl(projects.image);
-      const isPriorityImage =
-        !activeProject && activeTab === tabId && i < priorityImageCount;
-
-      const project = (
-        <>
-          <img
-            draggable="false"
-            alt={projects.title}
-            src={projectImage}
-            loading={isPriorityImage ? "eager" : "lazy"}
-            fetchPriority={isPriorityImage ? "high" : "low"}
-            decoding="async"
-            onLoad={(event) => handleProjectImageLoad(event, projectImage)}
-            onError={() => handleProjectImageError(projectImage)}
-            {...stylex.props(styles.projectImage)}
-          />
-          <div style={{ height: 100, width: "100%" }}>
-            <div
-              className="portfolio-item-meta"
-              style={{
-                paddingBottom: 18,
-                paddingLeft: 18,
-                paddingRight: 18,
-              }}
-            >
-              <h5>
-                &#40;{i + 1}&#41; {projects.title}; {projects.year}
-              </h5>
-              <p className="collab">
-                {parse(projects.description)}{" "}
-                {projects.collaborators && "Collaborators: "}
-                {projects.collaborators && projects.collaborators.length > 0
-                  ? projects.collaborators
-                      .map((collaborator) => (
-                        <a
-                          key={collaborator.name}
-                          href={collaborator.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="collab"
-                          style={{ display: "inline", color: "inherit" }}
-                        >
-                          {collaborator.name}
-                        </a>
-                      ))
-                      .reduce((prev, curr) => [prev, ", ", curr])
-                  : null}
-              </p>
-              <p {...stylex.props(styles.madeWith)}>
-                Made with {projects.languages}, &lt;3
-              </p>
-            </div>
-          </div>
-        </>
-      );
-      return (
-        <div
-          key={projects.title}
-          style={{
-            padding: "0 15px",
-            opacity: readyProjectImages.has(projectImage) ? 1 : 0,
-            transition: "opacity 160ms ease-out",
-          }}
-          aria-busy={!readyProjectImages.has(projectImage)}
-          className="two columns portfolio-item"
-        >
-          <div {...stylex.props(styles.hvrGrow)}>
-            {projects.url ? (
-              <a
-                target="_blank"
-                href={projects.url}
-                rel="noopener noreferrer"
-                {...stylex.props(styles.projectLink)}
-              >
-                {project}
-              </a>
-            ) : (
-              <div {...stylex.props(styles.projectNoLink)}>{project}</div>
-            )}
+    const card = (
+      <>
+        <img
+          draggable="false"
+          alt={project.title}
+          src={imageUrl}
+          loading={isPriorityImage ? "eager" : "lazy"}
+          fetchPriority={isPriorityImage ? "high" : "low"}
+          decoding="async"
+          onLoad={(event) => whenDecoded(event.currentTarget, () => markImageReady(imageUrl))}
+          onError={() => markImageReady(imageUrl)}
+          {...stylex.props(styles.projectImage)}
+        />
+        <div style={{ height: 100, width: "100%" }}>
+          <div
+            className="portfolio-item-meta"
+            style={{ paddingBottom: 18, paddingLeft: 18, paddingRight: 18 }}
+          >
+            <h5>
+              &#40;{index + 1}&#41; {project.title}; {project.year}
+            </h5>
+            <p className="collab">
+              {parse(project.description)} {project.collaborators && "Collaborators: "}
+              {project.collaborators?.map((collaborator, i) => (
+                <React.Fragment key={collaborator.name}>
+                  {i > 0 && ", "}
+                  <a
+                    href={collaborator.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="collab"
+                    style={{ display: "inline", color: "inherit" }}
+                  >
+                    {collaborator.name}
+                  </a>
+                </React.Fragment>
+              ))}
+            </p>
+            <p {...stylex.props(styles.madeWith)}>Made with {project.languages}, &lt;3</p>
           </div>
         </div>
-      );
-    });
+      </>
+    );
+
+    return (
+      <div
+        key={project.title}
+        style={{
+          padding: "0 15px",
+          opacity: isImageReady ? 1 : 0,
+          transition: "opacity 160ms ease-out",
+        }}
+        aria-busy={!isImageReady}
+        className="two columns portfolio-item"
+      >
+        <div {...stylex.props(styles.hvrGrow)}>
+          {project.url ? (
+            <a
+              target="_blank"
+              href={project.url}
+              rel="noopener noreferrer"
+              {...stylex.props(styles.projectLink)}
+            >
+              {card}
+            </a>
+          ) : (
+            <div {...stylex.props(styles.projectNoLink)}>{card}</div>
+          )}
+        </div>
+      </div>
+    );
   };
 
-  const projects = getProjects(projectsWithMeta, "all", "one");
-  const code = getProjects(projectsWithMeta, "code", "two");
-  const design = getProjects(projectsWithMeta, "design", "three");
-  const games = getProjects(projectsWithMeta, "games", "four");
-  const conversation = getProjects(
-    projectsWithMeta,
-    "conversation",
-    "five"
+  // Only the visible tab's panel renders its contents; hidden panels stay empty.
+  const renderTabPanel = (tab) => (
+    <TabPanel key={tab.id} tabId={tab.id}>
+      {activeTab === tab.id &&
+        renderUrlBar(tab.urlName, filterProjects(tab.category).map(renderProject))}
+    </TabPanel>
   );
+
   return (
     <section id="portfolio">
       <div
         className="row fade-in custom-scrollbar visible"
-        style={{
-          height: "100%",
-          backgroundColor: "white",
-          width: "100%",
-          maxWidth: "100%",
-        }}
+        style={{ height: "100%", backgroundColor: "white", width: "100%", maxWidth: "100%" }}
       >
         <div style={{ marginBottom: -15 }} className="tagline"></div>
         <div className="twelve columns collapsed" style={{ height: "100%" }}>
@@ -745,11 +566,10 @@ const Portfolio = ({ setDesktopScreen }) => {
               <div {...stylex.props(styles.tabSpacer)}></div>
               <Tab
                 {...stylex.props(styles.tab)}
-                tabFor="one"
-                onClick={() => handleTabChange("one")}
+                tabFor={ALL_TAB.id}
+                onClick={() => handleTabChange(ALL_TAB.id)}
               >
-                {" "}
-                All ⋆𐙚₊˚⊹♡{" "}
+                {ALL_TAB.label}
               </Tab>
               {activeProject ? (
                 <Tab
@@ -757,14 +577,11 @@ const Portfolio = ({ setDesktopScreen }) => {
                   tabFor={projectTabId}
                   onClick={() => handleTabChange(projectTabId)}
                 >
-                  <span {...stylex.props(styles.projectTabTitle)}>
-                    {activeProject.title}
-                  </span>
+                  <span {...stylex.props(styles.projectTabTitle)}>{activeProject.title}</span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      history.push("/portfolio");
-                      setActiveTab("one");
+                      history.push(ALL_TAB.path);
                     }}
                     {...stylex.props(styles.closeButton)}
                   >
@@ -772,91 +589,38 @@ const Portfolio = ({ setDesktopScreen }) => {
                   </button>
                 </Tab>
               ) : (
-                <>
+                TABS.slice(1).map((tab) => (
                   <Tab
-                    selected={activeTab === "two"}
-                    ref={tabTwoRef}
+                    key={tab.id}
                     {...stylex.props(styles.tab)}
-                    tabFor="two"
-                    onClick={() => handleTabChange("two")}
+                    tabFor={tab.id}
+                    onClick={() => handleTabChange(tab.id)}
                   >
-                    {" "}
-                    Code ‧&lt;₊˚🔗✩ /&gt;₊
+                    {tab.label}
                   </Tab>
-                  <Tab
-                    {...stylex.props(styles.tab)}
-                    tabFor="three"
-                    onClick={() => handleTabChange("three")}
-                  >
-                    {" "}
-                    Design ‧⊹˚🕊️☽₊⟡⋆
-                  </Tab>
-                  <Tab
-                    {...stylex.props(styles.tab)}
-                    tabFor="four"
-                    onClick={() => handleTabChange("four")}
-                  >
-                    {" "}
-                    Games ‧₊🎧ྀི☾⋆₊⟡⁺.
-                  </Tab>
-                  <Tab
-                    {...stylex.props(styles.tab)}
-                    tabFor="five"
-                    onClick={() => handleTabChange("five")}
-                  >
-                    {" "}
-                    Convos ⁺.💭.˚✩˚⊹‧
-                  </Tab>
-                </>
+                ))
               )}
-              <BrowserIcons setDesktopScreen={setDesktopScreen} />
+              <BrowserIcons />
             </TabList>
-            <TabPanel tabId="one">
-              {urlBar(
-                "All",
-                activeProject ? (
-                  <ProjectDetailMobile project={activeProject} />
-                ) : (
-                  projects
-                ),
-                !activeProject,
-                !!activeProject
-              )}
-            </TabPanel>
             {activeProject ? (
-              <TabPanel tabId={projectTabId}>
-                {urlBar(
-                  activeProject.title,
-                  <ProjectDetailMobile project={activeProject} />,
-                  false,
-                  true
-                )}
-              </TabPanel>
-            ) : (
               <>
-                <TabPanel tabId="two">
-                  {urlBar("Code", code, true, false)}
-                </TabPanel>
-                <TabPanel tabId="three">
-                  {urlBar("Design", design, true, false)}
-                </TabPanel>
-                <TabPanel tabId="four">
-                  {urlBar("Games", games, true, false)}
-                </TabPanel>
-                <TabPanel tabId="five">
-                  {urlBar("Conversation", conversation, true, false)}
+                <TabPanel tabId={ALL_TAB.id} />
+                <TabPanel tabId={projectTabId}>
+                  {activeTab === projectTabId &&
+                    renderUrlBar(activeProject.title, <ProjectDetail project={activeProject} />, {
+                      grid: false,
+                      showLayoutToggle: true,
+                    })}
                 </TabPanel>
               </>
+            ) : (
+              TABS.map(renderTabPanel)
             )}
           </Tabs>
         </div>
       </div>
     </section>
   );
-};
-
-Portfolio.propTypes = {
-  setDesktopScreen: PropTypes.func.isRequired,
 };
 
 export default Portfolio;

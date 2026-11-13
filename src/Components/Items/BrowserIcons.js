@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Screen } from "../../App";
 import * as stylex from "@stylexjs/stylex";
+import { Screen, useDesktopScreen } from "../../routes";
 import { colors, radii } from "../../styles/tokens.stylex";
 
 const styles = stylex.create({
@@ -44,27 +43,17 @@ const styles = stylex.create({
   },
 });
 
-const BrowserIcons = ({ setDesktopScreen }) => {
+// The traffic-light buttons on the portfolio "browser". Red goes home.
+const BrowserIcons = () => {
   const [hovered, setHovered] = useState(false);
-
-  const handleMouseOver = () => {
-    setHovered(true);
-  };
-
-  const handleMouseOut = () => {
-    setHovered(false);
-  };
-
-  const handleClick = () => {
-    setDesktopScreen(Screen.HOME);
-  };
+  const [, setDesktopScreen] = useDesktopScreen();
 
   return (
     <span
       className="browsero"
       style={{ cursor: "pointer" }}
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
+      onMouseOver={() => setHovered(true)}
+      onMouseOut={() => setHovered(false)}
     >
       <span {...stylex.props(styles.iconBase, styles.iconDisabled)}>
         ○
@@ -86,7 +75,7 @@ const BrowserIcons = ({ setDesktopScreen }) => {
       </span>
       <span
         {...stylex.props(styles.iconBase, styles.iconClickable)}
-        onClick={handleClick}
+        onClick={() => setDesktopScreen(Screen.HOME)}
       >
         ○
         {hovered && (
@@ -95,10 +84,6 @@ const BrowserIcons = ({ setDesktopScreen }) => {
       </span>
     </span>
   );
-};
-
-BrowserIcons.propTypes = {
-  setDesktopScreen: PropTypes.func.isRequired,
 };
 
 export default BrowserIcons;

@@ -1,11 +1,11 @@
 import React from "react";
-import Clock from "./Clock";
-import { useMediaQuery } from "react-responsive";
-import StartButton from "./StartButton";
-import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
+import Clock from "./Clock";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import StartButton from "./StartButton";
 import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
-import { useUI } from "../../context/UIContext";
+import { useUIActions } from "../../context/UIContext";
+import { Screen, useDesktopScreen } from "../../routes";
 
 const styles = stylex.create({
   hvrShade: {
@@ -72,28 +72,31 @@ const styles = stylex.create({
   },
 });
 
-const StartBar = ({ setDesktopScreen, desktopScreen }) => {
+const StartBar = () => {
   // Hide below 860px to match the CSS zoom reset breakpoint; above 860px the
   // body zoom is a constant 1.1, so the bar renders at a consistent height.
-  const isMobile = useMediaQuery({ query: "(max-width: 860px)" });
-  const { setCursorString } = useUI();
+  const isMobile = useMediaQuery("(max-width: 860px)");
+  const { setCursorString } = useUIActions();
+  const [desktopScreen, setDesktopScreen] = useDesktopScreen();
 
   if (isMobile) {
     return null;
   }
 
+  const goTo = (screen) => {
+    setDesktopScreen(screen);
+    setCursorString("");
+  };
+
   return (
     <div {...stylex.props(styles.container)}>
       <StartButton />
       <div
-        onClick={() => {
-          setDesktopScreen("HOME");
-          setCursorString("");
-        }}
+        onClick={() => goTo(Screen.HOME)}
         {...stylex.props(
           styles.hvrShade,
           styles.homeButton,
-          desktopScreen === "HOME"
+          desktopScreen === Screen.HOME
             ? styles.homeButtonActive
             : styles.homeButtonInactive
         )}
@@ -104,25 +107,17 @@ const StartBar = ({ setDesktopScreen, desktopScreen }) => {
         {...stylex.props(
           styles.hvrShade,
           styles.projectsButton,
-          desktopScreen === "PORTFOLIO"
+          desktopScreen === Screen.PORTFOLIO
             ? styles.projectsButtonActive
             : styles.projectsButtonInactive
         )}
-        onClick={() => {
-          setDesktopScreen("PORTFOLIO");
-          setCursorString("");
-        }}
+        onClick={() => goTo(Screen.PORTFOLIO)}
       >
         ッ <span {...stylex.props(styles.projectsText)}>Projects</span>
       </div>
       <Clock />
     </div>
   );
-};
-
-StartBar.propTypes = {
-  setDesktopScreen: PropTypes.func.isRequired,
-  desktopScreen: PropTypes.string.isRequired,
 };
 
 export default StartBar;

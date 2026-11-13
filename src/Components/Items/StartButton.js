@@ -147,36 +147,26 @@ const styles = stylex.create({
 
 const StartButton = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
   const buttonRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleClickOutside = (event) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target) &&
-      !buttonRef.current.contains(event.target)
-    ) {
-      setDropdownVisible(false);
-      setSelectedOption(null);
-    }
-  };
-
+  // Close the menu on any click outside it.
   useEffect(() => {
-    if (isDropdownVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
+    if (!isDropdownVisible) return undefined;
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+    const handleMouseDown = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setDropdownVisible(false);
+        setSelectedOption(null);
+      }
     };
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
   }, [isDropdownVisible]);
 
   const toggleDropdown = () => {
@@ -203,20 +193,20 @@ const StartButton = () => {
         <div
           ref={dropdownRef}
           {...stylex.props(styles.dropdown)}
-          onMouseLeave={() => handleOptionClick(null)}
+          onMouseLeave={() => setSelectedOption(null)}
         >
           <div {...stylex.props(styles.verticalBlock)}>
             <a
-              href={"https://linktr.ee/mellye.liu"}
+              href="https://linktr.ee/mellye.liu"
               {...stylex.props(styles.verticalText)}
             >
               @mellye.liu
             </a>
           </div>
           <div {...stylex.props(styles.optionsContainer)}>
-            {Object.keys(startData).map((option, index) => (
+            {Object.keys(startData).map((option) => (
               <a
-                key={index}
+                key={option}
                 {...stylex.props(
                   styles.hvrShade,
                   styles.optionButton,
@@ -224,37 +214,35 @@ const StartButton = () => {
                     ? styles.optionButtonActive
                     : styles.optionButtonInactive
                 )}
-                onMouseEnter={() => handleOptionClick(option)}
+                onMouseEnter={() => setSelectedOption(option)}
               >
                 {option}
               </a>
             ))}
           </div>
-          {selectedOption && startData[selectedOption].length !== 0 && (
+          {selectedOption && startData[selectedOption].length > 0 && (
             <div {...stylex.props(styles.sidePanel)}>
               <ul {...stylex.props(styles.sidePanelList)}>
-                {startData[selectedOption].map((subOption, index) => (
+                {startData[selectedOption].map(([label, href], index) => (
                   <li
                     key={index}
                     {...stylex.props(
                       styles.hvrShade,
                       styles.sidePanelItem,
-                      subOption[1]
-                        ? styles.sidePanelItemClickable
-                        : styles.sidePanelItemDefault
+                      href ? styles.sidePanelItemClickable : styles.sidePanelItemDefault
                     )}
                   >
-                    {subOption[1] ? (
+                    {href ? (
                       <a
-                        href={subOption[1]}
+                        href={href}
                         target="_blank"
                         rel="noopener noreferrer"
                         {...stylex.props(styles.sidePanelLink)}
                       >
-                        {subOption[0]}
+                        {label}
                       </a>
                     ) : (
-                      subOption[0]
+                      label
                     )}
                   </li>
                 ))}

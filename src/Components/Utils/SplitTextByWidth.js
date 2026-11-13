@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState } from "react";
 const SplitTextByWidth = ({
   text,
   maxWidth,
-  backgroundColor,
   style,
   className,
   ...props

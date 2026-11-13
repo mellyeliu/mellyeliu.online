@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import ReactGA from "react-ga";
-import { Route, Switch, useLocation, useHistory } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import Home from "./Components/Pages/Home";
-import NameTag from "./Components/Items/NameTag";
+import Home, { HOME_BACKGROUND_SRC } from "./Components/Pages/Home";
 import Portfolio from "./Components/Pages/Portfolio";
-import { ThemeProvider, useTheme } from "./ThemeContext";
-import { UIProvider } from "./context/UIContext";
+import NameTag from "./Components/Items/NameTag";
 import StartBar from "./Components/Items/StartBar";
+import { UIProvider } from "./context/UIContext";
+import { Screen, useDesktopScreen } from "./routes";
+import whenDecoded from "./utils/whenDecoded";
 
-export const Screen = {
-  HOME: "HOME",
-  PORTFOLIO: "PORTFOLIO",
-};
-
-const HOME_BACKGROUND_SRC = "/images/bgfinal.png";
 const LOAD_FALLBACK_MS = 4000;
 const ZOOM = 1.1;
 const IS_SAFARI =
@@ -23,37 +18,59 @@ const IS_SAFARI =
     window.navigator.userAgent
   );
 
+// Above 860px the body is zoomed (see site.css), except in Safari.
 const getAppHeight = () => {
   const usesPageZoom = window.innerWidth > 860 && !IS_SAFARI;
   return usesPageZoom ? window.innerHeight / ZOOM : window.innerHeight;
 };
 
+// Resolves once the home background has decoded (or after a fallback delay),
+// so the desktop fades in fully drawn.
+const useHomeBackgroundReady = (enabled) => {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    if (!enabled || isReady) return undefined;
+
+    let cancelled = false;
+    const image = new Image();
+    image.fetchPriority = "high";
+    image.decoding = "async";
+
+    const reveal = () => {
+      if (!cancelled) setIsReady(true);
+    };
+    const fallbackTimer = window.setTimeout(reveal, LOAD_FALLBACK_MS);
+    image.onload = () => whenDecoded(image, reveal);
+    image.onerror = reveal;
+    image.src = HOME_BACKGROUND_SRC;
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
+      image.onload = null;
+      image.onerror = null;
+    };
+  }, [enabled, isReady]);
+
+  return isReady;
+};
+
 const AppContent = () => {
-  const location = useLocation();
-  const history = useHistory();
-  const { theme } = useTheme();
+  const [desktopScreen] = useDesktopScreen();
   const [isFoldersOff, setIsFoldersOff] = useState(false);
   const [windowHeight, setWindowHeight] = useState(getAppHeight);
 
-  const isPortfolioPage = location.pathname.startsWith("/portfolio");
-  const desktopScreen = isPortfolioPage ? Screen.PORTFOLIO : Screen.HOME;
-  const [isHomeReady, setIsHomeReady] = useState(false);
-  const isPageReady = isPortfolioPage || isHomeReady;
+  const isHome = desktopScreen === Screen.HOME;
+  const isHomeReady = useHomeBackgroundReady(isHome);
+  const isPageReady = !isHome || isHomeReady;
 
-  const setDesktopScreen = (screen) => {
-    if (screen === Screen.HOME) {
-      history.push("/");
-    } else if (screen === Screen.PORTFOLIO) {
-      history.push("/portfolio");
-    }
-  };
-
+  // Safari skips the CSS page zoom and uses a fixed-position app instead.
   useLayoutEffect(() => {
     if (!IS_SAFARI) return undefined;
 
     const previousZoom = document.body.style.zoom;
     document.body.style.zoom = "1";
-    setWindowHeight(getAppHeight());
 
     return () => {
       document.body.style.zoom = previousZoom;
@@ -61,125 +78,57 @@ const AppContent = () => {
   }, []);
 
   useEffect(() => {
+    const handleResize = () => setWindowHeight(getAppHeight());
+    window.addEventListener("resize", handleResize);
+
+    // Re-measure once layout and fonts have settled.
     const timer = setTimeout(() => {
       window.dispatchEvent(new Event("resize"));
     }, 500);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (isPortfolioPage || isHomeReady) return undefined;
-
-    let cancelled = false;
-    let fallbackTimer;
-    const backgroundImage = new Image();
-    const preloadLink = document.createElement("link");
-
-    preloadLink.rel = "preload";
-    preloadLink.as = "image";
-    preloadLink.href = HOME_BACKGROUND_SRC;
-    preloadLink.fetchPriority = "high";
-    document.head.appendChild(preloadLink);
-
-    backgroundImage.fetchPriority = "high";
-    backgroundImage.decoding = "async";
-
-    const revealPage = () => {
-      if (cancelled) return;
-      window.clearTimeout(fallbackTimer);
-      setIsHomeReady(true);
-    };
-
-    const handleLoad = () => {
-      if (typeof backgroundImage.decode === "function") {
-        backgroundImage.decode().then(revealPage, revealPage);
-      } else {
-        revealPage();
-      }
-    };
-
-    backgroundImage.addEventListener("load", handleLoad);
-    backgroundImage.addEventListener("error", revealPage);
-    fallbackTimer = window.setTimeout(revealPage, LOAD_FALLBACK_MS);
-    backgroundImage.src = HOME_BACKGROUND_SRC;
-
-    if (backgroundImage.complete) {
-      handleLoad();
-    }
-
     return () => {
-      cancelled = true;
-      window.clearTimeout(fallbackTimer);
-      backgroundImage.removeEventListener("load", handleLoad);
-      backgroundImage.removeEventListener("error", revealPage);
-      preloadLink.remove();
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [isPortfolioPage, isHomeReady]);
+  }, []);
 
   useEffect(() => {
     ReactGA.initialize("UA-110570651-1");
     ReactGA.pageview(window.location.pathname);
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowHeight(getAppHeight());
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const themeClass = theme === "dark" ? "App dark-theme" : "App";
-
   return (
-    <>
-      <div
-        className={themeClass}
-        aria-busy={!isPageReady}
-        style={{
-          ...(IS_SAFARI
-            ? { position: "fixed", inset: 0, height: "auto" }
-            : { height: `${windowHeight}px` }),
-          overflow: "hidden",
-          opacity: isPageReady ? 1 : 0,
-          pointerEvents: isPageReady ? "auto" : "none",
-          transition: "opacity 250ms ease-out",
-        }}
-      >
-        {!isFoldersOff && desktopScreen === Screen.HOME && <NameTag />}
-        <Switch>
-          <Route exact path="/">
-            <Home
-              isFoldersOff={isFoldersOff}
-              setIsFoldersOff={setIsFoldersOff}
-              setDesktopScreen={setDesktopScreen}
-            />
-          </Route>
-          <Route path="/portfolio">
-            <Portfolio
-              setDesktopScreen={setDesktopScreen}
-            />
-          </Route>
-        </Switch>
-        <StartBar
-          setDesktopScreen={setDesktopScreen}
-          desktopScreen={desktopScreen}
-        />
-      </div>
-    </>
+    <div
+      className="App"
+      aria-busy={!isPageReady}
+      style={{
+        ...(IS_SAFARI
+          ? { position: "fixed", inset: 0, height: "auto" }
+          : { height: `${windowHeight}px` }),
+        overflow: "hidden",
+        opacity: isPageReady ? 1 : 0,
+        pointerEvents: isPageReady ? "auto" : "none",
+        transition: "opacity 250ms ease-out",
+      }}
+    >
+      {isHome && !isFoldersOff && <NameTag />}
+      <Switch>
+        <Route exact path="/">
+          <Home isFoldersOff={isFoldersOff} setIsFoldersOff={setIsFoldersOff} />
+        </Route>
+        <Route path="/portfolio">
+          <Portfolio />
+        </Route>
+      </Switch>
+      <StartBar />
+    </div>
   );
 };
 
-const App = () => {
-  return (
-    <ThemeProvider>
-      <UIProvider>
-        <AppContent />
-      </UIProvider>
-    </ThemeProvider>
-  );
-};
+const App = () => (
+  <UIProvider>
+    <AppContent />
+  </UIProvider>
+);
 
 export default App;

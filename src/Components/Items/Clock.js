@@ -50,17 +50,13 @@ const Clock = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const formatTime = (time) => {
-    return time.toLocaleTimeString();
-  };
-
   return (
     <div {...stylex.props(styles.container)}>
       <div
         {...stylex.props(styles.element, styles.clickable)}
         onClick={() => setShowCalendar((prev) => !prev)}
       >
-        &nbsp;&nbsp;{formatTime(currentTime)}&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;{currentTime.toLocaleTimeString()}&nbsp;&nbsp;&nbsp;
       </div>
       {showCalendar && (
         <Calendar onClose={() => setShowCalendar(false)} />

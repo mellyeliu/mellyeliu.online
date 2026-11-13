@@ -1,36 +1,32 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 
-const useDraggable = ({
-  initialX = 0,
-  initialY = 0,
-  containerSelector = ".hover-container",
-  minWidth = 900,
-  onDragStart,
-  onDragEnd,
-}) => {
+const CONTAINER_SELECTOR = ".hover-container";
+const MIN_CONTAINER_WIDTH = 900;
+
+// Drag an absolutely positioned item around the desktop. Positions are stored
+// as percentages of the desktop container. `left` is converted to pixels
+// against the container width (never less than 900px) so items keep their
+// layout on narrow screens, where the desktop scrolls horizontally.
+const useDraggable = ({ initialX = 0, initialY = 0, onDragStart, onDragEnd }) => {
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [isDragging, setIsDragging] = useState(false);
-  const [containerWidth, setContainerWidth] = useState(minWidth);
+  const [containerWidth, setContainerWidth] = useState(MIN_CONTAINER_WIDTH);
   const [isReady, setIsReady] = useState(false);
-
   const dragRef = useRef(null);
-  const elementRef = useRef(null);
 
   useEffect(() => {
     const updateContainerWidth = () => {
-      const container = document.querySelector(containerSelector);
+      const container = document.querySelector(CONTAINER_SELECTOR);
       if (container) {
-        const newWidth = Math.max(container.clientWidth, minWidth);
-        setContainerWidth(newWidth);
+        setContainerWidth(Math.max(container.clientWidth, MIN_CONTAINER_WIDTH));
         setIsReady(true);
       }
     };
 
     updateContainerWidth();
     window.addEventListener("resize", updateContainerWidth);
-
     return () => window.removeEventListener("resize", updateContainerWidth);
-  }, [containerSelector, minWidth]);
+  }, []);
 
   useEffect(() => {
     setPosition({ x: initialX, y: initialY });
@@ -40,46 +36,29 @@ const useDraggable = ({
     (e) => {
       e.preventDefault();
       setIsDragging(true);
-
       dragRef.current = {
-        isDragging: true,
         startX: e.clientX,
         startY: e.clientY,
-        startPosition: { ...position },
+        startPosition: position,
       };
-
       onDragStart?.();
 
       const handleMouseMove = (moveEvent) => {
-        if (!dragRef.current?.isDragging) return;
-
         moveEvent.preventDefault();
+        const container = document.querySelector(CONTAINER_SELECTOR);
+        if (!container || !dragRef.current) return;
 
-        const container = document.querySelector(containerSelector);
-        if (!container) return;
-
-        const deltaX =
-          ((moveEvent.clientX - dragRef.current.startX) /
-            container.offsetWidth) *
-          100;
-        const deltaY =
-          ((moveEvent.clientY - dragRef.current.startY) /
-            container.offsetHeight) *
-          100;
-
+        const { startX, startY, startPosition } = dragRef.current;
         setPosition({
-          x: dragRef.current.startPosition.x + deltaX,
-          y: dragRef.current.startPosition.y + deltaY,
+          x: startPosition.x + ((moveEvent.clientX - startX) / container.offsetWidth) * 100,
+          y: startPosition.y + ((moveEvent.clientY - startY) / container.offsetHeight) * 100,
         });
       };
 
       const handleMouseUp = () => {
         setIsDragging(false);
-        if (dragRef.current) {
-          dragRef.current.isDragging = false;
-        }
+        dragRef.current = null;
         onDragEnd?.();
-
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
       };
@@ -87,25 +66,17 @@ const useDraggable = ({
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
     },
-    [position, containerSelector, onDragStart, onDragEnd]
+    [position, onDragStart, onDragEnd]
   );
 
-  const getPixelPosition = useCallback(() => {
-    return {
-      left: `${(position.x * containerWidth) / 100}px`,
-      top: `${position.y}%`,
-    };
-  }, [position, containerWidth]);
-
   return {
-    position,
-    setPosition,
     isDragging,
     isReady,
-    containerWidth,
-    elementRef,
     handleDragStart,
-    getPixelPosition,
+    pixelPosition: {
+      left: `${(position.x * containerWidth) / 100}px`,
+      top: `${position.y}%`,
+    },
   };
 };
 

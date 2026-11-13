@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PortfolioData from "./PortfolioData";
-import { useMediaQuery } from "react-responsive";
+import { socials } from "./PortfolioData";
+import useIsMobile from "../hooks/useIsMobile";
 
 function CustomLink({ text, href, color = "#B666BA" }) {
   return (
@@ -34,9 +34,7 @@ function ContentBlock({
   padding = "165px 20px",
   fontSize = 22,
 }) {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 767px)",
-  });
+  const isMobile = useIsMobile();
 
   return (
     <div
@@ -72,8 +70,8 @@ const socialsContent = (
     start &#8594; contact to collab 💌
     <br />
     <br />
-    {PortfolioData.main.social.map((item, index) => (
-      <React.Fragment key={index}>
+    {socials.map((item) => (
+      <React.Fragment key={item.url}>
         <CustomLink href={item.url} text={item.name} />
         <div />
       </React.Fragment>

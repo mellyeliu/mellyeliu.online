@@ -85,10 +85,10 @@ const Quote = () => {
   const [hasOverflow, setHasOverflow] = useState(false);
   const [quoteOrder, setQuoteOrder] = useState(() => shuffleQuotes());
   const [quoteIndex, setQuoteIndex] = useState(0);
-  const currentQuote = quotes[quoteOrder[quoteIndex]];
-  const lastSpace = currentQuote[0].lastIndexOf(" ");
-  const quoteBody = currentQuote[0].slice(0, lastSpace + 1);
-  const quoteEnding = currentQuote[0].slice(lastSpace + 1);
+  const [quoteText, quoteSource] = quotes[quoteOrder[quoteIndex]];
+  const lastSpace = quoteText.lastIndexOf(" ");
+  const quoteBody = quoteText.slice(0, lastSpace + 1);
+  const quoteEnding = quoteText.slice(lastSpace + 1);
   const [isQuoteFading, setIsQuoteFading] = useState(false);
   const advanceQuote = () => {
     setIsQuoteFading(true);
@@ -114,7 +114,7 @@ const Quote = () => {
     content.style.display = "";
     setHasOverflow(fullHeight > lineHeight * 3 + 0.5);
     blockquote.style.setProperty("--quote-height", `${Math.min(fullHeight, lineHeight * 3)}px`);
-  }, [currentQuote[0]]);
+  }, [quoteText]);
 
   useEffect(() => {
     if (!isQuoteFading) return undefined;
@@ -173,7 +173,7 @@ const Quote = () => {
         data-overflow={hasOverflow}
         style={{
           opacity: isQuoteFading ? 0 : 1,
-          "--quote-duration": `${Math.max(5, currentQuote[0].length * 0.028)}s`,
+          "--quote-duration": `${Math.max(5, quoteText.length * 0.028)}s`,
         }}
         aria-live="polite"
       >
@@ -189,7 +189,7 @@ const Quote = () => {
           <path d="M3 20h7v-8H6c0-3 1-5 4-7L8 3c-4 2-5 5-5 9v8Z M14 20h7v-8h-4c0-3 1-5 4-7l-2-2c-4 2-5 5-5 9v8Z" />
         </svg>
         <div className="calendar-quote-viewport">
-        <span ref={quoteContentRef} key={currentQuote[0]} className="calendar-quote-content">
+        <span ref={quoteContentRef} key={quoteText} className="calendar-quote-content">
         <span
           {...quoteButtonProps}
           {...stylex.props(styles.quoteAdvance)}
@@ -202,7 +202,7 @@ const Quote = () => {
           </span>{" "}
           <sup {...stylex.props(styles.quoteReference)}>
             <a
-              href={currentQuote[1]}
+              href={quoteSource}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Read quote source"

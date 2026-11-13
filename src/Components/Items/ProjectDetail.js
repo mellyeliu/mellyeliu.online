@@ -1,0 +1,104 @@
+import React from "react";
+import PropTypes from "prop-types";
+import * as stylex from "@stylexjs/stylex";
+import { getProjectImageUrl } from "../../Data/PortfolioData";
+
+const styles = stylex.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 20,
+    width: "100%",
+    color: "#000",
+    fontFamily: "opensans-light",
+    paddingTop: 50,
+  },
+  image: {
+    width: "100%",
+    maxWidth: 720,
+    height: "auto",
+    alignSelf: "center",
+    objectFit: "cover",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 600,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    color: "#000",
+    fontFamily: "Cormorant Garamond",
+  },
+  titleLink: {
+    color: "inherit",
+    textDecoration: "underline",
+  },
+  paragraph: {
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    lineHeight: 1.5,
+    fontSize: 14,
+    color: "#000",
+  },
+});
+
+const ProjectDetail = ({ project }) => {
+  const coverSrc = project.image && getProjectImageUrl(project.image);
+
+  const paragraphs = project.longDescription
+    ? project.longDescription.split(/\n+/).filter(Boolean)
+    : [];
+
+  return (
+    <div {...stylex.props(styles.container)}>
+      {coverSrc && (
+        <img
+          src={coverSrc}
+          alt={project.title}
+          draggable="false"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          {...stylex.props(styles.image)}
+        />
+      )}
+      <div>
+        <h2 {...stylex.props(styles.title)}>
+          {project.url ? (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              {...stylex.props(styles.titleLink)}
+            >
+              {project.title} ↗
+            </a>
+          ) : (
+            project.title
+          )}{" "}
+          — {project.year}
+        </h2>
+      </div>
+      {paragraphs.map((p, idx) => (
+        <p key={idx} {...stylex.props(styles.paragraph)}>
+          {p}
+        </p>
+      ))}
+    </div>
+  );
+};
+
+ProjectDetail.propTypes = {
+  project: PropTypes.shape({
+    title: PropTypes.string,
+    year: PropTypes.string,
+    url: PropTypes.string,
+    image: PropTypes.string,
+    longDescription: PropTypes.string,
+  }).isRequired,
+};
+
+export default ProjectDetail;

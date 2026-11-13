@@ -9,11 +9,6 @@ const MONTH_NAMES = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-const MONTH_SHORT = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-];
-
 const DAY_NAMES = ["S", "M", "T", "W", "T", "F", "S"];
 
 const MIN_YEAR = 1998;
@@ -23,6 +18,8 @@ const MIN_MONTH = 11;
 const notes = {
   "2026-4-23": "added a notes feature to this site ^.^",
 };
+
+const getNote = (year, month, day) => notes[`${year}-${month}-${day}`] || null;
 
 function clampDate(year, month) {
   if (year < MIN_YEAR || (year === MIN_YEAR && month < MIN_MONTH)) {
@@ -216,131 +213,49 @@ const styles = stylex.create({
     backgroundColor: colors.white,
   },
 
-
-  pickerContainer: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 14,
-    paddingRight: 14,
-  },
-  yearInputRow: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    paddingBottom: 12,
-  },
-  yearInput: {
-    width: 70,
-    textAlign: "center",
-    fontFamily: fonts.serif,
-    fontSize: 16,
-    fontWeight: 500,
-    border: "none",
-    borderBottomWidth: 1,
-    borderBottomStyle: "solid",
-    borderBottomColor: colors.black,
-    backgroundColor: "transparent",
-    color: colors.black,
-    outline: "none",
-    paddingTop: 2,
-    paddingBottom: 2,
-  },
-  monthGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: 4,
-  },
-  monthCell: {
-    textAlign: "center",
-    fontSize: 13,
-    paddingTop: 8,
-    paddingBottom: 8,
-    cursor: "pointer",
-    color: colors.black,
-    backgroundColor: {
-      default: "transparent",
-      ":hover": colors.bgGray,
-    },
-  },
-  monthCellCurrent: {
-    fontWeight: 700,
-    backgroundColor: {
-      default: colors.bgGray,
-      ":hover": colors.bgHover,
-    },
-  },
 });
 
-const Calendar = ({ onClose }) => {
-  const today = new Date();
-  const [viewYear, setViewYear] = useState(today.getFullYear());
-  const [viewMonth, setViewMonth] = useState(today.getMonth());
-  const [showPicker, setShowPicker] = useState(false);
-  const [pickerYear, setPickerYear] = useState(today.getFullYear());
-
-  const navigate = (year, month) => {
-    const clamped = clampDate(year, month);
-    setViewYear(clamped.year);
-    setViewMonth(clamped.month);
-    setSelectedDay(null);
-  };
-
-  const goBackMonth = () => {
-    const m = viewMonth === 0 ? 11 : viewMonth - 1;
-    const y = viewMonth === 0 ? viewYear - 1 : viewYear;
-    navigate(y, m);
-  };
-
-  const goForwardMonth = () => {
-    const m = viewMonth === 11 ? 0 : viewMonth + 1;
-    const y = viewMonth === 11 ? viewYear + 1 : viewYear;
-    navigate(y, m);
-  };
-
-  const goBackYear = () => navigate(viewYear - 1, viewMonth);
-  const goForwardYear = () => navigate(viewYear + 1, viewMonth);
-
-  const selectMonthFromPicker = (month) => {
-    const clamped = clampDate(pickerYear, month);
-    setViewYear(clamped.year);
-    setViewMonth(clamped.month);
-    setShowPicker(false);
-  };
-
-  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-  const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
+// Day cells for a month, padded with days from the neighbouring months so
+// every week row is full.
+const getMonthCells = (year, month) => {
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
 
   const cells = [];
   for (let i = firstDay - 1; i >= 0; i--) {
     cells.push({ day: daysInPrevMonth - i, otherMonth: true });
   }
-  for (let d = 1; d <= daysInMonth; d++) {
-    cells.push({ day: d, otherMonth: false });
+  for (let day = 1; day <= daysInMonth; day++) {
+    cells.push({ day, otherMonth: false });
   }
-  const rows = Math.ceil(cells.length / 7);
-  const totalCells = rows * 7;
-  while (cells.length < totalCells) {
-    cells.push({ day: cells.length - (firstDay + daysInMonth) + 1, otherMonth: true });
+  for (let day = 1; cells.length % 7 !== 0; day++) {
+    cells.push({ day, otherMonth: true });
   }
+  return cells;
+};
 
-
+const Calendar = ({ onClose }) => {
+  const today = new Date();
+  const [viewYear, setViewYear] = useState(today.getFullYear());
+  const [viewMonth, setViewMonth] = useState(today.getMonth());
   const [selectedDay, setSelectedDay] = useState(today.getDate());
 
+  // Month arithmetic via Date handles year wrap-around (e.g. month -1).
+  const navigate = (year, month) => {
+    const date = new Date(year, month, 1);
+    const clamped = clampDate(date.getFullYear(), date.getMonth());
+    setViewYear(clamped.year);
+    setViewMonth(clamped.month);
+    setSelectedDay(null);
+  };
+
+  const cells = getMonthCells(viewYear, viewMonth);
   const isToday = (day) =>
     viewYear === today.getFullYear() &&
     viewMonth === today.getMonth() &&
     day === today.getDate();
-
-  const getNote = (year, month, day) => {
-    const key = `${year}-${month}-${day}`;
-    return notes[key] || null;
-  };
-
-  const hasNote = (year, month, day) => getNote(year, month, day) != null;
-
-  const showDayInfo = selectedDay != null && getNote(viewYear, viewMonth, selectedDay);
+  const selectedNote = selectedDay != null && getNote(viewYear, viewMonth, selectedDay);
 
   return ReactDOM.createPortal(
     <>
@@ -348,116 +263,65 @@ const Calendar = ({ onClose }) => {
       <div {...stylex.props(styles.container)}>
         <div {...stylex.props(styles.header)}>
           <div {...stylex.props(styles.navGroup)}>
-            <button {...stylex.props(styles.navButton)} onClick={showPicker ? () => setPickerYear(pickerYear - 10) : goBackYear}>
+            <button {...stylex.props(styles.navButton)} onClick={() => navigate(viewYear - 1, viewMonth)}>
               ‹‹
             </button>
-            <button {...stylex.props(styles.navButton)} onClick={showPicker ? () => setPickerYear(pickerYear - 1) : goBackMonth}>
+            <button {...stylex.props(styles.navButton)} onClick={() => navigate(viewYear, viewMonth - 1)}>
               ‹
             </button>
           </div>
-          <span
-            {...stylex.props(styles.headerTitle)}
-          >
-            {showPicker ? pickerYear : `${MONTH_NAMES[viewMonth]} ${viewYear}`}
+          <span {...stylex.props(styles.headerTitle)}>
+            {`${MONTH_NAMES[viewMonth]} ${viewYear}`}
           </span>
           <div {...stylex.props(styles.navGroup)}>
-            <button {...stylex.props(styles.navButton)} onClick={showPicker ? () => setPickerYear(pickerYear + 1) : goForwardMonth}>
+            <button {...stylex.props(styles.navButton)} onClick={() => navigate(viewYear, viewMonth + 1)}>
               ›
             </button>
-            <button {...stylex.props(styles.navButton)} onClick={showPicker ? () => setPickerYear(pickerYear + 10) : goForwardYear}>
+            <button {...stylex.props(styles.navButton)} onClick={() => navigate(viewYear + 1, viewMonth)}>
               ››
             </button>
           </div>
         </div>
 
-        {showPicker ? (
-          <div {...stylex.props(styles.pickerContainer)}>
-            <div {...stylex.props(styles.yearInputRow)}>
-              <input
-                {...stylex.props(styles.yearInput)}
-                type="number"
-                value={pickerYear}
-                onChange={(e) => {
-                  const val = parseInt(e.target.value, 10);
-                  if (!isNaN(val)) setPickerYear(val);
-                }}
-              />
+        <div {...stylex.props(styles.dayNamesRow)}>
+          {DAY_NAMES.map((name, index) => (
+            <div key={index} {...stylex.props(styles.dayName)}>
+              {name}
             </div>
-            <div {...stylex.props(styles.monthGrid)}>
-              {MONTH_SHORT.map((name, i) => (
+          ))}
+        </div>
+        <div {...stylex.props(styles.gridWrapper)}>
+          <div {...stylex.props(styles.grid)}>
+            {cells.map((cell, i) => {
+              const inMonth = !cell.otherMonth;
+              const isSelected = inMonth && selectedDay === cell.day;
+              return (
                 <div
-                  key={name}
-                  {...stylex.props(
-                    styles.monthCell,
-                    pickerYear === viewYear && i === viewMonth && styles.monthCellCurrent
-                  )}
-                  onClick={() => selectMonthFromPicker(i)}
+                  key={i}
+                  {...stylex.props(styles.day, cell.otherMonth && styles.dayOtherMonth)}
+                  onClick={inMonth ? () => setSelectedDay(cell.day) : undefined}
                 >
-                  {name}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
-            <div {...stylex.props(styles.dayNamesRow)}>
-              {DAY_NAMES.map((name, index) => (
-                <div key={index} {...stylex.props(styles.dayName)}>
-                  {name}
-                </div>
-              ))}
-            </div>
-            <div {...stylex.props(styles.gridWrapper)}>
-              <div {...stylex.props(styles.grid)}>
-                {cells.map((cell, i) => (
-                  <div
-                    key={i}
-                    {...stylex.props(
-                      styles.day,
-                      cell.otherMonth && styles.dayOtherMonth
-                    )}
-                    onClick={
-                      cell.otherMonth
-                        ? undefined
-                        : () => {
-                            setSelectedDay(cell.day);
-                          }
-                    }
-                  >
-                    <div
-                      {...stylex.props(
-                        styles.dayInner,
-                        !cell.otherMonth && selectedDay === cell.day && styles.dayActiveInner
-                      )}
-                    >
-                      {cell.day}
-                    </div>
-                    {!cell.otherMonth && selectedDay === cell.day && (
-                      <span {...stylex.props(styles.activeStar)}>★</span>
-                    )}
-                    {!cell.otherMonth && hasNote(viewYear, viewMonth, cell.day) && selectedDay !== cell.day && (
-                      <span {...stylex.props(styles.noteStar)}>★</span>
-                    )}
-                    {!cell.otherMonth && isToday(cell.day) && selectedDay !== cell.day && (
-                      <div {...stylex.props(styles.todayDot)} />
-                    )}
+                  <div {...stylex.props(styles.dayInner, isSelected && styles.dayActiveInner)}>
+                    {cell.day}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {showDayInfo && getNote(viewYear, viewMonth, selectedDay) && (
-              <>
-                <div {...stylex.props(styles.noteBody)}>
-                  {getNote(viewYear, viewMonth, selectedDay)}
+                  {isSelected && <span {...stylex.props(styles.activeStar)}>★</span>}
+                  {inMonth && !isSelected && getNote(viewYear, viewMonth, cell.day) && (
+                    <span {...stylex.props(styles.noteStar)}>★</span>
+                  )}
+                  {inMonth && !isSelected && isToday(cell.day) && (
+                    <div {...stylex.props(styles.todayDot)} />
+                  )}
                 </div>
-              </>
-            )}
+              );
+            })}
+          </div>
+        </div>
 
-
-          </>
+        {selectedNote ? (
+          <div {...stylex.props(styles.noteBody)}>{selectedNote}</div>
+        ) : (
+          <Quote />
         )}
-        {!showDayInfo && <Quote />}
       </div>
     </>,
     document.body

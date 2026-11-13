@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import stylex from "@stylexjs/unplugin";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     stylex.vite({
@@ -10,6 +9,8 @@ export default defineConfig({
     }),
     react(),
   ],
+  // Components use JSX in .js files. `exclude: []` overrides Vite's default,
+  // which skips .js files.
   esbuild: {
     loader: "jsx",
     include: /src\/.*\.[jt]sx?$/,

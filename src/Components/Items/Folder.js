@@ -1,7 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
 import { fonts } from "../../styles/tokens.stylex";
+import whenDecoded from "../../utils/whenDecoded";
+
+const FOLDER_IMAGE = "/images/menu/folder.png";
+const FOLDER_OPEN_IMAGE = "/images/menu/folderNewOpen.png";
 
 const styles = stylex.create({
   container: {
@@ -44,47 +48,21 @@ const Folder = ({
   caption,
   isOpen = false,
   onOpen,
-  image,
 }) => {
-  const folderImage = image
-    ? image
-    : isOpen
-    ? `${window.location.origin}/images/menu/folderNewOpen.png`
-    : `${window.location.origin}/images/menu/folder.png`;
-  const [isImageReady, setIsImageReady] = useState(false);
+  const folderImage = isOpen ? FOLDER_OPEN_IMAGE : FOLDER_IMAGE;
+  // The folder fades in once its current image (open or closed) is decoded.
+  const [readyImage, setReadyImage] = useState(null);
+  const isImageReady = readyImage === folderImage;
 
-  useEffect(() => {
-    setIsImageReady(false);
-  }, [folderImage]);
-
-  const handleImageLoad = useCallback((event) => {
-    const imageElement = event.currentTarget;
-    const reveal = () => setIsImageReady(true);
-
-    if (typeof imageElement.decode === "function") {
-      imageElement.decode().then(reveal, reveal);
-    } else {
-      reveal();
-    }
-  }, []);
-
-  const handleClick = useCallback(() => {
-    onOpen(!isOpen);
-  }, [isOpen, onOpen]);
-
-  const handleMouseEnter = useCallback(() => {
-    onHoverChange(true, hoverString);
-  }, [hoverString, onHoverChange]);
-
-  const handleMouseLeave = useCallback(() => {
-    onHoverChange(false, "");
-  }, [onHoverChange]);
+  const handleImageLoad = (event) => {
+    whenDecoded(event.currentTarget, () => setReadyImage(folderImage));
+  };
 
   return (
     <div
-      onClick={handleClick}
-      onMouseLeave={handleMouseLeave}
-      onMouseEnter={handleMouseEnter}
+      onClick={() => onOpen(!isOpen)}
+      onMouseEnter={() => onHoverChange(true, hoverString)}
+      onMouseLeave={() => onHoverChange(false, "")}
       {...stylex.props(stylex.defaultMarker(), styles.container)}
       style={{
         top: y,
@@ -100,7 +78,7 @@ const Folder = ({
         draggable={false}
         decoding="async"
         onLoad={handleImageLoad}
-        onError={() => setIsImageReady(true)}
+        onError={() => setReadyImage(folderImage)}
         {...stylex.props(styles.folder)}
       />
       {caption && (
@@ -120,7 +98,6 @@ Folder.propTypes = {
   caption: PropTypes.string,
   isOpen: PropTypes.bool,
   onOpen: PropTypes.func.isRequired,
-  image: PropTypes.string,
 };
 
 export default Folder;

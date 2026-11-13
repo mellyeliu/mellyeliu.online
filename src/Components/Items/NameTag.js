@@ -1,5 +1,5 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
+import useIsMobile from "../../hooks/useIsMobile";
 import * as stylex from "@stylexjs/stylex";
 import { colors, fonts } from "../../styles/tokens.stylex";
 
@@ -47,9 +47,7 @@ const styles = stylex.create({
 });
 
 const NameTag = () => {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 767px)",
-  });
+  const isMobile = useIsMobile();
 
   return (
     <div
