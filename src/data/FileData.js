@@ -1,8 +1,15 @@
+// Desktop items, grouped by the folder that toggles them.
+// - x, y: position as a percentage of the desktop.
+// - hoverString: caption shown on hover. Items with an empty caption only show on mobile.
+// - window: id of a WindowData entry. Those items render as draggable windows instead of icons.
+// - bounds: transparent padding around the icon art ([left, top, right, bottom] in %),
+//   so the selection outline hugs the visible image.
 const FileData = {
   games: [
     {
       hoverString: "www.neopets.com",
       src: "images/icons/neopetsicon.png",
+      bounds: [11.1538, 3.8462, 10.3846, 5.3846],
       url: "https://www.neopets.com/",
       x: 20,
       y: 30,
@@ -12,6 +19,7 @@ const FileData = {
       hoverString: "https://jstris.jezevec10.com/",
       url: "https://jstris.jezevec10.com/u/magicunicorn",
       src: "images/icons/tetris2.png",
+      bounds: [14.4531, 3.125, 13.6719, 4.6875],
       x: 20,
       y: 20,
       iconText: "tetris.png",
@@ -19,6 +27,7 @@ const FileData = {
     {
       hoverString: "The Company of Myself",
       src: "images/icons/com.png",
+      bounds: [8.9655, 22.069, 9.6552, 21.3793],
       url: "https://www.newgrounds.com/portal/view/518729",
       x: 40,
       y: 30,
@@ -27,6 +36,7 @@ const FileData = {
     {
       hoverString: "You Find Yourself In A Room",
       src: "images/icons/YFYIAR.png",
+      bounds: [2.3483, 13.3072, 1.5656, 12.7202],
       url: "https://www.newgrounds.com/portal/view/556644",
       x: 54,
       y: 46,
@@ -35,6 +45,7 @@ const FileData = {
     {
       hoverString: "Town of Salem",
       src: "images/icons/salem.png",
+      bounds: [9.1549, 18.662, 7.7465, 21.4789],
       url: "https://blankmediagames.com/",
       x: 75,
       y: 60,
@@ -43,6 +54,7 @@ const FileData = {
     {
       hoverString: "( Kingdom of Loathing )",
       src: "images/icons/kol.png",
+      bounds: [8.5938, 7.0312, 11.7188, 12.5],
       url: "https://www.kingdomofloathing.com/",
       x: 31,
       y: 25,
@@ -51,6 +63,7 @@ const FileData = {
     {
       hoverString: "( Spider and Web )",
       src: "images/icons/spiderweb.png",
+      bounds: [5.5556, 19.4444, 0.7937, 22.619],
       url: "https://eblong.com/zarf/zweb/tangle/",
       x: 27,
       y: 15,
@@ -67,6 +80,7 @@ const FileData = {
     {
       hoverString: "Club Penguin",
       src: "images/icons/cp.png",
+      bounds: [3.9062, 9.375, 3.9062, 11.7188],
       url: "https://www.cplegacy.com/",
       x: 50,
       y: 40,
@@ -75,6 +89,7 @@ const FileData = {
     {
       hoverString: "Shift",
       src: "images/icons/shift.png",
+      bounds: [8.1967, 3.2787, 7.377, 2.459],
       url: "https://armorgames.com/play/751/shift",
       x: 7,
       y: 19,
@@ -83,6 +98,7 @@ const FileData = {
     {
       hoverString: "Fantage",
       src: "images/icons/fantage.png",
+      bounds: [28.0255, 12.7389, 29.9363, 12.1019],
       url: "https://en.wikipedia.org/wiki/Fantage",
       x: 60,
       y: 60,
@@ -91,6 +107,7 @@ const FileData = {
     {
       hoverString: "Loved",
       src: "images/icons/loved.png",
+      bounds: [4.6875, 16.0156, 3.125, 18.3594],
       url: "https://ocias.com/works/loved/",
       x: 42,
       y: 22,
@@ -99,6 +116,7 @@ const FileData = {
     {
       hoverString: "Cause of Death",
       src: "images/icons/cod.png",
+      bounds: [22.7545, 10.7784, 20.9581, 14.9701],
       url: "https://tvtropes.org/pmwiki/pmwiki.php/VisualNovel/CauseOfDeath",
       x: 39,
       y: 65,
@@ -107,6 +125,7 @@ const FileData = {
     {
       hoverString: "( Dreaming Mary )",
       src: "images/icons/dreamingmary.png",
+      bounds: [5.5085, 6.7797, 5.5085, 5.0847],
       url: "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/DreamingMary",
       x: 10,
       y: 25,
@@ -115,6 +134,7 @@ const FileData = {
     {
       hoverString: "( Okami )",
       src: "images/icons/okami.png",
+      bounds: [6.3063, 3.6036, 6.3063, 4.5045],
       url: "https://en.wikipedia.org/wiki/%C5%8Ckami",
       x: 17,
       y: 35,
@@ -123,6 +143,7 @@ const FileData = {
     {
       hoverString: "( a dark room )",
       src: "images/icons/darkroom.png",
+      bounds: [12.9412, 21.4706, 17.6471, 24.4118],
       url: "https://adarkroom.doublespeakgames.com/",
       x: 5,
       y: 34,
@@ -131,6 +152,7 @@ const FileData = {
     {
       hoverString: "windows93",
       src: "images/icons/windows93.png",
+      bounds: [6.25, 2.6042, 4.1667, 6.7708],
       url: "https://www.windows93.net/",
       x: 30,
       y: 60,
@@ -139,6 +161,7 @@ const FileData = {
     {
       hoverString: "The Wiki Game",
       src: "images/icons/wikigame.png",
+      bounds: [5.8929, 16.9643, 6.4286, 17.5],
       url: "https://www.wikigame.com/",
       x: 28,
       y: 57,
@@ -147,6 +170,7 @@ const FileData = {
     {
       hoverString: "E.B.O.N.Y.",
       src: "images/icons/ebony.png",
+      bounds: [6.4457, 15.7459, 5.3407, 15.0092],
       url: "https://ebonyriddle.com/",
       x: 28,
       y: 57,
@@ -157,6 +181,7 @@ const FileData = {
     {
       hoverString: "TRShady",
       src: "images/icons/trshady.png",
+      bounds: [6.7669, 6.391, 4.5113, 7.8947],
       url: "http://forum.trshady.com/",
       x: 30,
       y: 60,
@@ -165,6 +190,7 @@ const FileData = {
     {
       hoverString: "goodreads",
       src: "images/icons/goodreads.png",
+      bounds: [4.918, 6.9672, 6.5574, 11.0656],
       url: "https://www.goodreads.com/mellyeliu",
       x: 30,
       y: 60,
@@ -173,6 +199,7 @@ const FileData = {
     {
       hoverString: "Life is Strange",
       src: "images/icons/lis.png",
+      bounds: [6.1069, 2.2901, 3.8168, 6.8702],
       url: "https://archiveofourown.org/works/4577451",
       x: 75,
       y: 25,
@@ -181,6 +208,7 @@ const FileData = {
     {
       hoverString: "www.tvtropes.org",
       src: "images/icons/tvtropes.png",
+      bounds: [6.7164, 9.7015, 5.2239, 8.9552],
       url: "https://www.tvtropes.org/",
       x: 25,
       y: 27,
@@ -189,6 +217,7 @@ const FileData = {
     {
       hoverString: "Deism, Reincarnation, and Creation Myths",
       src: "images/icons/deism.png",
+      bounds: [9.7656, 2.3438, 8.9844, 5.4688],
       url: "https://en.wikipedia.org/wiki/Pandeism",
       x: 76,
       y: 17,
@@ -197,6 +226,7 @@ const FileData = {
     {
       hoverString: "tyler x josh (21p)",
       src: "images/icons/21p.png",
+      bounds: [6.5217, 6.1594, 5.7971, 6.8841],
       url: "https://archiveofourown.org/works/8262935",
       x: 25,
       y: 38,
@@ -205,6 +235,7 @@ const FileData = {
     {
       hoverString: "everlark ♡",
       src: "images/icons/everlark.png",
+      bounds: [7.1429, 6.4286, 8.5714, 8.5714],
       url: "https://archiveofourown.org/works/603428",
       x: 23,
       y: 65,
@@ -213,6 +244,7 @@ const FileData = {
     {
       hoverString: "azula x mai (atla) ♡",
       src: "images/icons/maizula.png",
+      bounds: [5.1852, 5.1852, 7.4074, 6.6667],
       url: "https://archiveofourown.org/works/4249794/chapters/9617619",
       x: 42,
       y: 48,
@@ -221,6 +253,7 @@ const FileData = {
     {
       hoverString: "joseon-era kdramas",
       src: "images/icons/kdrama.png",
+      bounds: [22.7545, 10.7784, 20.9581, 14.9701],
       url: "https://archiveofourown.org/works/4249794/chapters/9617619",
       x: 50,
       y: 45,
@@ -231,6 +264,7 @@ const FileData = {
     {
       hoverString: "are.na",
       src: "images/icons/arena.png",
+      bounds: [8.0292, 6.9343, 5.8394, 6.9343],
       url: "https://www.are.na/",
       x: 45,
       y: 53,
@@ -239,6 +273,7 @@ const FileData = {
     {
       hoverString: "z library",
       src: "images/icons/zlib.png",
+      bounds: [6.338, 6.5728, 6.338, 6.1033],
       url: "https://reddit.com/zlib",
       x: 35,
       y: 53,
@@ -247,6 +282,7 @@ const FileData = {
     {
       hoverString: "ms paint",
       src: "images/icons/paint.png",
+      bounds: [7.5758, 7.3084, 7.2193, 7.4866],
       url: "https://jspaint.app/",
       x: 35,
       y: 53,
@@ -255,6 +291,7 @@ const FileData = {
     {
       hoverString: "esoteric.codes",
       src: "images/icons/esoteric.png",
+      bounds: [9.3684, 6.7368, 10.8421, 7.1579],
       url: "https://www.newgrounds.com/portal/view/518729",
       x: 51,
       y: 34,
@@ -263,6 +300,7 @@ const FileData = {
     {
       hoverString: "( TCRF )",
       src: "images/icons/tcrf.png",
+      bounds: [8.0537, 9.7315, 9.396, 9.7315],
       url: "https://tcrf.net/The_Cutting_Room_Floor",
       x: 40,
       y: 59,
@@ -271,6 +309,7 @@ const FileData = {
     {
       hoverString: "( daily deviation dream )",
       src: "images/icons/deviantart.png",
+      bounds: [9.6552, 9.6552, 8.9655, 11.0345],
       url: "https://www.deviantart.com/",
       x: 71,
       y: 72,
@@ -279,6 +318,7 @@ const FileData = {
     {
       hoverString: "( MSCHF )",
       src: "images/icons/mschf.png",
+      bounds: [5.3435, 8.3969, 5.3435, 7.6336],
       url: "https://www.mschf.com/",
       x: 37,
       y: 32,
@@ -287,6 +327,7 @@ const FileData = {
     {
       hoverString: "Rational Wiki",
       src: "images/icons/rational.png",
+      bounds: [5.9701, 10.0746, 5.9701, 12.3134],
       url: "https://rationalwiki.org/wiki/Special:Random",
       x: 76,
       y: 68,
@@ -295,6 +336,7 @@ const FileData = {
     {
       hoverString: "( scp foundation )",
       src: "images/icons/scp.png",
+      bounds: [5.8394, 12.0438, 8.0292, 14.2336],
       url: "https://scp-wiki.wikidot.com/",
       x: 50,
       y: 72,
@@ -303,6 +345,7 @@ const FileData = {
     {
       hoverString: "( Edit Wars )",
       src: "images/icons/wiki.png",
+      bounds: [10.0775, 5.4264, 9.3023, 3.1008],
       url: "https://en.wikipedia.org/wiki/User:TheUnmissingPiece",
       x: 58,
       y: 65,
@@ -313,13 +356,14 @@ const FileData = {
     {
       hoverString: "૮꒰ ˶• ༝ •˶꒱ა ♡",
       src: "images/windows/bio.png",
-      border: true,
+      window: "bio",
       x: 68,
       y: 22.5,
     },
     {
       hoverString: "૮꒰ ˶• ༝ •˶꒱ა ♡",
       src: "images/me/mememe.png",
+      bounds: [5, 9, 6, 13],
       url: "https://vsco.co/mellyeliu/gallery",
       x: 80,
       y: 42,
@@ -328,6 +372,7 @@ const FileData = {
     {
       hoverString: "૮꒰ ˶• ༝ •˶꒱ა ♡",
       src: "images/me/meme.png",
+      bounds: [18.4615, 6.1538, 18.4615, 6.1538],
       url: "https://vsco.co/mellyeliu/gallery",
       x: 83,
       y: 26,
@@ -336,6 +381,7 @@ const FileData = {
     {
       hoverString: "૮꒰ ˶• ༝ •˶꒱ა ♡",
       src: "images/me/me.png",
+      bounds: [16.129, 6.4516, 15.3226, 6.4516],
       url: "https://vsco.co/mellyeliu/gallery",
       x: 60,
       y: 35,
@@ -344,21 +390,21 @@ const FileData = {
     {
       hoverString: "( Pixels )",
       src: "images/windows/emojis.png",
-      border: true,
+      window: "pixels",
       x: 59,
       y: 14,
     },
     {
       hoverString: "( Socials )",
       src: "images/windows/socials.png",
-      border: true,
+      window: "socials",
       x: 9,
       y: 29,
     },
     {
       hoverString: "( 🌐🤍🎀🫧 )",
       src: "images/windows/internet.png",
-      border: true,
+      window: "site",
       x: 17,
       y: 45,
     },

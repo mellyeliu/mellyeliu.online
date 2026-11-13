@@ -1,3 +1,5 @@
+import React from "react";
+
 export const socials = [
   { name: "❀ vsco.co", url: "https://vsco.co/mellyeliu" },
   { name: "𖡼 reading.supply", url: "https://reading.supply/@mellyeliu" },
@@ -18,7 +20,7 @@ export const projects = [
   {
     title: "BOY♡GAME (2.0)",
     description:
-      "Couch co-op game to create boys and vote on your favourites. View the <a  class='special-links' href='https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed'>zine</a> and <a  class='special-links' href='https://github.com/mellyeliu/boygame'>source code</a>.",
+      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a> and <a className="special-links" href="https://github.com/mellyeliu/boygame">source code</a>.</>,
     languages: "React, NodeJS/SQLite, Figma",
     image: "boygame2.png",
     year: "2024",
@@ -44,7 +46,7 @@ export const projects = [
   {
     title: "Dreamland",
     description:
-      "Interactive fiction documenting dream journal escapism. For <a class='special-links' href='https://tiat.place'>tiat.place</a> at the <a class='special-links' href='https://archive.org/'>Internet Archive</a>. Play the (rough) demo!",
+      <>Interactive fiction documenting dream journal escapism. For <a className="special-links" href="https://tiat.place">tiat.place</a> at the <a className="special-links" href="https://archive.org/">Internet Archive</a>. Play the (rough) demo!</>,
     languages: "Inform7",
     image: "inform.png",
     year: "2023",
@@ -54,7 +56,7 @@ export const projects = [
   {
     title: "CYBERHUG COLLECTIVE",
     description:
-      "Musings on digital intimacy.  View the <a class='special-links' href='https://web.archive.org/web/20260414032632/https://cyberhug.studio/'>website</a> and <a class='special-links' href='https://www.instagram.com/cyber.hug/'>brainstorm</a>.",
+      <>Musings on digital intimacy.  View the <a className="special-links" href="https://web.archive.org/web/20260414032632/https://cyberhug.studio/">website</a> and <a className="special-links" href="https://www.instagram.com/cyber.hug/">brainstorm</a>.</>,
     languages: "Figma",
     image: "cyberhug.png",
     year: "2022-",
@@ -101,7 +103,7 @@ export const projects = [
   {
     title: "StyleX",
     description:
-      "CSS in JS compiler. See the Meta Engineering <a class='special-links' href='https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/'>blog</a> and <a class='special-links' href='https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/'>podcast.</a>",
+      <>CSS in JS compiler. See the Meta Engineering <a className="special-links" href="https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/">blog</a> and <a className="special-links" href="https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/">podcast.</a></>,
     languages: "Javascript",
     image: "stylex.png",
     year: "2024-",
@@ -117,7 +119,7 @@ export const projects = [
   {
     title: "666 Stories",
     description:
-      "Little Alchemy inspired fragments of the 2nd-gen Asian experience. Dedicated to my family and hometown. Work in progress! For the <a class='special-links' href='https://www.instagram.com/p/DJVkYEJRtSp/'>666 show</a>.",
+      <>Little Alchemy inspired fragments of the 2nd-gen Asian experience. Dedicated to my family and hometown. Work in progress! For the <a className="special-links" href="https://www.instagram.com/p/DJVkYEJRtSp/">666 show</a>.</>,
     languages: "React, Cursor :/",
     image: "666piece.png",
     year: "2024-",
@@ -195,7 +197,7 @@ export const projects = [
   {
     title: "Object Anthropomorphism",
     description:
-      "A <a  class='special-links' href='https://archiveofourown.org/works/53351767'>beloved phone app</a> and <a class='special-links' href='https://archiveofourown.org/works/51323875'>paperclip</a> find love. Circumventing the ChatGPT censors again.",
+      <>A <a className="special-links" href="https://archiveofourown.org/works/53351767">beloved phone app</a> and <a className="special-links" href="https://archiveofourown.org/works/51323875">paperclip</a> find love. Circumventing the ChatGPT censors again.</>,
     languages: "ChatGPT",
     image: "clippy.png",
     year: "2024",
@@ -211,7 +213,7 @@ export const projects = [
   {
     title: "Serif",
     description:
-      "Tiktok meets Goodreads. View the <a class='special-links' href='https://www.serif.app/publishers'>website</a>, <a class='special-links' href='https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed'>mocks</a>, and <a class='special-links' href='https://ascii-storybook.netlify.app/'>ascii explorations</a> here.",
+      <>Tiktok meets Goodreads. View the <a className="special-links" href="https://www.serif.app/publishers">website</a>, <a className="special-links" href="https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed">mocks</a>, and <a className="special-links" href="https://ascii-storybook.netlify.app/">ascii explorations</a> here.</>,
     languages: "Framer, Figma",
     image: "serif.png",
     year: "2024",

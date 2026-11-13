@@ -116,7 +116,7 @@ const Home = ({ isFoldersOff, setIsFoldersOff }) => {
         const key = `${folder.key}-${itemIndex}`;
         const hasHoverText = item.hoverString !== "";
 
-        if (item.border) {
+        if (item.window) {
           if (isGridLayout) return null;
           return (
             <Popup
@@ -126,7 +126,7 @@ const Home = ({ isFoldersOff, setIsFoldersOff }) => {
               src={`/${item.src}`}
               x={item.x}
               y={item.y}
-              content={WindowData[item.hoverString]}
+              content={WindowData[item.window]}
             />
           );
         }
@@ -145,6 +145,7 @@ const Home = ({ isFoldersOff, setIsFoldersOff }) => {
             x={position.x}
             y={position.y}
             iconText={item.iconText}
+            bounds={item.bounds}
           />
         );
       });

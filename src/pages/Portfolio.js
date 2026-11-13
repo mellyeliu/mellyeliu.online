@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Tabs, Tab, TabPanel, TabList } from "react-web-tabs";
 import { useLocation, useHistory } from "react-router-dom";
-import parse from "html-react-parser";
 import * as stylex from "@stylexjs/stylex";
 import BrowserIcons from "../components/portfolio/BrowserIcons";
 import ProjectDetail from "../components/portfolio/ProjectDetail";
@@ -494,7 +493,7 @@ const Portfolio = () => {
               &#40;{index + 1}&#41; {project.title}; {project.year}
             </h5>
             <p className="collab">
-              {parse(project.description)} {project.collaborators && "Collaborators: "}
+              {project.description} {project.collaborators && "Collaborators: "}
               {project.collaborators?.map((collaborator, i) => (
                 <React.Fragment key={collaborator.name}>
                   {i > 0 && ", "}

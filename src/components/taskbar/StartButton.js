@@ -223,18 +223,18 @@ const StartButton = () => {
           {selectedOption && startData[selectedOption].length > 0 && (
             <div {...stylex.props(styles.sidePanel)}>
               <ul {...stylex.props(styles.sidePanelList)}>
-                {startData[selectedOption].map(([label, href], index) => (
+                {startData[selectedOption].map(({ label, url }, index) => (
                   <li
                     key={index}
                     {...stylex.props(
                       styles.hvrShade,
                       styles.sidePanelItem,
-                      href ? styles.sidePanelItemClickable : styles.sidePanelItemDefault
+                      url ? styles.sidePanelItemClickable : styles.sidePanelItemDefault
                     )}
                   >
-                    {href ? (
+                    {url ? (
                       <a
-                        href={href}
+                        href={url}
                         target="_blank"
                         rel="noopener noreferrer"
                         {...stylex.props(styles.sidePanelLink)}

@@ -5,7 +5,6 @@ import SplitTextByWidth from "./SplitTextByWidth";
 import useDraggable from "../../hooks/useDraggable";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useUIActions } from "../../context/UIContext";
-import IconBoundsData from "../../data/IconBoundsData";
 import whenDecoded from "../../utils/whenDecoded";
 import { radii } from "../../styles/tokens.stylex";
 
@@ -58,7 +57,16 @@ const styles = stylex.create({
   },
 });
 
-const DesktopIcon = ({ src, url = "", x, y, onHoverChange, hoverString = "", iconText }) => {
+const DesktopIcon = ({
+  src,
+  url = "",
+  x,
+  y,
+  onHoverChange,
+  hoverString = "",
+  iconText,
+  bounds = NO_BOUNDS,
+}) => {
   const isMobile = useIsMobile();
   const { getNextZIndex } = useUIActions();
 
@@ -122,7 +130,6 @@ const DesktopIcon = ({ src, url = "", x, y, onHoverChange, hoverString = "", ico
     return null;
   }
 
-  const imageBounds = IconBoundsData[new URL(src, window.location.origin).pathname] || NO_BOUNDS;
   const isActive = isDragging || isSelected;
 
   return (
@@ -159,10 +166,10 @@ const DesktopIcon = ({ src, url = "", x, y, onHoverChange, hoverString = "", ico
               aria-hidden="true"
               {...stylex.props(styles.selectionOutline)}
               style={{
-                left: `calc(${imageBounds[0]}% - 9px)`,
-                top: `calc(${imageBounds[1]}% - 9px)`,
-                right: `calc(${imageBounds[2]}% - 9px)`,
-                bottom: `calc(${imageBounds[3]}% - 9px)`,
+                left: `calc(${bounds[0]}% - 9px)`,
+                top: `calc(${bounds[1]}% - 9px)`,
+                right: `calc(${bounds[2]}% - 9px)`,
+                bottom: `calc(${bounds[3]}% - 9px)`,
               }}
             />
           )}
@@ -200,6 +207,9 @@ DesktopIcon.propTypes = {
   onHoverChange: PropTypes.func.isRequired,
   hoverString: PropTypes.string,
   iconText: PropTypes.string.isRequired,
+  // Transparent padding around the artwork, as [left, top, right, bottom] percentages,
+  // so the selection outline hugs the visible image.
+  bounds: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default memo(DesktopIcon);

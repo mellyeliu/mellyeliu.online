@@ -79,19 +79,20 @@ const bioContent = (
 
 const emojisContent = <>🎀💿🧸💫</>;
 
+// Window contents, keyed by the `window` id of items in FileData.
 const WindowData = {
-  "( Socials )": <ContentBlock content={socialsContent} padding="175px 20px" />,
-  "૮꒰ ˶• ༝ •˶꒱ა ♡": (
+  socials: <ContentBlock content={socialsContent} padding="175px 20px" />,
+  bio: (
     <ContentBlock content={bioContent} padding="195px 25px" />
   ),
-  "( 🌐🤍🎀🫧 )": (
+  site: (
     <ContentBlock
       content={siteContent}
       textAlign="center"
       padding="195px 50px"
     />
   ),
-  "( Pixels )": (
+  pixels: (
     <ContentBlock content={emojisContent} textAlign="center" fontSize={48} />
   ),
 };
