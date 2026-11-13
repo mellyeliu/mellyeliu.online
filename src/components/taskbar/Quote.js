@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import * as stylex from "@stylexjs/stylex";
-import { quotes } from "../../Data/QuotesData";
+import { quotes } from "../../data/QuotesData";
 import { colors, fonts, fontSizes } from "../../styles/tokens.stylex";
 import "./Quote.css";
 

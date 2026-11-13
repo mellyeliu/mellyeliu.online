@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
-import { getProjectImageUrl } from "../../Data/PortfolioData";
+import { getProjectImageUrl } from "../../data/PortfolioData";
 
 const styles = stylex.create({
   container: {

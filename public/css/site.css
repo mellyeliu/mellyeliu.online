@@ -4,16 +4,14 @@
 
 @font-face {
   font-family: "opensans-light";
-  src: url("fonts/opensans/OpenSans-Light-webfont.woff") format("woff"),
-    url("fonts/opensans/OpenSans-Light-webfont.ttf") format("truetype");
+  src: url("fonts/opensans/OpenSans-Light-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "opensans-bold";
-  src: url("fonts/opensans/OpenSans-Bold-webfont.woff") format("woff"),
-    url("fonts/opensans/OpenSans-Bold-webfont.ttf") format("truetype");
+  src: url("fonts/opensans/OpenSans-Bold-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

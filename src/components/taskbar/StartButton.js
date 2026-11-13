@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startData } from "../../Data/StartData";
+import { startData } from "../../data/StartData";
 import * as stylex from "@stylexjs/stylex";
 import { colors, fontSizes } from "../../styles/tokens.stylex";
 

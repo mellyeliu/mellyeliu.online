@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
-import DesktopIcon from "../Items/DesktopIcon";
-import Folder from "../Items/Folder";
-import Popup from "../Items/Popup";
-import FileData from "../../Data/FileData";
-import WindowData from "../../Data/WindowData";
-import { useCursorString, useUIActions } from "../../context/UIContext";
-import { Screen, useDesktopScreen } from "../../routes";
-import useIsMobile from "../../hooks/useIsMobile";
+import DesktopIcon from "../components/desktop/DesktopIcon";
+import Folder from "../components/desktop/Folder";
+import Popup from "../components/desktop/Popup";
+import FileData from "../data/FileData";
+import WindowData from "../data/WindowData";
+import { useCursorString, useUIActions } from "../context/UIContext";
+import { Screen, useDesktopScreen } from "../routes";
+import useIsMobile from "../hooks/useIsMobile";
 
 // Browsers that understand image-set() with type() all decode WebP. site.css
 // uses the same check, so the CSS background and this URL always match.

@@ -1,11 +1,11 @@
 import React, { memo, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
-import SplitTextByWidth from "../Utils/SplitTextByWidth";
+import SplitTextByWidth from "./SplitTextByWidth";
 import useDraggable from "../../hooks/useDraggable";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useUIActions } from "../../context/UIContext";
-import IconBoundsData from "../../Data/IconBoundsData";
+import IconBoundsData from "../../data/IconBoundsData";
 import whenDecoded from "../../utils/whenDecoded";
 import { radii } from "../../styles/tokens.stylex";
 
