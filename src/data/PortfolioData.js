@@ -24,7 +24,7 @@ export const projects = [
     title: "BOY♡GAME (2.0)",
     favourite: true,
     description:
-      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a> and <a className="special-links" href="https://thinkingleaf.space/">studio site</a>.</>,
+      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a>, <a className="special-links" href="/images/portfolio/femcel-worksheet.png">femcel worksheet</a>, and <a className="special-links" href="https://thinkingleaf.space/">studio site</a>.</>,
     languages: "React, NodeJS/SQLite, Figma",
     image: "boygame2.png",
     date: "2024-11",
