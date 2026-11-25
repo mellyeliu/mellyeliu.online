@@ -24,7 +24,7 @@ export const projects = [
     title: "BOY♡GAME (2.0)",
     favourite: true,
     description:
-      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a>, <a className="special-links" href="/images/portfolio/femcel-worksheet.png">femcel worksheet</a>, and <a className="special-links" href="https://thinkingleaf.space/">studio site</a>.</>,
+      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a>, <a className="special-links" href="/images/portfolio/boyposter.webp">poster</a>, <a className="special-links" href="/images/portfolio/femcel-worksheet.png">worksheet</a>, <a className="special-links" href="https://www.figma.com/proto/7QemW22jZhpVvq8FENwX4f/BOY%E2%99%A1GAME">analog game</a>, and <a className="special-links" href="https://thinkingleaf.space/">studio site</a>.</>,
     languages: "React, NodeJS/SQLite, Figma",
     image: "boygame2.png",
     date: "2024-11",
@@ -40,12 +40,12 @@ export const projects = [
   },
   {
     title: "CYBERHUG COLLECTIVE",
+    favourite: true,
     description:
       <>Musings on digital intimacy.  View the <a className="special-links" href="https://web.archive.org/web/20260414032632/https://cyberhug.studio/">website</a> and <a className="special-links" href="https://www.instagram.com/cyber.hug/">brainstorm</a>.</>,
     languages: "Figma",
     image: "cyberhug.png",
-    date: "2022-01",
-    endDate: "present",
+    date: "2022-05",
     type: ["design"],
     url: "https://web.archive.org/web/20260414032632/https://cyberhug.studio/",
     collaborators: [
@@ -60,13 +60,17 @@ export const projects = [
     favourite: true,
     description:
       <>CSS in JS compiler. See the Meta Engineering <a className="special-links" href="https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/">blog</a> and <a className="special-links" href="https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/">podcast.</a></>,
-    languages: "Javascript",
+    languages: "JavaScript, Babel",
     image: "stylex.png",
     date: "2024-06",
     endDate: "present",
     type: ["code"],
     url: "https://stylexjs.com/",
     collaborators: [
+      {
+        name: "Naman Goel",
+        url: "https://nmn.sh/",
+      },
       {
         name: "Community",
         url: "https://github.com/facebook/stylex/graphs/contributors",
@@ -136,7 +140,6 @@ export const projects = [
   },
   {
     title: "AO3 is Down",
-    favourite: true,
     description: "A tribute to the AO3 shutdown of 2026.",
     languages: "Figma",
     image: "ao3down.png",
@@ -158,7 +161,7 @@ export const projects = [
     languages: "Figma",
     image: "love love love.png",
     date: "2025-02",
-    type: ["conversation"],
+    type: ["design", "conversation"],
     url: "https://www.figma.com/proto/hkZ1ppBFS9HaALSesJZl07/valentines?page-id=109%3A130&node-id=109-131&p=f&viewport=560%2C40%2C0.03&t=JpfqV5tPb32nP0oG-1&scaling=scale-down&content-scaling=fixed",
     collaborators: [
       {
@@ -169,7 +172,6 @@ export const projects = [
   },
   {
     title: "BOY♡GAME",
-    favourite: true,
     description:
       "Analog dating sim to date boys and matchmake friends. A reskin of the 80s game HEARTTHROB.",
     languages: "Canva AI (lol), Figma",
@@ -230,10 +232,10 @@ export const projects = [
     title: "Serif",
     description:
       <>Tiktok meets Goodreads. View the <a className="special-links" href="https://www.serif.app/publishers">website</a>, <a className="special-links" href="https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed">mocks</a>, and <a className="special-links" href="https://ascii-storybook.netlify.app/">ascii explorations</a> here.</>,
-    languages: "Framer, Figma",
+    languages: "Python, Framer, Figma",
     image: "serif.png",
     date: "2024-03",
-    type: ["design"],
+    type: ["code", "design"],
     url: "https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed",
     collaborators: [
       {
@@ -275,7 +277,6 @@ export const projects = [
   },
   {
     title: "I've Been Thinking About Obsession",
-    favourite: true,
     description: "Visual conversation on obsessive personalities.",
     languages: "Figma",
     image: "obsession.png",
