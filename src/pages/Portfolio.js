@@ -4,7 +4,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import * as stylex from "@stylexjs/stylex";
 import BrowserIcons from "../components/portfolio/BrowserIcons";
 import ProjectDetail from "../components/portfolio/ProjectDetail";
-import { projects, getProjectImageUrl } from "../data/PortfolioData";
+import { projects, formatProjectDate, getProjectImageUrl } from "../data/PortfolioData";
 import { Screen, useDesktopScreen } from "../routes";
 import useIsMobile from "../hooks/useIsMobile";
 import whenDecoded from "../utils/whenDecoded";
@@ -15,7 +15,16 @@ const URL_PREFIX = "C://Users/mellyeliu/Projects/";
 const PROJECT_PATH = /^\/portfolio\/projects\/([^/]+)\/?$/;
 
 const TABS = [
-  { id: "one", category: "all", path: "/portfolio", urlName: "All", label: " All ⋆𐙚₊˚⊹♡ " },
+  {
+    id: "one",
+    category: "all",
+    path: "/portfolio",
+    urlName: "All",
+    label: " All ⋆𐙚₊˚⊹♡ ",
+    // Shown instead while the star filters All down to favourites.
+    selectedUrlName: "Selected",
+    selectedLabel: " Selected ⋆𐙚₊˚⊹♡ ",
+  },
   { id: "two", category: "code", path: "/portfolio/code", urlName: "Code", label: " Code ‧<₊˚🔗✩ />₊" },
   { id: "three", category: "design", path: "/portfolio/design", urlName: "Design", label: " Design ‧⊹˚🕊️☽₊⟡⋆" },
   { id: "four", category: "games", path: "/portfolio/games", urlName: "Games", label: " Games ‧₊🎧ྀི☾⋆₊⟡⁺." },
@@ -26,6 +35,7 @@ const ALL_TAB = TABS[0];
 // Names accepted in the fake URL bar, mapped to their tab.
 const URL_BAR_ROUTES = {
   all: ALL_TAB,
+  selected: ALL_TAB,
   code: TABS[1],
   design: TABS[2],
   games: TABS[3],
@@ -55,8 +65,16 @@ const getTabFromPath = (pathname, projectSlug) => {
   return (tab || ALL_TAB).id;
 };
 
-const filterProjects = (category) =>
-  category === "all" ? PROJECTS : PROJECTS.filter((p) => p.type.includes(category));
+// Pinned projects first, then in-progress work, then newest first. Sort is
+// stable, so projects with the same dates keep their order in PortfolioData.
+const dateKey = (p) => `${p.pinned ? 1 : 0}:${p.endDate === "present" ? 1 : 0}:${p.date}`;
+const byNewest = (a, b) => dateKey(b).localeCompare(dateKey(a));
+
+const getVisibleProjects = (category, favouritesOnly) => {
+  let list = category === "all" ? PROJECTS : PROJECTS.filter((p) => p.type.includes(category));
+  if (favouritesOnly) list = list.filter((p) => p.favourite);
+  return [...list].sort(byNewest);
+};
 
 const loadImage = (url) =>
   new Promise((resolve) => {
@@ -161,6 +179,7 @@ const styles = stylex.create({
     fontFamily: fonts.serif,
     fontStyle: "italic",
     paddingLeft: 20,
+    paddingRight: 40,
     borderRadius: radii.xl,
     position: "relative",
   },
@@ -179,20 +198,43 @@ const styles = stylex.create({
     cursor: "text",
     width: "100%",
   },
-  favouriteButton: {
+  iconButton: {
     position: "absolute",
     top: "50%",
-    right: 10,
     transform: "translateY(-50%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 22,
+    width: 22,
+    padding: 0,
+    margin: 0,
+    borderWidth: 0,
+    borderStyle: "none",
+    borderColor: "transparent",
+    backgroundImage: "none",
+    backgroundColor: "transparent",
+    color: colors.black,
     cursor: "pointer",
     fontStyle: "normal",
+    lineHeight: 1,
+  },
+  favouriteButton: {
+    right: 8,
     fontSize: "1.2em",
   },
-  favouriteButtonMobile: {
-    display: "none",
+  // The heading font uses old-style numerals that sit at x-height, so the
+  // uppercase month words are shrunk to match them. Bolder so the smaller
+  // text keeps the same visual weight as the title.
+  dateWord: {
+    fontSize: "0.68em",
+    fontWeight: 700,
   },
-  favouriteButtonDesktop: {
-    display: "block",
+  emptyState: {
+    paddingTop: 40,
+    textAlign: "center",
+    fontFamily: fonts.serif,
+    fontStyle: "italic",
   },
   layoutToggle: {
     position: "absolute",
@@ -210,12 +252,7 @@ const styles = stylex.create({
     cursor: "pointer",
     borderRadius: radii.lg,
     fontSize: fontSizes.sm,
-  },
-  layoutToggleMobile: {
     right: 12,
-  },
-  layoutToggleDesktop: {
-    right: 48,
   },
   projectImage: {
     height: 200,
@@ -282,7 +319,9 @@ const Portfolio = () => {
   const history = useHistory();
   const [, setDesktopScreen] = useDesktopScreen();
 
-  const [favourite, setFavourite] = useState("✩");
+  // The All tab starts on favourites; other tabs start on everything. The star flips it per tab.
+  const [favouriteOverrides, setFavouriteOverrides] = useState({});
+  const isFavouritesOnly = (tab) => favouriteOverrides[tab.id] ?? tab.category === "all";
   const [backHover, setBackHover] = useState(0);
   const [useMobileDetail, setUseMobileDetail] = useState(true);
   const [readyImageLoadKey, setReadyImageLoadKey] = useState("");
@@ -292,18 +331,20 @@ const Portfolio = () => {
   const activeProject = projectSlug ? PROJECTS.find((p) => p.slug === projectSlug) : null;
   const projectTabId = activeProject ? `project-${activeProject.slug}` : null;
   const activeTab = getTabFromPath(pathname, projectSlug);
-  const activeCategory = TABS.find((t) => t.id === activeTab)?.category || "all";
+  const activeTabConfig = TABS.find((t) => t.id === activeTab) || ALL_TAB;
+  const activeCategory = activeTabConfig.category;
+  const favouritesOnly = isFavouritesOnly(activeTabConfig);
 
   // Hold the grid back until the first row of images is ready, so it fades in whole.
   const priorityImageCount = isMobile ? 1 : 3;
   const priorityImageUrls = useMemo(
     () =>
-      (activeProject ? [activeProject] : filterProjects(activeCategory))
+      (activeProject ? [activeProject] : getVisibleProjects(activeCategory, favouritesOnly))
         .slice(0, priorityImageCount)
         .map((project) => project.image)
         .filter(Boolean)
         .map(getProjectImageUrl),
-    [activeProject, activeCategory, priorityImageCount]
+    [activeProject, activeCategory, favouritesOnly, priorityImageCount]
   );
   const imageLoadKey = `${activeTab}:${priorityImageCount}:${priorityImageUrls.join("|")}`;
   const isContentReady = readyImageLoadKey === imageLoadKey;
@@ -353,6 +394,9 @@ const Portfolio = () => {
     const tab = URL_BAR_ROUTES[lastSegment];
     if (tab) {
       history.push(tab.path);
+      if (tab === ALL_TAB) {
+        setFavouriteOverrides((prev) => ({ ...prev, [ALL_TAB.id]: lastSegment === "selected" }));
+      }
       event.target.value = `${URL_PREFIX}${lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)}`;
     }
   };
@@ -421,27 +465,30 @@ const Portfolio = () => {
           <div {...stylex.props(styles.urlInputContainer)}>
             {" "}
             <input
+              key={urlName}
               type="text"
               onKeyDown={handleUrlBarSubmit}
               {...stylex.props(styles.urlInput)}
               defaultValue={`${URL_PREFIX}${urlName}`}
             />
-            <div
-              onClick={() => setFavourite(favourite === "✩" ? "✮" : "✩")}
-              {...stylex.props(
-                styles.favouriteButton,
-                isMobile ? styles.favouriteButtonMobile : styles.favouriteButtonDesktop
-              )}
-            >
-              {favourite}
-            </div>
+            {grid && (
+              <button
+                type="button"
+                title={favouritesOnly ? "Show all projects" : "Show favourites"}
+                aria-label="Show favourites only"
+                aria-pressed={favouritesOnly}
+                onClick={() =>
+                  setFavouriteOverrides((prev) => ({ ...prev, [activeTab]: !favouritesOnly }))
+                }
+                {...stylex.props(styles.iconButton, styles.favouriteButton)}
+              >
+                {favouritesOnly ? "✮" : "✩"}
+              </button>
+            )}
             {showLayoutToggle && (
               <button
                 onClick={() => setUseMobileDetail((prev) => !prev)}
-                {...stylex.props(
-                  styles.layoutToggle,
-                  isMobile ? styles.layoutToggleMobile : styles.layoutToggleDesktop
-                )}
+                {...stylex.props(styles.layoutToggle)}
               >
                 {useMobileDetail ? "Desktop layout" : "Alt layout"}
               </button>
@@ -490,7 +537,18 @@ const Portfolio = () => {
             style={{ paddingBottom: 18, paddingLeft: 18, paddingRight: 18 }}
           >
             <h5>
-              &#40;{index + 1}&#41; {project.title}; {project.year}
+              &#40;{index + 1}&#41; {project.title};{" "}
+              {formatProjectDate(project)
+                .split(/([A-Za-z]+)/)
+                .map((part, i) =>
+                  i % 2 ? (
+                    <span key={i} {...stylex.props(styles.dateWord)}>
+                      {part}
+                    </span>
+                  ) : (
+                    part
+                  )
+                )}
             </h5>
             <p className="collab">
               {project.description} {project.collaborators && "Collaborators: "}
@@ -545,12 +603,22 @@ const Portfolio = () => {
   };
 
   // Only the visible tab's panel renders its contents; hidden panels stay empty.
-  const renderTabPanel = (tab) => (
-    <TabPanel key={tab.id} tabId={tab.id}>
-      {activeTab === tab.id &&
-        renderUrlBar(tab.urlName, filterProjects(tab.category).map(renderProject))}
-    </TabPanel>
-  );
+  const renderTabPanel = (tab) => {
+    if (activeTab !== tab.id) return <TabPanel key={tab.id} tabId={tab.id} />;
+    const visible = getVisibleProjects(tab.category, isFavouritesOnly(tab));
+    return (
+      <TabPanel key={tab.id} tabId={tab.id}>
+        {renderUrlBar(
+          tab.selectedUrlName && isFavouritesOnly(tab) ? tab.selectedUrlName : tab.urlName,
+          visible.length > 0 ? (
+            visible.map(renderProject)
+          ) : (
+            <p {...stylex.props(styles.emptyState)}>No favourites here yet ✩</p>
+          )
+        )}
+      </TabPanel>
+    );
+  };
 
   return (
     <section id="portfolio">
@@ -568,7 +636,7 @@ const Portfolio = () => {
                 tabFor={ALL_TAB.id}
                 onClick={() => handleTabChange(ALL_TAB.id)}
               >
-                {ALL_TAB.label}
+                {isFavouritesOnly(ALL_TAB) ? ALL_TAB.selectedLabel : ALL_TAB.label}
               </Tab>
               {activeProject ? (
                 <Tab

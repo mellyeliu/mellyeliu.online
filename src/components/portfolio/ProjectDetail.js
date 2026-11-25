@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as stylex from "@stylexjs/stylex";
-import { getProjectImageUrl } from "../../data/PortfolioData";
+import { formatProjectDate, getProjectImageUrl } from "../../data/PortfolioData";
 
 const styles = stylex.create({
   container: {
@@ -79,7 +79,7 @@ const ProjectDetail = ({ project }) => {
           ) : (
             project.title
           )}{" "}
-          — {project.year}
+          — {formatProjectDate(project)}
         </h2>
       </div>
       {paragraphs.map((p, idx) => (
@@ -94,7 +94,8 @@ const ProjectDetail = ({ project }) => {
 ProjectDetail.propTypes = {
   project: PropTypes.shape({
     title: PropTypes.string,
-    year: PropTypes.string,
+    date: PropTypes.string,
+    endDate: PropTypes.string,
     url: PropTypes.string,
     image: PropTypes.string,
     longDescription: PropTypes.string,

@@ -10,21 +10,26 @@ export const socials = [
 export const projects = [
   {
     title: "Personal Website (2.0)",
+    pinned: true,
+    favourite: true,
     description: "A continual work in progress.",
     languages: "React",
     image: "pweb2.png",
-    year: "2023-",
+    date: "2023-07",
+    endDate: "present",
     type: ["code"],
     url: "https://github.com/mellyeliu/new-personal-website/",
   },
   {
     title: "BOY♡GAME (2.0)",
+    favourite: true,
     description:
-      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a> and <a className="special-links" href="https://github.com/mellyeliu/boygame">source code</a>.</>,
+      <>Couch co-op game to create boys and vote on your favourites. View the <a className="special-links" href="https://www.figma.com/proto/ax0prFmJLAucQZ4dNVh0HW/BOY%E2%99%A1ZINE?page-id=167%3A63219&node-id=167-63263&p=f&viewport=386%2C143%2C0.43&t=Qu2bU8vjyVHPCcAj-1&scaling=contain&content-scaling=fixed">zine</a> and <a className="special-links" href="https://thinkingleaf.space/">studio site</a>.</>,
     languages: "React, NodeJS/SQLite, Figma",
     image: "boygame2.png",
-    year: "2024",
-    type: ["games"],
+    date: "2024-11",
+    endDate: "present",
+    type: ["design", "games"],
     url: "https://instagram.com/b0ygame",
     collaborators: [
       {
@@ -34,32 +39,13 @@ export const projects = [
     ],
   },
   {
-    title: "Digital Nostalgia",
-    description:
-      "Zine documenting my online childhood and the websites that made me. For SF Zine Fest.",
-    languages: "Figma",
-    image: "zine1.png",
-    year: "2023",
-    type: ["design"],
-    url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?page-id=0%3A1&node-id=201-2&node-type=CANVAS&viewport=617%2C1021%2C0.07&t=6nK9lL1zcp8bszWy-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=201%3A2",
-  },
-  {
-    title: "Dreamland",
-    description:
-      <>Interactive fiction documenting dream journal escapism. For <a className="special-links" href="https://tiat.place">tiat.place</a> at the <a className="special-links" href="https://archive.org/">Internet Archive</a>. Play the (rough) demo!</>,
-    languages: "Inform7",
-    image: "inform.png",
-    year: "2023",
-    type: ["code", "games"],
-    url: "https://dreamland-demo.netlify.app/play",
-  },
-  {
     title: "CYBERHUG COLLECTIVE",
     description:
       <>Musings on digital intimacy.  View the <a className="special-links" href="https://web.archive.org/web/20260414032632/https://cyberhug.studio/">website</a> and <a className="special-links" href="https://www.instagram.com/cyber.hug/">brainstorm</a>.</>,
     languages: "Figma",
     image: "cyberhug.png",
-    year: "2022-",
+    date: "2022-01",
+    endDate: "present",
     type: ["design"],
     url: "https://web.archive.org/web/20260414032632/https://cyberhug.studio/",
     collaborators: [
@@ -70,43 +56,14 @@ export const projects = [
     ],
   },
   {
-    title: "AO3 is Down",
-    description: "A tribute to the AO3 shutdown of 2026.",
-    languages: "Figma",
-    image: "ao3down.png",
-    year: "2026",
-    type: ["conversation"],
-    url: "https://www.figma.com/design/kscnxTimvnBIFRE5tiRIWN/AO3-is-Down-?node-id=0-1&t=0S6r0hWnrI0disaG-1",
-    collaborators: [
-      {
-        name: "Ariel He",
-        url: "https://arielheyanru.cargo.site/",
-      },
-    ],
-  },
-  {
-    title: "Love Love Love",
-    description:
-      "Two friends use Valentine's Day as an excuse to talk about love again.",
-    languages: "Figma",
-    image: "love love love.png",
-    year: "2025",
-    type: ["conversation"],
-    url: "https://www.figma.com/proto/hkZ1ppBFS9HaALSesJZl07/valentines?page-id=109%3A130&node-id=109-131&p=f&viewport=560%2C40%2C0.03&t=JpfqV5tPb32nP0oG-1&scaling=scale-down&content-scaling=fixed",
-    collaborators: [
-      {
-        name: "Carolyn Wang",
-        url: "https://carolynwang.substack.com",
-      },
-    ],
-  },
-  {
     title: "StyleX",
+    favourite: true,
     description:
       <>CSS in JS compiler. See the Meta Engineering <a className="special-links" href="https://engineering.fb.com/2025/11/11/web/stylex-a-styling-library-for-css-at-scale/">blog</a> and <a className="special-links" href="https://engineering.fb.com/2026/01/12/web/css-at-scale-with-stylex/">podcast.</a></>,
     languages: "Javascript",
     image: "stylex.png",
-    year: "2024-",
+    date: "2024-06",
+    endDate: "present",
     type: ["code"],
     url: "https://stylexjs.com/",
     collaborators: [
@@ -122,25 +79,10 @@ export const projects = [
       <>Little Alchemy inspired fragments of the 2nd-gen Asian experience. Dedicated to my family and hometown. Work in progress! For the <a className="special-links" href="https://www.instagram.com/p/DJVkYEJRtSp/">666 show</a>.</>,
     languages: "React, Cursor :/",
     image: "666piece.png",
-    year: "2024-",
+    date: "2025-05",
+    endDate: "present",
     type: ["games"],
     url: "",
-  },
-  {
-    title: "BOY♡GAME",
-    description:
-      "Analog dating sim to date boys and matchmake friends. A reskin of the 80s game HEARTTHROB.",
-    languages: "Canva AI (lol), Figma",
-    image: "boygame.png",
-    year: "2024",
-    type: ["design", "games"],
-    url: "https://www.figma.com/proto/7QemW22jZhpVvq8FENwX4f/BOY%E2%99%A1GAME",
-    collaborators: [
-      {
-        name: "Amanda Yeh",
-        url: "https://amandayeh.com/",
-      },
-    ],
   },
   {
     title: "On Healing [Untitled]",
@@ -148,7 +90,8 @@ export const projects = [
       "Meditations on trauma, abuse, and silver lining friendships. Work in progress!",
     languages: "React?",
     image: "healinggame.png",
-    year: "2024",
+    date: "2024-08",
+    endDate: "present",
     type: ["games"],
     url: "https://healing-game.netlify.app/",
     collaborators: [
@@ -159,24 +102,97 @@ export const projects = [
     ],
   },
   {
-    title: "My Fanfic Became Sentient and Cannabalized Itself",
-    description:
-      "Zine documenting the underbelly of AO3. For SF Zine Fest.",
-    languages: "Figma",
-    image: "fanfic.png",
-    year: "2023",
-    type: ["design"],
-    url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?node-id=201-3023&t=7x2gIbOEt1n5qwZx-1&scaling=scale-down&content-scaling=fixed",
-  },
-  {
     title: "MOMENTS",
     description:
       "Welcome Employee 42069. You play an engineer trying to survive the recession. Created in the height of the tech layoffs and updated in response to policy changes",
     languages: "ChatGPT, Twine, HTML/CSS",
     image: "moments.png",
-    year: "2023-",
+    date: "2023-01",
+    endDate: "present",
     type: ["code", "games"],
     url: "https://moments.codes/",
+  },
+  {
+    title: "Digital Nostalgia",
+    favourite: true,
+    description:
+      "Zine documenting my online childhood and the websites that made me. For SF Zine Fest.",
+    languages: "Figma",
+    image: "zine1.png",
+    date: "2023-09",
+    type: ["design"],
+    url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?page-id=0%3A1&node-id=201-2&node-type=CANVAS&viewport=617%2C1021%2C0.07&t=6nK9lL1zcp8bszWy-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=201%3A2",
+  },
+  {
+    title: "Dreamland",
+    favourite: true,
+    description:
+      <>Interactive fiction documenting dream journal escapism. For <a className="special-links" href="https://tiat.place">tiat.place</a> at the <a className="special-links" href="https://archive.org/">Internet Archive</a>. Play the (rough) demo!</>,
+    languages: "Inform7",
+    image: "inform.png",
+    date: "2023-05",
+    type: ["code", "games"],
+    url: "https://dreamland-demo.netlify.app/play",
+  },
+  {
+    title: "AO3 is Down",
+    favourite: true,
+    description: "A tribute to the AO3 shutdown of 2026.",
+    languages: "Figma",
+    image: "ao3down.png",
+    date: "2026-11",
+    type: ["conversation"],
+    url: "https://www.figma.com/design/kscnxTimvnBIFRE5tiRIWN/AO3-is-Down-?node-id=0-1&t=0S6r0hWnrI0disaG-1",
+    collaborators: [
+      {
+        name: "Ariel He",
+        url: "https://arielheyanru.cargo.site/",
+      },
+    ],
+  },
+  {
+    title: "Love Love Love",
+    favourite: true,
+    description:
+      "Two friends use Valentine's Day as an excuse to talk about love again.",
+    languages: "Figma",
+    image: "love love love.png",
+    date: "2025-02",
+    type: ["conversation"],
+    url: "https://www.figma.com/proto/hkZ1ppBFS9HaALSesJZl07/valentines?page-id=109%3A130&node-id=109-131&p=f&viewport=560%2C40%2C0.03&t=JpfqV5tPb32nP0oG-1&scaling=scale-down&content-scaling=fixed",
+    collaborators: [
+      {
+        name: "Carolyn Wang",
+        url: "https://carolynwang.substack.com",
+      },
+    ],
+  },
+  {
+    title: "BOY♡GAME",
+    favourite: true,
+    description:
+      "Analog dating sim to date boys and matchmake friends. A reskin of the 80s game HEARTTHROB.",
+    languages: "Canva AI (lol), Figma",
+    image: "boygame.png",
+    date: "2024-08",
+    type: ["design", "games"],
+    url: "https://www.figma.com/proto/7QemW22jZhpVvq8FENwX4f/BOY%E2%99%A1GAME",
+    collaborators: [
+      {
+        name: "Amanda Yeh",
+        url: "https://amandayeh.com/",
+      },
+    ],
+  },
+  {
+    title: "My Fanfic Became Sentient and Cannabalized Itself",
+    description:
+      "Zine documenting the underbelly of AO3. For SF Zine Fest.",
+    languages: "Figma",
+    image: "fanfic.png",
+    date: "2023-09",
+    type: ["design"],
+    url: "https://www.figma.com/proto/QMYDZfrpN2PUJP21R62Sb6/digital-nostalgia?node-id=201-3023&t=7x2gIbOEt1n5qwZx-1&scaling=scale-down&content-scaling=fixed",
   },
   {
     title: "Childhood Convos",
@@ -184,7 +200,7 @@ export const projects = [
       "Fictional childhood friendship roleplay. Recess trespassing, fanfic reading, msn chats, nose jobs.",
     languages: "Figma",
     image: "childhood.png",
-    year: "2025",
+    date: "2025-03",
     type: ["conversation"],
     url: "https://www.figma.com/design/cCsqk7MUBsIxy3M1ZiEEDf/childhood?node-id=0-1&t=nRZ1MitSTxdXJVKT-1",
     collaborators: [
@@ -200,7 +216,7 @@ export const projects = [
       <>A <a className="special-links" href="https://archiveofourown.org/works/53351767">beloved phone app</a> and <a className="special-links" href="https://archiveofourown.org/works/51323875">paperclip</a> find love. Circumventing the ChatGPT censors again.</>,
     languages: "ChatGPT",
     image: "clippy.png",
-    year: "2024",
+    date: "2024-01",
     type: ["conversation"],
     url: "https://archiveofourown.org/works/53351767",
     collaborators: [
@@ -216,7 +232,7 @@ export const projects = [
       <>Tiktok meets Goodreads. View the <a className="special-links" href="https://www.serif.app/publishers">website</a>, <a className="special-links" href="https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed">mocks</a>, and <a className="special-links" href="https://ascii-storybook.netlify.app/">ascii explorations</a> here.</>,
     languages: "Framer, Figma",
     image: "serif.png",
-    year: "2024",
+    date: "2024-03",
     type: ["design"],
     url: "https://www.figma.com/proto/xYi0d8tK6IHz2Zbi8xLY1Z/Serif-App?node-id=470-12601&t=8LfqUkmjph4QIGnv-1&starting-point-node-id=470%3A12601&scaling=scale-down&content-scaling=fixed",
     collaborators: [
@@ -236,7 +252,8 @@ export const projects = [
       "Nicknames, AI stickers, commands, themes, edit message, and encryption.",
     languages: "ObjC, Hack, React",
     image: "messenger.png",
-    year: "2021-2024",
+    date: "2021-01",
+    endDate: "2024-12",
     type: ["code"],
     url: "https://messenger.com",
   },
@@ -246,7 +263,7 @@ export const projects = [
       "Visual conversation on parasocial relationships, internet crushes, and loneliness.",
     languages: "Figma",
     image: "parasocial.png",
-    year: "2024",
+    date: "2024-10",
     type: ["conversation"],
     url: "https://www.figma.com/design/e2UOBTAXopSigUwJToke4c/parasocial-relationships",
     collaborators: [
@@ -258,10 +275,11 @@ export const projects = [
   },
   {
     title: "I've Been Thinking About Obsession",
+    favourite: true,
     description: "Visual conversation on obsessive personalities.",
     languages: "Figma",
     image: "obsession.png",
-    year: "2023",
+    date: "2023-02",
     type: ["conversation"],
     url: "https://www.instagram.com/p/CpESuQsploR/?img_index=1",
     collaborators: [
@@ -276,7 +294,7 @@ export const projects = [
     description: "What does it mean to love online?",
     languages: "Figma",
     image: "digitallove.png",
-    year: "2023",
+    date: "2023-01",
     type: ["design"],
     url: "images/portfolio/poster.png",
   },
@@ -285,7 +303,7 @@ export const projects = [
     description: "Visual conversation on dissociation.",
     languages: "Figma",
     image: "dissociation.png",
-    year: "2024",
+    date: "2024-03",
     type: ["conversation"],
     url: "https://www.figma.com/file/wtlzG9LI65YerdnUCTavG5/dissociation-(Copy)?type=design&node-id=0%3A1&mode=design&t=qItstvoCYMAuhfYa-1",
     collaborators: [
@@ -296,27 +314,12 @@ export const projects = [
     ],
   },
   {
-    title: "Internet (2 Sides)",
-    description: "Word cloud on 2000s internet.",
-    languages: "Figma",
-    image: "internetc.png",
-    year: "2022",
-    type: ["design"],
-    url: "",
-    collaborators: [
-      {
-        name: "Carolyn Wang",
-        url: "https://carolynwang.substack.com/",
-      },
-    ],
-  },
-  {
     title: "Personal Website (1.0)",
     description: "Covid-19 quarantine coping. (Plz do not visit Ty)",
     languages: "React",
     image: "oldpweb.png",
     type: ["code"],
-    year: "2020",
+    date: "2020-03",
     url: "https://mellyeliu2020.netlify.app/",
   },
   {
@@ -325,7 +328,7 @@ export const projects = [
     languages: "Procreate",
     image: "tattoo.png",
     type: ["design"],
-    year: "2021",
+    date: "2021-01",
     url: "",
   },
   {
@@ -334,7 +337,7 @@ export const projects = [
     languages: "HTML/CSS",
     image: "html.png",
     type: ["code"],
-    year: "2007",
+    date: "2007",
     url: "https://web.archive.org/web/20070912023029/http://pages.matmice.com/home/tamahtml/",
     collaborators: [
       {
@@ -350,10 +353,24 @@ export const projects = [
     languages: "HTML/CSS",
     image: "tama.png",
     type: ["code"],
-    year: "2006",
+    date: "2007",
     url: "https://web.archive.org/web/20070209174817/https://tamaplace.zoomshare.com/",
   },
 ];
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// "2024-03" -> "Mar 2024". A bare "2007" stays as the year.
+const formatMonth = (value) => {
+  const [year, month] = value.split("-");
+  return month ? `${MONTHS[Number(month) - 1]} ${year}` : year;
+};
+
+// Dates are "YYYY-MM", or "YYYY" when the month is unknown. endDate is optional; "present" marks ongoing work.
+export const formatProjectDate = ({ date, endDate }) => {
+  if (!endDate) return formatMonth(date);
+  return `${formatMonth(date)} – ${endDate === "present" ? "now" : formatMonth(endDate)}`;
+};
 
 export const getProjectImageUrl = (image) =>
   image.startsWith("http")
