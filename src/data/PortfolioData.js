@@ -103,12 +103,12 @@ export const projects = [
   },
   {
     title: "MOMENTS",
+    favourite: true,
     description:
-      "Welcome Employee 42069. You play an engineer trying to survive the recession. Created in the height of the tech layoffs and updated in response to policy changes",
+      "Welcome Employee 42067. You play an engineer trying to survive the recession. Created in the height of the tech layoffs and updated with every wave.",
     languages: "ChatGPT, Twine, HTML/CSS",
     image: "moments.png",
-    date: "2023-01",
-    endDate: "present",
+    date: "2023-04",
     type: ["code", "games"],
     url: "https://moments.codes/",
   },
