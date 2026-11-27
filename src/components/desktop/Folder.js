@@ -16,6 +16,12 @@ const styles = stylex.create({
     userSelect: "none",
     zIndex: 100,
     display: "block",
+    width: 128,
+  },
+  caption: {
+    display: "flex",
+    justifyContent: "center",
+    whiteSpace: "nowrap",
   },
   folder: {
     transform: {
@@ -82,8 +88,8 @@ const Folder = ({
         {...stylex.props(styles.folder)}
       />
       {caption && (
-        <div {...stylex.props(styles.text, isOpen && styles.textOpen)}>
-          {caption}
+        <div {...stylex.props(styles.caption)}>
+          <div {...stylex.props(styles.text, isOpen && styles.textOpen)}>{caption}</div>
         </div>
       )}
     </div>

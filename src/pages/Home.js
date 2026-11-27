@@ -5,10 +5,12 @@ import DesktopIcon from "../components/desktop/DesktopIcon";
 import Folder from "../components/desktop/Folder";
 import Popup from "../components/desktop/Popup";
 import FileData from "../data/FileData";
+import { socials } from "../data/PortfolioData";
 import WindowData from "../data/WindowData";
 import { useCursorString, useUIActions } from "../context/UIContext";
 import { Screen, useDesktopScreen } from "../routes";
 import useIsMobile from "../hooks/useIsMobile";
+import { fonts } from "../styles/tokens.stylex";
 
 // Browsers that understand image-set() with type() all decode WebP. site.css
 // uses the same check, so the CSS background and this URL always match.
@@ -28,6 +30,48 @@ const styles = stylex.create({
   headerImage: {
     opacity: 0,
   },
+  pager: {
+    position: "fixed",
+    right: 10,
+    width: 128,
+    zIndex: 100,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 14,
+    transform: "scale(0.5)",
+    fontFamily: fonts.serif,
+    fontStyle: "italic",
+    fontSize: 30,
+    color: "#111111",
+    userSelect: "none",
+    whiteSpace: "nowrap",
+  },
+  pagerLabel: {
+    padding: 0,
+    borderWidth: 0,
+    backgroundColor: "transparent",
+    color: "inherit",
+    font: "inherit",
+    cursor: "pointer",
+  },
+  pagerArrow: {
+    padding: 0,
+    borderWidth: 0,
+    backgroundColor: "transparent",
+    color: "inherit",
+    font: "inherit",
+    fontStyle: "normal",
+    lineHeight: 1,
+    cursor: {
+      default: "pointer",
+      ":disabled": "default",
+    },
+    opacity: {
+      default: 1,
+      ":disabled": 0.25,
+    },
+  },
 });
 
 const FOLDERS = [
@@ -44,6 +88,15 @@ const FOLDERS = [
   },
   { key: "About Me", display: "About Me", hoverText: "( Autofiction as therapy )" },
 ];
+
+const SOCIAL_FOLDERS = socials.map((social) => ({
+  key: social.url,
+  display: social.label,
+  hoverText: `( ${social.url.replace(/^https?:\/\//, "")} )`,
+  url: social.url,
+}));
+const FOLDER_PAGES = [SOCIAL_FOLDERS, FOLDERS];
+const folderTop = (index) => 150 + 90 * (index + 1);
 
 // Stops the page from scrolling or bouncing on vertical swipes (mobile).
 const usePreventVerticalSwipe = () => {
@@ -89,6 +142,8 @@ const Home = ({ isFoldersOff, setIsFoldersOff }) => {
 
   const [isGridLayout, setIsGridLayout] = useState(false);
   const [openStates, setOpenStates] = useState([true, false, true, true]);
+  const [folderPage, setFolderPage] = useState(0);
+  const pageFolders = FOLDER_PAGES[folderPage];
 
   const hoverHandlers = (text) => ({
     onMouseEnter: () => setCursorString(text),
@@ -236,20 +291,58 @@ const Home = ({ isFoldersOff, setIsFoldersOff }) => {
           {renderItems()}
 
           {!isFoldersOff &&
-            FOLDERS.map((folder, index) => (
+            pageFolders.map((folder, index) => (
               <Folder
                 key={folder.key}
-                isOpen={openStates[index]}
-                onOpen={(isOpen) => toggleFolder(index, isOpen)}
+                isOpen={folder.url ? false : openStates[index]}
+                onOpen={(isOpen) =>
+                  folder.url
+                    ? window.open(folder.url, "_blank", "noopener,noreferrer")
+                    : toggleFolder(index, isOpen)
+                }
                 hoverString={folder.hoverText}
                 onHoverChange={(isHovering) =>
                   setCursorString(isHovering ? folder.hoverText : "")
                 }
                 caption={folder.display}
-                y={150 + 90 * (index + 1)}
+                y={folderTop(index)}
                 scale={0.5}
               />
             ))}
+
+          {!isFoldersOff && (
+            <div
+              {...stylex.props(styles.pager)}
+              style={{ top: folderTop(pageFolders.length) + 45 }}
+            >
+              <button
+                type="button"
+                aria-label="Previous folders"
+                disabled={folderPage === 0}
+                onClick={() => setFolderPage((page) => page - 1)}
+                {...stylex.props(styles.pagerArrow)}
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                aria-label="Switch folder page"
+                onClick={() => setFolderPage((page) => (page + 1) % FOLDER_PAGES.length)}
+                {...stylex.props(styles.pagerLabel)}
+              >
+                ( {folderPage + 1}/{FOLDER_PAGES.length} )
+              </button>
+              <button
+                type="button"
+                aria-label="Next folders"
+                disabled={folderPage === FOLDER_PAGES.length - 1}
+                onClick={() => setFolderPage((page) => page + 1)}
+                {...stylex.props(styles.pagerArrow)}
+              >
+                ›
+              </button>
+            </div>
+          )}
 
           {cursorString ? (
             <div id="header-hover" className="bottom-left">

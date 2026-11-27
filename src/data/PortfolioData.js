@@ -1,10 +1,10 @@
 import React from "react";
 
 export const socials = [
-  { name: "❀ vsco.co", url: "https://vsco.co/mellyeliu" },
-  { name: "𖡼 reading.supply", url: "https://reading.supply/@mellyeliu" },
-  { name: "⚘ github.com", url: "https://github.com/mellyeliu" },
-  { name: "𖠋 linktr.ee", url: "https://linktr.ee/mellye.liu" },
+  { name: "❀ vsco.co", label: "Photos", url: "https://vsco.co/mellyeliu" },
+  { name: "𖡼 reading.supply", label: "Notes", url: "https://reading.supply/@mellyeliu" },
+  { name: "⚘ github.com", label: "Github", url: "https://github.com/mellyeliu" },
+  { name: "𖠋 linktr.ee", label: "Links", url: "https://linktr.ee/mellye.liu" },
 ];
 
 export const projects = [
@@ -84,7 +84,6 @@ export const projects = [
     languages: "React, Cursor :/",
     image: "666piece.png",
     date: "2025-05",
-    endDate: "present",
     type: ["games"],
     url: "",
   },
@@ -95,13 +94,12 @@ export const projects = [
     languages: "React?",
     image: "healinggame.png",
     date: "2024-08",
-    endDate: "present",
     type: ["games"],
     url: "https://healing-game.netlify.app/",
     collaborators: [
       {
         name: "Carolyn Wang",
-        url: "https://carolynwang.substack.com/",
+        url: "https://carowang.me/",
       },
     ],
   },
@@ -166,7 +164,7 @@ export const projects = [
     collaborators: [
       {
         name: "Carolyn Wang",
-        url: "https://carolynwang.substack.com",
+        url: "https://carowang.me/",
       },
     ],
   },
@@ -329,7 +327,8 @@ export const projects = [
     languages: "Procreate",
     image: "tattoo.png",
     type: ["design"],
-    date: "2021-01",
+    date: "2020",
+    endDate: "2021",
     url: "",
   },
   {

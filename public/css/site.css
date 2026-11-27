@@ -586,6 +586,26 @@ button#one-tab {
 
 /* ---- Responsive ---- */
 
+@media only screen and (max-width: 1200px) {
+  #portfolio-wrapper .portfolio-item.columns {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 860px) {
+  #portfolio-wrapper .portfolio-item.columns {
+    width: 50% !important;
+    float: left;
+    padding: 0 12px !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #portfolio-wrapper .portfolio-item img {
+    object-position: center;
+  }
+}
+
 @media only screen and (min-height: 890px) and (min-width: 1350px) {
   .top-left,
   .bottom-left {

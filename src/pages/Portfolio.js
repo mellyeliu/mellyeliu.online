@@ -7,6 +7,7 @@ import ProjectDetail from "../components/portfolio/ProjectDetail";
 import { projects, formatProjectDate, getProjectImageUrl } from "../data/PortfolioData";
 import { Screen, useDesktopScreen } from "../routes";
 import useIsMobile from "../hooks/useIsMobile";
+import useMediaQuery from "../hooks/useMediaQuery";
 import whenDecoded from "../utils/whenDecoded";
 import { colors, fonts, radii, fontSizes } from "../styles/tokens.stylex";
 
@@ -42,6 +43,10 @@ const URL_BAR_ROUTES = {
   convos: TABS[4],
   conversation: TABS[4],
   conversations: TABS[4],
+};
+
+const URL_BAR_REDIRECTS = {
+  friends: "https://moments.codes/friends",
 };
 
 const slugify = (title) =>
@@ -93,8 +98,7 @@ const loadImage = (url) =>
 
 const styles = stylex.create({
   hvrGrow: {
-    display: "inline-block",
-    verticalAlign: "middle",
+    display: "block",
     transform: {
       default: "translateZ(0)",
       ":hover": "scale(1.035)",
@@ -138,6 +142,8 @@ const styles = stylex.create({
   }),
   navPadding: {
     padding: 18,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
   },
   backArrow: {
     cursor: "pointer",
@@ -255,7 +261,11 @@ const styles = stylex.create({
     right: 12,
   },
   projectImage: {
+    display: "block",
+    width: "100%",
     height: 200,
+    objectFit: "contain",
+    objectPosition: "left center",
     transform: "scale(0.9)",
   },
   madeWith: {
@@ -315,6 +325,7 @@ const styles = stylex.create({
 
 const Portfolio = () => {
   const isMobile = useIsMobile();
+  const isTwoColumn = useMediaQuery("(max-width: 1200px)");
   const { pathname } = useLocation();
   const history = useHistory();
   const [, setDesktopScreen] = useDesktopScreen();
@@ -323,6 +334,10 @@ const Portfolio = () => {
   const [favouriteOverrides, setFavouriteOverrides] = useState({});
   const isFavouritesOnly = (tab) => favouriteOverrides[tab.id] ?? tab.category === "all";
   const [backHover, setBackHover] = useState(0);
+  const hoverCircle = (id) => ({
+    onPointerEnter: (event) => event.pointerType === "mouse" && setBackHover(id),
+    onPointerLeave: () => setBackHover(0),
+  });
   const [useMobileDetail, setUseMobileDetail] = useState(true);
   const [readyImageLoadKey, setReadyImageLoadKey] = useState("");
   const [readyProjectImages, setReadyProjectImages] = useState(() => new Set());
@@ -391,6 +406,11 @@ const Portfolio = () => {
   const handleUrlBarSubmit = (event) => {
     if (event.key !== "Enter") return;
     const lastSegment = event.target.value.trim().split("/").pop().trim().toLowerCase();
+    const redirect = URL_BAR_REDIRECTS[lastSegment];
+    if (redirect) {
+      window.open(redirect, "_blank", "noopener,noreferrer");
+      return;
+    }
     const tab = URL_BAR_ROUTES[lastSegment];
     if (tab) {
       history.push(tab.path);
@@ -423,8 +443,7 @@ const Portfolio = () => {
               onClick={() => setDesktopScreen(Screen.HOME)}
               xmlns="http://www.w3.org/2000/svg"
               {...stylex.props(styles.backArrow)}
-              onMouseEnter={() => setBackHover(1)}
-              onMouseLeave={() => setBackHover(0)}
+              {...hoverCircle(1)}
             >
               <path
                 d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.528 6.236h-12.884v1h21.883z"
@@ -439,8 +458,7 @@ const Portfolio = () => {
               height="30"
               xmlns="http://www.w3.org/2000/svg"
               {...stylex.props(styles.forwardArrow)}
-              onMouseEnter={() => setBackHover(2)}
-              onMouseLeave={() => setBackHover(0)}
+              {...hoverCircle(2)}
             >
               <path
                 d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-12.884v1h21.883z"
@@ -455,8 +473,7 @@ const Portfolio = () => {
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
                 {...stylex.props(styles.refreshIcon)}
-                onMouseEnter={() => setBackHover(3)}
-                onMouseLeave={() => setBackHover(0)}
+                {...hoverCircle(3)}
               >
                 <path d="M7 9h-7v-7h1v5.2c1.853-4.237 6.083-7.2 11-7.2 6.623 0 12 5.377 12 12s-5.377 12-12 12c-6.286 0-11.45-4.844-11.959-11h1.004c.506 5.603 5.221 10 10.955 10 6.071 0 11-4.929 11-11s-4.929-11-11-11c-4.66 0-8.647 2.904-10.249 7h5.249v1z" />
               </svg>
@@ -500,7 +517,7 @@ const Portfolio = () => {
             id="portfolio-wrapper"
             className="bgrid-thirds s-bgrid-thirds cf"
             style={{
-              padding: isMobile ? "70px 10px 100px" : "50px 80px",
+              padding: isMobile ? "70px 10px 100px" : isTwoColumn ? "40px 30px" : "50px 80px",
               minHeight: isMobile ? "calc(100vh / 1.1 - 180px)" : "calc(100vh / 1.1 - 200px)",
             }}
           >
